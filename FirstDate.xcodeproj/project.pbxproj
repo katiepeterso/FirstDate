@@ -9,10 +9,15 @@
 /* Begin PBXBuildFile section */
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
-		AAD8DA081BAE04BB00218CC9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA071BAE04BB00218CC9 /* ViewController.m */; };
+		AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */; };
 		AAD8DA0B1BAE04BB00218CC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA091BAE04BB00218CC9 /* Main.storyboard */; };
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
+		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +25,22 @@
 		AAD8DA011BAE04BB00218CC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AAD8DA061BAE04BB00218CC9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		AAD8DA071BAE04BB00218CC9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdeasFeedViewController.h; sourceTree = "<group>"; };
+		AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdeasFeedViewController.m; sourceTree = "<group>"; };
 		AAD8DA0A1BAE04BB00218CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAD8DA0F1BAE04BB00218CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAD8DA111BAE04BB00218CC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaDetailViewController.h; sourceTree = "<group>"; };
+		C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeaDetailViewController.m; sourceTree = "<group>"; };
+		C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaFeedCell.h; sourceTree = "<group>"; };
+		C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeaFeedCell.m; sourceTree = "<group>"; };
+		C73AA5E11BB0B39700EAD889 /* IdeaDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaDescriptionCell.h; sourceTree = "<group>"; };
+		C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeaDescriptionCell.m; sourceTree = "<group>"; };
+		C73AA5E41BB0B3BC00EAD889 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEditIdeaViewController.h; sourceTree = "<group>"; };
+		C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEditIdeaViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +75,18 @@
 			children = (
 				AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */,
 				AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */,
-				AAD8DA061BAE04BB00218CC9 /* ViewController.h */,
-				AAD8DA071BAE04BB00218CC9 /* ViewController.m */,
+				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
+				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
+				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
+				C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */,
+				C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */,
+				C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */,
+				C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */,
+				C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */,
+				C73AA5E11BB0B39700EAD889 /* IdeaDescriptionCell.h */,
+				C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */,
+				C73AA5E41BB0B3BC00EAD889 /* CommentCell.h */,
+				C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */,
 				AAD8DA091BAE04BB00218CC9 /* Main.storyboard */,
 				AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */,
 				AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */,
@@ -149,9 +174,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAD8DA081BAE04BB00218CC9 /* ViewController.m in Sources */,
+				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
+				C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */,
+				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
+				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
+				C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */,
 				AAD8DA021BAE04BB00218CC9 /* main.m in Sources */,
+				C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +328,7 @@
 				AAD8DA161BAE04BB00218CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

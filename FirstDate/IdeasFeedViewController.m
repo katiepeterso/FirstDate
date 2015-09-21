@@ -6,13 +6,13 @@
 //  Copyright © 2015 KatieExpatriated. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "IdeasFeedViewController.h"
 
-@interface ViewController ()
+@interface IdeasFeedViewController ()
 
 @end
 
-@implementation ViewController
+@implementation IdeasFeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
