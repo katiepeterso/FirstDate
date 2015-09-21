@@ -18,6 +18,9 @@
 		C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EB1BB0B76300EAD889 /* DateIdea.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; settings = {ASSET_TAGS = (); }; };
+		C73AA5F21BB0B89600EAD889 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5F11BB0B89600EAD889 /* Comment.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,12 @@
 		C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEditIdeaViewController.h; sourceTree = "<group>"; };
 		C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEditIdeaViewController.m; sourceTree = "<group>"; };
+		C73AA5EA1BB0B76300EAD889 /* DateIdea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateIdea.h; sourceTree = "<group>"; };
+		C73AA5EB1BB0B76300EAD889 /* DateIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateIdea.m; sourceTree = "<group>"; };
+		C73AA5ED1BB0B88B00EAD889 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		C73AA5EE1BB0B88B00EAD889 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		C73AA5F01BB0B89600EAD889 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		C73AA5F11BB0B89600EAD889 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +84,12 @@
 			children = (
 				AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */,
 				AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */,
+				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
+				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
+				C73AA5ED1BB0B88B00EAD889 /* User.h */,
+				C73AA5EE1BB0B88B00EAD889 /* User.m */,
+				C73AA5F01BB0B89600EAD889 /* Comment.h */,
+				C73AA5F11BB0B89600EAD889 /* Comment.m */,
 				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
 				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
 				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
@@ -174,11 +189,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
 				C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */,
+				C73AA5F21BB0B89600EAD889 /* Comment.m in Sources */,
 				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
 				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
+				C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */,
 				C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */,
 				AAD8DA021BAE04BB00218CC9 /* main.m in Sources */,
 				C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */,
