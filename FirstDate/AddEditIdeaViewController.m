@@ -12,7 +12,7 @@
 #import "User.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
-@interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionView;
@@ -31,8 +31,14 @@
     
     self.imageIsPicked = NO;
     self.photoLabel.text = @"Select date photo";
+    
     self.titleField.text = @"";
-    self.descriptionView.text = @"";
+    self.titleField.delegate = self;
+    
+    self.descriptionView.text = @"Enter date description here...";
+    self.descriptionView.textColor = [UIColor lightGrayColor];
+    self.descriptionView.delegate = self;
+    
     self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
 }
 
@@ -89,5 +95,30 @@
     self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
 }
 
+#pragma mark - Text view placeholder
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Enter date description here..."]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor];
+    }
+    [textView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Enter date description here...";
+        textView.textColor = [UIColor lightGrayColor];
+    }
+    [textView resignFirstResponder];
+}
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
 @end
