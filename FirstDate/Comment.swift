@@ -8,10 +8,16 @@
 
 import UIKit
 
-struct Comment {
+class Comment : NSObject {
     
     let user: User
     let content: String
     let timeStamp: NSDate
+    
+    init(user: User, content: String) {
+        self.user = user
+        self.content = content
+        self.timeStamp = NSDate()
+    }
     
 }

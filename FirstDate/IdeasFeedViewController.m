@@ -11,12 +11,13 @@
 #import "IdeaDetailViewController.h"
 #import "IdeaFeedCell.h"
 #import "DateIdea.h"
+#import "FirstDate-Swift.h"
 
 @interface IdeasFeedViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DateIdea *dateIdea;
-
 @property (nonatomic, strong) NSMutableArray *ideas;
+@property (nonatomic, strong) User *currentUser;
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
@@ -28,6 +29,7 @@
     [super viewDidLoad];
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     self.ideas = appDelegate.ideas;
+    self.currentUser = appDelegate.currentUser;
     
     DateIdea *dateIdea = [[DateIdea alloc] initWithUser:[[User alloc] initWithUsername:@"alperenc"
                                                                                    sex:SexMale
@@ -79,8 +81,21 @@
         
     }]];
     
+    UITextField *commentTextField = alertController.textFields[0];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //
+        Comment *comment = [[Comment alloc] initWithUser:self.currentUser content:commentTextField.text];
+        
+        CGPoint touchedPoint = [self.tableView convertPoint:commentButton.center fromView:[commentButton superview]];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchedPoint];
+        
+        if (indexPath) {
+            DateIdea *currentDateIdea = self.ideas[indexPath.row];
+            
+            [currentDateIdea.comments addObject:comment];
+        }
+        
     }]];
     
     [self presentViewController:alertController animated:YES completion:^{
@@ -97,7 +112,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     IdeaFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ideaFeedCell" forIndexPath:indexPath];
     
-    cell.dateIdea = self.ideas[indexPath.row];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    
+    NSArray *sortedArray = [self.ideas sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    cell.dateIdea = sortedArray[indexPath.row];
     
     return cell;
 }
