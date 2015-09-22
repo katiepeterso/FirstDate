@@ -47,6 +47,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)hearted:(UIButton *)heartbutton {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    User *currentUser = appDelegate.currentUser;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:heartbutton.center];
+    
+    [currentUser.hearts addObject:self.ideas[indexPath.row]];
+    
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+    
+}
+
+- (IBAction)comment:(UIButton *)commentButton {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter a comment" message:@"Please be respectful!" preferredStyle:UIAlertControllerStyleAlert];
+    UITextField *commentTextField = [[UITextField alloc] initWithFrame:alertController.view.frame];
+    
+    [alertController.view addSubview:commentTextField];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
