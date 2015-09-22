@@ -40,6 +40,14 @@
     self.descriptionView.delegate = self;
     
     self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
+    
+    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
+    
+    [accessoryView setItems:@[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
+    
+    self.titleField.inputAccessoryView = accessoryView;
+    self.descriptionView.inputAccessoryView = accessoryView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -130,20 +138,17 @@
         textView.text = @"Enter date description here...";
         textView.textColor = [UIColor lightGrayColor];
     }
-    [textView resignFirstResponder];
+    [self hideKeyboard];
 }
 
 #pragma mark - Text Edit Resign First Responder
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
+    [self hideKeyboard];
     return YES;
 }
 
-- (IBAction)textFieldDone:(id)sender {
+- (void)hideKeyboard {
     [self.titleField resignFirstResponder];
-}
-
-- (IBAction)textViewDone:(id)sender {
     [self.descriptionView resignFirstResponder];
 }
 

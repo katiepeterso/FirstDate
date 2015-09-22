@@ -283,9 +283,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
-                                        <connections>
-                                            <outlet property="accessoryView" destination="TRa-fk-W0z" id="Lz7-Ep-Ax4"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="322" id="e69-bg-t41">
                                         <rect key="frame" x="0.0" y="108" width="375" height="322"/>
@@ -364,9 +361,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
-                                        <connections>
-                                            <outlet property="accessoryView" destination="KrN-kw-vHm" id="Zf4-xl-qiR"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="47" id="Zf1-Tn-7ge">
                                         <rect key="frame" x="0.0" y="533" width="375" height="47"/>
@@ -412,22 +406,6 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fZ-Hh-71e" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KrN-kw-vHm">
-                    <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Done"/>
-                    <connections>
-                        <action selector="textViewDone:" destination="NVG-2Y-reg" eventType="touchUpInside" id="FLx-ho-yWK"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TRa-fk-W0z">
-                    <rect key="frame" x="0.0" y="0.0" width="37" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Done"/>
-                    <connections>
-                        <action selector="textFieldDone:" destination="NVG-2Y-reg" eventType="touchUpInside" id="adT-AZ-eqF"/>
-                    </connections>
-                </button>
             </objects>
             <point key="canvasLocation" x="1822.5" y="1070.5"/>
         </scene>
