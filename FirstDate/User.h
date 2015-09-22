@@ -28,6 +28,7 @@ typedef NS_ENUM(NSUInteger, DatingPreference) {
 @property (nonatomic, assign) DatingPreference datingPreference;
 @property (nonatomic, strong) NSString *about;
 @property (nonatomic, strong) NSMutableArray *ideas;
+@property (nonatomic, strong) NSMutableSet *hearts;
 
 - (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference;
 

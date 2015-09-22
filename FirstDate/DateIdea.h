@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import <UIKit/UIKit.h>
 
 @interface DateIdea : NSObject
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *comments;
 @property (nonatomic, strong) NSMutableSet *hearts;
 @property (nonatomic, strong) NSDate *timeStamp;
+@property (nonatomic, strong) UIImage *photo;
 
 - (instancetype)initWithUser:(User *)user title:(NSString*) title details:(NSString *)details;
 

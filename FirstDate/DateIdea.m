@@ -20,6 +20,7 @@
         self.comments = [NSMutableArray array];
         self.hearts = [NSMutableSet set];
         self.timeStamp = [NSDate date];
+        self.photo = [UIImage imageNamed:@"placeholder.png"];
     }
     return self;
 }
