@@ -57,10 +57,16 @@
      return cell;
 }
 
-#pragma mark - Table View Delegate
+#pragma mark - Navigation
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+    
+    IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
+    DateIdea *dateIdea = self.ideas[path.row];
+    
+    ideaDetailVC.dateIdea = dateIdea;
 }
 
 

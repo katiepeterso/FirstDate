@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DateIdea.h"
 
 @interface IdeaDetailViewController : UIViewController
+
+@property (nonatomic, strong) DateIdea *dateIdea;
 
 @end
