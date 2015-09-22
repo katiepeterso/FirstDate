@@ -17,6 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.ideas = [NSMutableArray array];
+    self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
     return YES;
 }
 

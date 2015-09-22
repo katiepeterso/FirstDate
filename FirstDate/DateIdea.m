@@ -10,7 +10,7 @@
 
 @implementation DateIdea
 
-- (instancetype)initWithUser:(User *)user title:(NSString*) title details:(NSString *)details
+- (instancetype)initWithUser:(User *)user title:(NSString*)title details:(NSString *)details
 {
     self = [super init];
     if (self) {
@@ -20,6 +20,7 @@
         self.comments = [NSMutableArray array];
         self.hearts = [NSMutableSet set];
         self.timeStamp = [NSDate date];
+        self.photo = [UIImage imageNamed:@"placeholder.png"];
     }
     return self;
 }

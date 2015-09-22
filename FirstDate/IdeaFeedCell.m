@@ -7,11 +7,35 @@
 //
 
 #import "IdeaFeedCell.h"
+#import "AppDelegate.h"
+
+@interface IdeaFeedCell ()
+
+@property (nonatomic, weak) IBOutlet UIImageView *dateImageView;
+@property (nonatomic, weak) IBOutlet UILabel *dateTitleLabel;
+@property (nonatomic, weak) IBOutlet UIButton *heartButton;
+
+@end
 
 @implementation IdeaFeedCell
 
+- (void)setup {
+    
+    self.dateImageView.image = self.dateIdea.photo;
+    self.dateTitleLabel.text = self.dateIdea.title;
+    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    User *currentUser = appDelegate.currentUser;
+    
+    if ([currentUser.hearts containsObject:self.dateIdea]) {
+        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState:UIControlStateSelected];
+        [self.heartButton setSelected:YES];
+    }
+}
+
 - (void)awakeFromNib {
-    // Initialization code
+    [self setup];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

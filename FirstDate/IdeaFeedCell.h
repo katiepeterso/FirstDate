@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "DateIdea.h"
 @interface IdeaFeedCell : UITableViewCell
+
+@property (nonatomic, strong) DateIdea *dateIdea;
 
 @end
