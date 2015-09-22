@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) DateIdea *dateIdea;
 
+- (void)setup;
+
 @end

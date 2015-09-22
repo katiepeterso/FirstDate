@@ -38,6 +38,10 @@
     [self.ideas addObject:dateIdea];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -50,11 +54,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     IdeaFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ideaFeedCell" forIndexPath:indexPath];
-     
-     cell.dateIdea = self.ideas[indexPath.row];
- 
-     return cell;
+    IdeaFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ideaFeedCell" forIndexPath:indexPath];
+    
+    cell.dateIdea = self.ideas[indexPath.row];
+    
+    return cell;
 }
 
 #pragma mark - Navigation
@@ -62,10 +66,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-    
-    IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
     DateIdea *dateIdea = self.ideas[path.row];
     
+    IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
     ideaDetailVC.dateIdea = dateIdea;
 }
 

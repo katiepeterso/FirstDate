@@ -34,6 +34,13 @@
     }
 }
 
+- (void)setDateIdea:(DateIdea *)dateIdea {
+    if (!_dateIdea) {
+        _dateIdea = dateIdea;
+        [self setup];
+    }
+}
+
 - (void)awakeFromNib {
     [self setup];
 }
