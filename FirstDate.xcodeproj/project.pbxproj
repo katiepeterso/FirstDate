@@ -13,6 +13,7 @@
 		AAD8DA0B1BAE04BB00218CC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA091BAE04BB00218CC9 /* Main.storyboard */; };
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
+		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; settings = {ASSET_TAGS = (); }; };
 		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */; settings = {ASSET_TAGS = (); }; };
@@ -20,7 +21,6 @@
 		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EB1BB0B76300EAD889 /* DateIdea.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5F21BB0B89600EAD889 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5F11BB0B89600EAD889 /* Comment.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +34,8 @@
 		AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAD8DA0F1BAE04BB00218CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAD8DA111BAE04BB00218CC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FirstDate-Bridging-Header.h"; sourceTree = "<group>"; };
+		C70460301BB210EF005D8335 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaDetailViewController.h; sourceTree = "<group>"; };
 		C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeaDetailViewController.m; sourceTree = "<group>"; };
 		C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaFeedCell.h; sourceTree = "<group>"; };
@@ -48,8 +50,6 @@
 		C73AA5EB1BB0B76300EAD889 /* DateIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateIdea.m; sourceTree = "<group>"; };
 		C73AA5ED1BB0B88B00EAD889 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C73AA5EE1BB0B88B00EAD889 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		C73AA5F01BB0B89600EAD889 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
-		C73AA5F11BB0B89600EAD889 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,12 +84,12 @@
 			children = (
 				AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */,
 				AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */,
+				C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */,
+				C70460301BB210EF005D8335 /* Comment.swift */,
 				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
 				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
 				C73AA5ED1BB0B88B00EAD889 /* User.h */,
 				C73AA5EE1BB0B88B00EAD889 /* User.m */,
-				C73AA5F01BB0B89600EAD889 /* Comment.h */,
-				C73AA5F11BB0B89600EAD889 /* Comment.m */,
 				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
 				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
 				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
@@ -145,6 +145,7 @@
 		AAD8D9F51BAE04BB00218CC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = KatieExpatriated;
 				TargetAttributes = {
@@ -192,10 +193,10 @@
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
 				C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */,
-				C73AA5F21BB0B89600EAD889 /* Comment.m in Sources */,
 				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
 				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
+				C70460311BB210EF005D8335 /* Comment.swift in Sources */,
 				C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */,
 				C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */,
 				AAD8DA021BAE04BB00218CC9 /* main.m in Sources */,
@@ -309,10 +310,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FirstDate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wordpress.katieexpatriated.FirstDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FirstDate/FirstDate-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -320,10 +324,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FirstDate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wordpress.katieexpatriated.FirstDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FirstDate/FirstDate-Bridging-Header.h";
 			};
 			name = Release;
 		};
