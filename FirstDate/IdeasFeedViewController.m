@@ -51,19 +51,41 @@
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     User *currentUser = appDelegate.currentUser;
     
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:heartbutton.center];
+    CGPoint touchedPoint = [self.tableView convertPoint:heartbutton.center fromView:[heartbutton superview]];
     
-    [currentUser.hearts addObject:self.ideas[indexPath.row]];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchedPoint];
     
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+    if (indexPath) {
+        DateIdea *currentDateIdea = self.ideas[indexPath.row];
+        
+        if ([currentUser.hearts containsObject:currentDateIdea]) {
+            [currentUser.hearts removeObject:currentDateIdea];
+        } else {
+            [currentUser.hearts addObject:self.ideas[indexPath.row]];
+        }
+        
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+    }
     
 }
 
 - (IBAction)comment:(UIButton *)commentButton {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter a comment" message:@"Please be respectful!" preferredStyle:UIAlertControllerStyleAlert];
-    UITextField *commentTextField = [[UITextField alloc] initWithFrame:alertController.view.frame];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Your comment goes here...";
+    }];
     
-    [alertController.view addSubview:commentTextField];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        //
+    }];
 }
 
 #pragma mark - Table View Data Source

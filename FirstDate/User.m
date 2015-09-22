@@ -18,6 +18,7 @@
         self.sex = sex;
         self.datingPreference = datingPreference;
         self.ideas = [NSMutableArray array];
+        self.hearts = [NSMutableSet set];
     }
     return self;
 }
