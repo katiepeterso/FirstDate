@@ -10,8 +10,9 @@
 #import "DateIdea.h"
 #import "AppDelegate.h"
 #import "User.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface AddEditIdeaViewController ()
+@interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionView;
@@ -30,8 +31,10 @@
     
     self.imageIsPicked = NO;
     self.photoLabel.text = @"Select date photo";
+    self.titleField.text = @"";
+    self.descriptionView.text = @"";
+    self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -40,25 +43,35 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
-}
-
-//- (IBAction)markComplete:(UIButton *)sender {
-//    
-//    if (self.completionButtonChecked) {
-//        [self.addNewCompletionButton setTitle:@"\u2610" forState:UIControlStateNormal];
-//        self.completionButtonChecked = NO;
-//    }
-//    else {
-//        [self.addNewCompletionButton setTitle:@"\u2611" forState:UIControlStateNormal];
-//        self.completionButtonChecked = YES;
-//    }
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    return 1;
 //}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return 4;
+//}
+
+#pragma mark - Image Picker and display
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 1) {
+        UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
+        pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        pickerController.delegate = self;
+        pickerController.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
+        [self presentViewController:pickerController animated:YES completion:nil];
+    }
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    self.photoLabel.text = @"Change date photo";
+}
+
+
+#pragma mark - Submit new idea
 
 - (IBAction)submitIdea:(UIButton *)sender {
     
@@ -69,7 +82,11 @@
     
     [appDelegate.ideas addObject:self.currentDateIdea];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.tabBarController setSelectedIndex:0];
+    self.photoLabel.text = @"Select date photo";
+    self.titleField.text = @"";
+    self.descriptionView.text = @"";
+    self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
 }
 
 
