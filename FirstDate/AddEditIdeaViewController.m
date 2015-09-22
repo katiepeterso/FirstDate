@@ -62,10 +62,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 1) {
         UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
-        pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         pickerController.delegate = self;
         pickerController.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
-        [self presentViewController:pickerController animated:YES completion:nil];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Photo Library" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:pickerController animated:YES completion:nil];
+            
+        }]];
+        
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Take Photo or Video" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                [self presentViewController:pickerController animated:YES completion:nil];
+                
+            }]];
+        }
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -75,7 +94,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     self.photoLabel.text = @"Change date photo";
 }
-
 
 #pragma mark - Submit new idea
 
@@ -115,10 +133,18 @@
     [textView resignFirstResponder];
 }
 
-
+#pragma mark - Text Edit Resign First Responder
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (IBAction)textFieldDone:(id)sender {
+    [self.titleField resignFirstResponder];
+}
+
+- (IBAction)textViewDone:(id)sender {
+    [self.descriptionView resignFirstResponder];
 }
 
 @end
