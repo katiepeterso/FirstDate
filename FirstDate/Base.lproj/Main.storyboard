@@ -91,7 +91,6 @@
                                                 <constraint firstItem="1EB-BM-uqs" firstAttribute="top" secondItem="sC3-RP-aoB" secondAttribute="bottom" constant="8" symbolic="YES" id="m2N-Iv-Xys"/>
                                                 <constraint firstItem="SaH-ay-9Rm" firstAttribute="leading" secondItem="kPe-bh-qM8" secondAttribute="trailing" constant="8" id="mtb-bm-po5"/>
                                                 <constraint firstItem="Mdn-VE-ljF" firstAttribute="top" secondItem="8Fw-sN-Bzm" secondAttribute="top" constant="8" id="pu1-2T-pjh"/>
-                                                <constraint firstAttribute="bottom" secondItem="Mdn-VE-ljF" secondAttribute="bottom" constant="8.5" id="xpe-ue-zqX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -247,7 +246,7 @@
         <scene sceneID="i1Q-KB-bAQ">
             <objects>
                 <tableViewController id="NVG-2Y-reg" customClass="AddEditIdeaViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lVK-Nc-82d">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lVK-Nc-82d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -259,17 +258,23 @@
                                         <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rny-Oc-wOl" id="vMs-ts-0VZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter date title here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j7u-rs-t0p">
-                                                    <rect key="frame" x="8" y="8" width="359" height="30"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter date title here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j7u-rs-t0p">
+                                                    <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <animations/>
+                                            <constraints>
+                                                <constraint firstItem="j7u-rs-t0p" firstAttribute="leading" secondItem="vMs-ts-0VZ" secondAttribute="leading" constant="8" id="9zi-AP-n1k"/>
+                                                <constraint firstItem="j7u-rs-t0p" firstAttribute="top" secondItem="vMs-ts-0VZ" secondAttribute="top" constant="8" id="X6t-cs-rpk"/>
+                                                <constraint firstAttribute="bottom" secondItem="j7u-rs-t0p" secondAttribute="bottom" constant="8" id="giP-VX-cUu"/>
+                                                <constraint firstAttribute="trailing" secondItem="j7u-rs-t0p" secondAttribute="trailing" constant="8" id="hZV-nR-xTJ"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
@@ -277,21 +282,21 @@
                                         <rect key="frame" x="0.0" y="108" width="375" height="360"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e69-bg-t41" id="ywW-Jo-pak">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="359.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="360"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Opk-cC-MW7">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Opk-cC-MW7">
                                                     <rect key="frame" x="8" y="8" width="359" height="343.5"/>
                                                     <animations/>
                                                 </imageView>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x0a-KC-keX">
-                                                    <rect key="frame" x="8" y="307" width="359" height="44"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="QGi-lY-6IF">
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0a-KC-keX">
+                                                    <rect key="frame" x="8" y="308" width="359" height="44"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="QGi-lY-6IF">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="44"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select date photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7h-39-Whw">
-                                                                <rect key="frame" x="111" y="11" width="136" height="21"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select date photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7h-39-Whw">
+                                                                <rect key="frame" x="8" y="11" width="343" height="20.5"/>
                                                                 <animations/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -299,12 +304,30 @@
                                                             </label>
                                                         </subviews>
                                                         <animations/>
+                                                        <constraints>
+                                                            <constraint firstItem="s7h-39-Whw" firstAttribute="leading" secondItem="QGi-lY-6IF" secondAttribute="leading" constant="8" id="2hq-L2-MAB"/>
+                                                            <constraint firstAttribute="trailing" secondItem="s7h-39-Whw" secondAttribute="trailing" constant="8" id="6mQ-1U-qps"/>
+                                                            <constraint firstItem="s7h-39-Whw" firstAttribute="centerY" secondItem="QGi-lY-6IF" secondAttribute="centerY" id="DKx-I6-nxE"/>
+                                                            <constraint firstItem="s7h-39-Whw" firstAttribute="centerX" secondItem="QGi-lY-6IF" secondAttribute="centerX" id="aV5-Xy-prU"/>
+                                                        </constraints>
                                                     </view>
                                                     <animations/>
-                                                    <blurEffect style="light"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="S94-ek-XxK"/>
+                                                    </constraints>
+                                                    <blurEffect style="dark"/>
                                                 </visualEffectView>
                                             </subviews>
                                             <animations/>
+                                            <constraints>
+                                                <constraint firstItem="Opk-cC-MW7" firstAttribute="bottom" secondItem="ywW-Jo-pak" secondAttribute="bottomMargin" id="Dw7-JM-ZrL"/>
+                                                <constraint firstItem="x0a-KC-keX" firstAttribute="trailing" secondItem="ywW-Jo-pak" secondAttribute="trailingMargin" id="JAQ-uE-cgK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="x0a-KC-keX" secondAttribute="bottom" id="JnG-AY-6zt"/>
+                                                <constraint firstItem="Opk-cC-MW7" firstAttribute="leading" secondItem="ywW-Jo-pak" secondAttribute="leadingMargin" id="NtL-bz-H7l"/>
+                                                <constraint firstItem="x0a-KC-keX" firstAttribute="leading" secondItem="ywW-Jo-pak" secondAttribute="leadingMargin" id="g5P-Kv-dbo"/>
+                                                <constraint firstItem="Opk-cC-MW7" firstAttribute="trailing" secondItem="ywW-Jo-pak" secondAttribute="trailingMargin" id="kAw-Og-sBf"/>
+                                                <constraint firstItem="Opk-cC-MW7" firstAttribute="top" secondItem="ywW-Jo-pak" secondAttribute="topMargin" id="wUn-FJ-1gr"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
@@ -312,7 +335,7 @@
                                         <rect key="frame" x="0.0" y="468" width="375" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g8Q-xu-Xbu" id="7lv-yW-PiB">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter date description here..." translatesAutoresizingMaskIntoConstraints="NO" id="ANN-8h-DYb">
@@ -337,7 +360,7 @@
                                         <rect key="frame" x="0.0" y="569" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zf1-Tn-7ge" id="o4C-Dm-VlH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hgz-5l-AAy">
