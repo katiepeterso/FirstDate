@@ -81,6 +81,7 @@ xcuserdata
 *.xccheckout
 *.moved-aside
 *.xcuserstate
+*.pbxproj
 
 
 ### Objective-C ###
