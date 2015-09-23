@@ -29,7 +29,7 @@
     
     User *currentUser = appDelegate.currentUser;
     
-    if ([currentUser.hearts containsObject:self.dateIdea]) {
+    if ([self.dateIdea.hearts containsObject:currentUser]) {
         [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState:UIControlStateNormal];
     } else {
         [self.heartButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];

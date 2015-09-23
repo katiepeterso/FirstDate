@@ -20,7 +20,7 @@
 @dynamic datingPreference;
 @dynamic age;
 @dynamic name;
-@dynamic photoFile;
+@dynamic photo;
 @dynamic about;
 
 - (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference

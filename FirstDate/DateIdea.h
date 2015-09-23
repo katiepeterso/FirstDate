@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import <ParseUI/ParseUI.h>
+#import "User.h"
 
-@interface DateIdea : NSObject
+@interface DateIdea : PFObject <PFSubclassing>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *details;
@@ -18,7 +20,9 @@
 @property (nonatomic, strong) NSMutableArray *comments;
 @property (nonatomic, strong) NSMutableSet *hearts;
 @property (nonatomic, strong) NSDate *timeStamp;
-@property (nonatomic, strong) UIImage *photo;
+@property (nonatomic, strong) PFFile *photo;
+
++ (NSString *)parseClassName;
 
 - (instancetype)initWithUser:(User *)user title:(NSString*) title details:(NSString *)details;
 

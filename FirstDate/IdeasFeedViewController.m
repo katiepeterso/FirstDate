@@ -60,10 +60,10 @@
     if (indexPath) {
         DateIdea *currentDateIdea = self.ideas[indexPath.row];
         
-        if ([currentUser.hearts containsObject:currentDateIdea]) {
-            [currentUser.hearts removeObject:currentDateIdea];
+        if ([currentDateIdea.hearts containsObject:currentUser]) {
+            [currentDateIdea.hearts removeObject:currentUser];
         } else {
-            [currentUser.hearts addObject:self.ideas[indexPath.row]];
+            [currentDateIdea.hearts addObject:currentUser];
         }
         
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];

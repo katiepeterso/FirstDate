@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "APIKeys.h"
 #import <Parse/Parse.h>
+#import "APIKeys.h"
+#import "DateIdea.h"
+#import "FirstDate-Swift.h"
 
 @interface AppDelegate ()
 
@@ -24,6 +26,11 @@
     
     // Enabling Parse Local Datastore
     [Parse enableLocalDatastore];
+    
+    // Register User, DateIdea and Comments
+    [User registerSubclass];
+    [DateIdea registerSubclass];
+    [Comment registerSubclass];
     
     // Initialize Parse.
     [Parse setApplicationId:PARSE_API_APPLICATION_ID clientKey:PARSE_API_CLIENT_KEY];

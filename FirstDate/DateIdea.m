@@ -10,6 +10,22 @@
 
 @implementation DateIdea
 
+@dynamic title;
+@dynamic details;
+@dynamic user;
+@dynamic comments;
+@dynamic hearts;
+@dynamic timeStamp;
+@dynamic photo;
+
++ (void)load {
+    [self registerSubclass];
+}
+
++ (NSString *)parseClassName {
+    return @"DateIdea";
+}
+
 - (instancetype)initWithUser:(User *)user title:(NSString*)title details:(NSString *)details
 {
     self = [super init];
@@ -20,7 +36,6 @@
         self.comments = [NSMutableArray array];
         self.hearts = [NSMutableSet set];
         self.timeStamp = [NSDate date];
-        self.photo = [UIImage imageNamed:@"placeholder.png"];
     }
     return self;
 }

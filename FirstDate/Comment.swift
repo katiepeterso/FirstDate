@@ -7,14 +7,29 @@
 //
 
 import UIKit
+import Parse
 
-class Comment : NSObject {
+class Comment : PFObject, PFSubclassing {
     
-    let user: User
-    let content: String
-    let timeStamp: NSDate
+    @NSManaged var user: User
+    @NSManaged var content: String
+    @NSManaged var timeStamp: NSDate
+    
+    override class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    static func parseClassName() -> String {
+        return "Comment"
+    }
     
     init(user: User, content: String) {
+        super.init()
         self.user = user
         self.content = content
         self.timeStamp = NSDate()
