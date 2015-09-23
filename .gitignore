@@ -131,3 +131,5 @@ Carthage/Build
 ### Objective-C Patch ###
 *.xcscmblueprint
 
+### API keys###
+/FirstDate/APIKeys.h

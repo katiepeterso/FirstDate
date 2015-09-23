@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "APIKeys.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -19,6 +21,15 @@
     // Override point for customization after application launch.
     self.ideas = [NSMutableArray array];
     self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
+    
+    // Enabling Parse Local Datastore
+    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:PARSE_API_APPLICATION_ID clientKey:PARSE_API_CLIENT_KEY];
+    
+    // [Optional] Track statistics around application opens.
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     return YES;
 }
 
