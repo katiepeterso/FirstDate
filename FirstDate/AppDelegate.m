@@ -32,12 +32,17 @@
     [Parse setApplicationId:PARSE_API_APPLICATION_ID clientKey:PARSE_API_CLIENT_KEY];
     
     self.ideas = [NSMutableArray array];
-    self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
-    self.currentUser.password = @"test";
     
-    [self.currentUser signUpInBackground];
+    if (![PFUser currentUser]) {
+        self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
+        self.currentUser.password = @"test";
+        
+        [self.currentUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            NSLog(@"with error %@", error);
+        }];
+    }
     
-//    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+ //    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //        if (succeeded) {
 //            // The object has been saved.
 //        } else {

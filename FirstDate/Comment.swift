@@ -13,7 +13,6 @@ class Comment : PFObject, PFSubclassing {
     
     @NSManaged var user: User
     @NSManaged var content: String
-    @NSManaged var timeStamp: NSDate
     
     override class func initialize() {
         struct Static {
@@ -32,7 +31,6 @@ class Comment : PFObject, PFSubclassing {
         super.init()
         self.user = user
         self.content = content
-        self.timeStamp = NSDate()
     }
     
 }

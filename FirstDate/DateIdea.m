@@ -13,7 +13,6 @@
 @dynamic title;
 @dynamic details;
 @dynamic user;
-@dynamic timeStamp;
 @dynamic photo;
 
 + (void)load {
@@ -31,7 +30,6 @@
         self.user = user;
         self.title = title;
         self.details = details;
-        self.timeStamp = [NSDate date];
     }
     return self;
 }
