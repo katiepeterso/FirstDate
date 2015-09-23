@@ -59,14 +59,20 @@
     
     if (indexPath) {
         DateIdea *currentDateIdea = self.ideas[indexPath.row];
+        PFRelation *relation = [currentDateIdea relationForKey:@"heartedBy"];
+        PFQuery *query = [relation query];
         
-        if ([currentDateIdea.hearts containsObject:currentUser]) {
-            [currentDateIdea.hearts removeObject:currentUser];
-        } else {
-            [currentDateIdea.hearts addObject:currentUser];
-        }
+        [query whereKey:@"heartedBy" equalTo:currentUser];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+            if (results.count > 0) {
+                [relation removeObject:currentUser];
+            } else {
+                [relation addObject:currentUser];
+            }
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+            [currentDateIdea saveInBackground];
+        }];
         
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
     }
     
 }
@@ -93,7 +99,7 @@
         if (indexPath) {
             DateIdea *currentDateIdea = self.ideas[indexPath.row];
             
-            [currentDateIdea.comments addObject:comment];
+//            [currentDateIdea.comments addObject:comment];
         }
         
     }]];

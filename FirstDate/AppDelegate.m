@@ -20,10 +20,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    self.ideas = [NSMutableArray array];
-    self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
-    
     // Enabling Parse Local Datastore
     [Parse enableLocalDatastore];
     
@@ -34,6 +30,21 @@
     
     // Initialize Parse.
     [Parse setApplicationId:PARSE_API_APPLICATION_ID clientKey:PARSE_API_CLIENT_KEY];
+    
+    self.ideas = [NSMutableArray array];
+    self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
+    self.currentUser.password = @"test";
+    
+    [self.currentUser signUpInBackground];
+    
+//    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (succeeded) {
+//            // The object has been saved.
+//        } else {
+//            // There was a problem, check error.description
+//        }
+//    }];
+
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

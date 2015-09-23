@@ -102,7 +102,6 @@
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
     self.currentDateIdea = [[DateIdea alloc]initWithUser:appDelegate.currentUser title:self.titleField.text details:self.descriptionView.text];
-    self.currentDateIdea.photo = self.photoImageView.image;
     
     DateIdea *currentDateIdea = [[DateIdea alloc]init];
     currentDateIdea.title = self.currentDateIdea.title;
@@ -111,7 +110,7 @@
 //    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
 //    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
     
-    NSData* data = UIImagePNGRepresentation(self.currentDateIdea.photo);
+    NSData* data = UIImagePNGRepresentation(self.photoImageView.image);
     currentDateIdea.photo = [PFFile fileWithData:data];
     [currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

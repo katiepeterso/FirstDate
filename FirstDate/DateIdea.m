@@ -13,8 +13,6 @@
 @dynamic title;
 @dynamic details;
 @dynamic user;
-@dynamic comments;
-@dynamic hearts;
 @dynamic timeStamp;
 @dynamic photo;
 
@@ -33,8 +31,6 @@
         self.user = user;
         self.title = title;
         self.details = details;
-        self.comments = [NSMutableArray array];
-        self.hearts = [NSMutableSet set];
         self.timeStamp = [NSDate date];
     }
     return self;

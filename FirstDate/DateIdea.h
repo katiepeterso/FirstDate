@@ -17,8 +17,6 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *details;
 @property (nonatomic, strong) User *user;
-@property (nonatomic, strong) NSMutableArray *comments;
-@property (nonatomic, strong) NSMutableSet *hearts;
 @property (nonatomic, strong) NSDate *timeStamp;
 @property (nonatomic, strong) PFFile *photo;
 
