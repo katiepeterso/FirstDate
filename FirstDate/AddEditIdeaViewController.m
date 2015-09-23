@@ -11,7 +11,8 @@
 #import "AppDelegate.h"
 #import "User.h"
 #import <MobileCoreServices/MobileCoreServices.h>
-#import "PFObject.h"
+#import <Parse/Parse.h>
+#import <ParseUI/ParseUI.h>
 
 @interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 
@@ -55,16 +56,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return 4;
-//}
 
 #pragma mark - Image Picker and display
 
@@ -113,13 +104,15 @@
     self.currentDateIdea = [[DateIdea alloc]initWithUser:appDelegate.currentUser title:self.titleField.text details:self.descriptionView.text];
     self.currentDateIdea.photo = self.photoImageView.image;
     
-    PFObject *currentDateIdea = [PFObject objectWithClassName:@"DateIdea"];
-    currentDateIdea[@"title"] = self.currentDateIdea.title;
-    currentDateIdea[@"details"] = self.currentDateIdea.details;
-    currentDateIdea[@"user"] = self.currentDateIdea.user;
-    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
-    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
-    currentDateIdea[@"photo"] = self.currentDateIdea.photo;
+    DateIdea *currentDateIdea = [[DateIdea alloc]init];
+    currentDateIdea.title = self.currentDateIdea.title;
+    currentDateIdea.details = self.currentDateIdea.details;
+//    currentDateIdea[@"user"] = self.currentDateIdea.user;
+//    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
+//    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
+    
+    NSData* data = UIImagePNGRepresentation(self.currentDateIdea.photo);
+    currentDateIdea.photo = [PFFile fileWithData:data];
     [currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             // The object has been saved.
