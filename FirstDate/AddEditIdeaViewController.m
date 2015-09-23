@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "User.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "PFObject.h"
 
 @interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 
@@ -112,7 +113,20 @@
     self.currentDateIdea = [[DateIdea alloc]initWithUser:appDelegate.currentUser title:self.titleField.text details:self.descriptionView.text];
     self.currentDateIdea.photo = self.photoImageView.image;
     
-    [appDelegate.ideas addObject:self.currentDateIdea];
+    PFObject *currentDateIdea = [PFObject objectWithClassName:@"DateIdea"];
+    currentDateIdea[@"title"] = self.currentDateIdea.title;
+    currentDateIdea[@"details"] = self.currentDateIdea.details;
+    currentDateIdea[@"user"] = self.currentDateIdea.user;
+    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
+    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
+    currentDateIdea[@"photo"] = self.currentDateIdea.photo;
+    [currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            // The object has been saved.
+        } else {
+            // There was a problem, check error.description
+        }
+    }];
     
     [self.tabBarController setSelectedIndex:0];
     self.photoLabel.text = @"Select date photo";

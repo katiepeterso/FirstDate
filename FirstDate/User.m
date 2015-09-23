@@ -7,8 +7,21 @@
 //
 
 #import "User.h"
+#import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import <ParseUI/ParseUI.h>
 
 @implementation User
++ (void)load {
+    [self registerSubclass];
+}
+
+@dynamic sex;
+@dynamic datingPreference;
+@dynamic age;
+@dynamic name;
+@dynamic photoFile;
+@dynamic about;
 
 - (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference
 {
@@ -17,8 +30,6 @@
         self.username = username;
         self.sex = sex;
         self.datingPreference = datingPreference;
-        self.ideas = [NSMutableArray array];
-        self.hearts = [NSMutableSet set];
     }
     return self;
 }

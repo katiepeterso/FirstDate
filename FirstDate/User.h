@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import <ParseUI/ParseUI.h>
+
+@class PFFile;
 
 typedef NS_ENUM(NSUInteger, Sex) {
     SexMale,
@@ -20,17 +24,14 @@ typedef NS_ENUM(NSUInteger, DatingPreference) {
     DatingPreferenceBoth,
 };
 
-@interface User : NSObject
+@interface User: PFUser <PFSubclassing>
 
-@property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) NSUInteger age;
 @property (nonatomic, assign) Sex sex;
 @property (nonatomic, assign) DatingPreference datingPreference;
-@property (nonatomic, strong) UIImage *profilePhoto;
 @property (nonatomic, strong) NSString *about;
-@property (nonatomic, strong) NSMutableArray *ideas;
-@property (nonatomic, strong) NSMutableSet *hearts;
+@property (nonatomic, strong) PFFile *photoFile;
 
 - (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference;
 
