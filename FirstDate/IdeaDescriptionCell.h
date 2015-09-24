@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DateIdea;
+
 @interface IdeaDescriptionCell : UITableViewCell
+
+- (void)setDateIdea:(DateIdea *)dateIdea;
 
 @end
