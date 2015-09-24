@@ -30,6 +30,17 @@
     
     self.dateTitleLabel.text = self.dateIdea.title;
     
+//    PFQuery *query = [PFQuery queryWithClassName:@"HeartedDateIdea"];
+//    [query whereKey:@"user" equalTo:[User currentUser]];
+//    [query whereKey:@"dateIdea" equalTo:self.dateIdea];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+//        if (results.count) {
+//            [self.heartButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
+//        } else {
+//            [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState:UIControlStateNormal];
+//        }
+//    }];
+    
 //    if ([self.dateIdea.hearts containsObject:currentUser]) {
 //        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState:UIControlStateNormal];
 //    } else {

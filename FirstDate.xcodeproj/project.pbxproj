@@ -7,23 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA52F2C01BB39D7700E52B43 /* HeartedDateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */; settings = {ASSET_TAGS = (); }; };
+		AA52F2C01BB39D7700E52B43 /* HeartedDateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */; };
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
 		AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */; };
 		AAD8DA0B1BAE04BB00218CC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA091BAE04BB00218CC9 /* Main.storyboard */; };
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
-		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; settings = {ASSET_TAGS = (); }; };
-		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EB1BB0B76300EAD889 /* DateIdea.m */; settings = {ASSET_TAGS = (); }; };
-		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; settings = {ASSET_TAGS = (); }; };
-		C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5131BB36DCE00651DC9 /* SignupViewController.m */; settings = {ASSET_TAGS = (); }; };
-		C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5151BB36DCE00651DC9 /* LoginViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; };
+		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; };
+		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; };
+		C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */; };
+		C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */; };
+		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; };
+		C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EB1BB0B76300EAD889 /* DateIdea.m */; };
+		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; };
+		C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5131BB36DCE00651DC9 /* SignupViewController.m */; };
+		C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5151BB36DCE00651DC9 /* LoginViewController.m */; };
 		D57AF32CFD284D7F5C98354B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDF7E20801C91CB5916C438 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -98,7 +98,6 @@
 		AA52F2BB1BB39D1A00E52B43 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */,
 				C70460301BB210EF005D8335 /* Comment.swift */,
 				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
 				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
@@ -163,6 +162,7 @@
 			children = (
 				AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */,
 				AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */,
+				C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */,
 				AA52F2BB1BB39D1A00E52B43 /* Model */,
 				AA52F2BC1BB39D2B00E52B43 /* Controllers */,
 				AA52F2BD1BB39D3C00E52B43 /* Views */,

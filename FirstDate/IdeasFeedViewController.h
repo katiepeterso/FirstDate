@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IdeasFeedViewController : UIViewController
+@interface IdeasFeedViewController : UITableViewController
 
 
 @end

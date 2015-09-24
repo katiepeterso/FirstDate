@@ -14,13 +14,11 @@
 #import "FirstDate-Swift.h"
 #import "HeartedDateIdea.h"
 
-@interface IdeasFeedViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface IdeasFeedViewController () //<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DateIdea *dateIdea;
-@property (nonatomic, strong) NSMutableArray *ideas;
+@property (nonatomic, strong) NSArray *ideas;
 @property (nonatomic, strong) User *currentUser;
-
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @end
 
@@ -29,25 +27,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        NSLog(@"Current user: %@", currentUser.username);
-        PFQuery *query = [PFQuery queryWithClassName:@"DateIdea"];
-        query.limit = 30;
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            NSLog(@"Finished Query %@", error);
-            self.ideas = [objects mutableCopy];
-            [self.tableView reloadData];
-        }];
-
-        
-        } else {
+    self.currentUser = [User currentUser];
+    
+    if (!self.currentUser) {
         [self performSegueWithIdentifier:@"showLogin" sender:self];
     }
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor orangeColor];
+    
+    [self.refreshControl addTarget:self action:@selector(fetchDateIdeas) forControlEvents:UIControlEventValueChanged];
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [self.tableView reloadData];
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+    [self fetchDateIdeas];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,6 +120,25 @@
     }];
 }
 
+- (void)fetchDateIdeas {
+    if (self.currentUser) {
+        NSLog(@"Current user: %@", self.currentUser.username);
+        PFQuery *query = [PFQuery queryWithClassName:@"DateIdea"];
+        query.limit = 30;
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            NSLog(@"Finished Query %@", error);
+            self.ideas = objects;
+            [self.tableView reloadData];
+        }];
+        
+        if ([self.refreshControl isRefreshing]) {
+            [self.refreshControl endRefreshing];
+        }
+        
+    }
+    
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -136,8 +150,6 @@
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
     
-    
-    
     NSArray *sortedArray = [self.ideas sortedArrayUsingDescriptors:@[sortDescriptor]];
     
     cell.dateIdea = sortedArray[indexPath.row];
@@ -146,6 +158,13 @@
     [self.ideas[indexPath.row] saveInBackground];
     
     return cell;
+}
+
+#pragma mark - Table View Delegate
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 180.0;
 }
 
 #pragma mark - Navigation
@@ -161,7 +180,6 @@
         IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
         ideaDetailVC.dateIdea = dateIdea;
     }
-    
     
 }
 
