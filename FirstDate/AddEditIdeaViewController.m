@@ -99,9 +99,9 @@
 
 - (IBAction)submitIdea:(UIButton *)sender {
     
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+//    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
-    self.currentDateIdea = [[DateIdea alloc]initWithUser:appDelegate.currentUser title:self.titleField.text details:self.descriptionView.text];
+    self.currentDateIdea = [[DateIdea alloc]initWithUser:[User currentUser] title:self.titleField.text details:self.descriptionView.text];
     
     DateIdea *currentDateIdea = [[DateIdea alloc]init];
     currentDateIdea.title = self.currentDateIdea.title;

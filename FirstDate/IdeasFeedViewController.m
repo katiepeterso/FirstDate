@@ -27,20 +27,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    self.ideas = appDelegate.ideas;
-    self.currentUser = appDelegate.currentUser;
     
-    DateIdea *dateIdea = [[DateIdea alloc] init]; //initWithUser:self.currentUser title:@"Dinner&Movie" details:@"Going to The Keg for dinner and Scotiabank Theater for Mission Impossible: Rouge Nation"];
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        NSLog(@"Current user: %@", currentUser.username);
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        self.ideas = appDelegate.ideas;
+        
+        
+        
+        DateIdea *dateIdea = [[DateIdea alloc] init]; //initWithUser:self.currentUser title:@"Dinner&Movie" details:@"Going to The Keg for dinner and Scotiabank Theater for Mission Impossible: Rouge Nation"];
+        
+        dateIdea.user = self.currentUser;
+        dateIdea.title = @"Dinner&Movie";
+        dateIdea.details = @"Going to The Keg for dinner and Scotiabank Theater for Mission Impossible: Rouge Nation";
+        [dateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            NSLog(@"is successful %@ with error %@", succeeded, error);
+        }];
+        
+        [self.ideas addObject:dateIdea];
+        
+    } else {
+        [self performSegueWithIdentifier:@"showLogin" sender:self];
+    }
     
-    dateIdea.user = self.currentUser;
-    dateIdea.title = @"Dinner&Movie";
-    dateIdea.details = @"Going to The Keg for dinner and Scotiabank Theater for Mission Impossible: Rouge Nation";
-    [dateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        NSLog(@"is successful %@ with error %@", succeeded, error);
-    }];
     
-    [self.ideas addObject:dateIdea];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -52,30 +63,37 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)logOut:(UIBarButtonItem *)sender {
+    
+    [User logOut];
+    
+    [self performSegueWithIdentifier:@"showLogin" sender:self];
+}
+
 - (IBAction)hearted:(UIButton *)heartbutton {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    User *currentUser = appDelegate.currentUser;
+    User *currentUser = [User currentUser];
     
     CGPoint touchedPoint = [self.tableView convertPoint:heartbutton.center fromView:[heartbutton superview]];
     
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchedPoint];
     
     if (indexPath) {
-//        DateIdea *currentDateIdea = self.ideas[indexPath.row];
-//        
-//        PFRelation *relation = [currentDateIdea relationForKey:@"heartedBy"];
-//        PFQuery *query = [relation query];
-//        
-//        [query whereKey:@"heartedBy" equalTo:currentUser];
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-//            if (results.count > 0) {
-//                [relation removeObject:currentUser];
-//            } else {
-//                [relation addObject:currentUser];
-//                [currentDateIdea saveInBackground];
-//            }
-//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
-//        }];
+        DateIdea *currentDateIdea = self.ideas[indexPath.row];
+        
+        PFRelation *relation = [currentDateIdea relationForKey:@"heartedBy"];
+        PFQuery *query = [relation query];
+        
+        [query whereKey:@"heartedBy" equalTo:currentUser];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+            if (results.count > 0) {
+                [relation removeObject:currentUser];
+            } else {
+                [relation addObject:currentUser];
+                [currentDateIdea saveInBackground];
+            }
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        }];
         
     }
     
@@ -138,11 +156,17 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-    DateIdea *dateIdea = self.ideas[path.row];
+    if ([segue.identifier isEqualToString:@"showLogin"]) {
+        [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
+    } else if ([segue.identifier isEqualToString:@"showDetail"]) {
+        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+        DateIdea *dateIdea = self.ideas[path.row];
+        
+        IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
+        ideaDetailVC.dateIdea = dateIdea;
+    }
     
-    IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
-    ideaDetailVC.dateIdea = dateIdea;
+    
 }
 
 

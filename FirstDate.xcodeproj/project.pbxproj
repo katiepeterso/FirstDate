@@ -21,6 +21,8 @@
 		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EB1BB0B76300EAD889 /* DateIdea.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; settings = {ASSET_TAGS = (); }; };
+		C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5131BB36DCE00651DC9 /* SignupViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5151BB36DCE00651DC9 /* LoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		D57AF32CFD284D7F5C98354B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDF7E20801C91CB5916C438 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -54,6 +56,10 @@
 		C73AA5EB1BB0B76300EAD889 /* DateIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateIdea.m; sourceTree = "<group>"; };
 		C73AA5ED1BB0B88B00EAD889 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C73AA5EE1BB0B88B00EAD889 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		C752C5121BB36DCE00651DC9 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
+		C752C5131BB36DCE00651DC9 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
+		C752C5141BB36DCE00651DC9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		C752C5151BB36DCE00651DC9 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C7B582931BB24B0600114385 /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +121,10 @@
 				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
 				C73AA5ED1BB0B88B00EAD889 /* User.h */,
 				C73AA5EE1BB0B88B00EAD889 /* User.m */,
+				C752C5121BB36DCE00651DC9 /* SignupViewController.h */,
+				C752C5131BB36DCE00651DC9 /* SignupViewController.m */,
+				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
+				C752C5151BB36DCE00651DC9 /* LoginViewController.m */,
 				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
 				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
 				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
@@ -269,10 +279,12 @@
 			files = (
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
+				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
 				C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */,
 				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
 				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
+				C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */,
 				C70460311BB210EF005D8335 /* Comment.swift in Sources */,
 				C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */,
 				C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */,

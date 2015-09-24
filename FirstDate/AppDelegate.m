@@ -33,24 +33,6 @@
     
     self.ideas = [NSMutableArray array];
     
-    if (![PFUser currentUser]) {
-        self.currentUser = [[User alloc] initWithUsername:@"firstDate" sex:SexFemale datingPreference:DatingPreferenceBoth];
-        self.currentUser.password = @"test";
-        
-        [self.currentUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            NSLog(@"with error %@", error);
-        }];
-    }
-    
- //    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (succeeded) {
-//            // The object has been saved.
-//        } else {
-//            // There was a problem, check error.description
-//        }
-//    }];
-
-    
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     return YES;

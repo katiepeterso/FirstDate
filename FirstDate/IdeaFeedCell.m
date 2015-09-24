@@ -27,7 +27,7 @@
     
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
-    User *currentUser = appDelegate.currentUser;
+    User *currentUser = [User currentUser];
     
 //    if ([self.dateIdea.hearts containsObject:currentUser]) {
 //        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState:UIControlStateNormal];
