@@ -13,11 +13,13 @@
 #import "User.h"
 #import "DateIdea.h"
 
-@interface HeartedDateIdea : PFObject <PFSubclassing>
+@interface Heart : PFObject <PFSubclassing>
 
 @property (nonatomic, strong) User *user;
 @property (nonatomic, strong) DateIdea *dateIdea;
 
 + (NSString *)parseClassName;
+
+- (instancetype)initWithUser:(User *)user dateIdea:(DateIdea *)dateIdea;
 
 @end

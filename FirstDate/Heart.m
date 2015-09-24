@@ -6,11 +6,11 @@
 //  Copyright © 2015 KatieExpatriated. All rights reserved.
 //
 
-#import "HeartedDateIdea.h"
+#import "Heart.h"
 #import <Parse/Parse.h>
 #import <ParseUI/ParseUI.h>
 
-@implementation HeartedDateIdea
+@implementation Heart
 
 @dynamic user;
 @dynamic dateIdea;
@@ -20,7 +20,17 @@
 }
 
 + (NSString *)parseClassName {
-    return @"HeartedDateIdea";
+    return @"Heart";
+}
+
+- (instancetype)initWithUser:(User *)user dateIdea:(DateIdea *)dateIdea
+{
+    self = [super init];
+    if (self) {
+        self.user = user;
+        self.dateIdea = dateIdea;
+    }
+    return self;
 }
 
 @end

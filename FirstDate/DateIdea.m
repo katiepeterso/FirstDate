@@ -10,9 +10,10 @@
 
 @implementation DateIdea
 
+@dynamic user;
 @dynamic title;
 @dynamic details;
-@dynamic user;
+@dynamic heartedBy;
 @dynamic photo;
 
 + (void)load {

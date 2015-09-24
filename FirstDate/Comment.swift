@@ -12,6 +12,7 @@ import Parse
 class Comment : PFObject, PFSubclassing {
     
     @NSManaged var user: User
+    @NSManaged var dateIdea: DateIdea
     @NSManaged var content: String
     
     override class func initialize() {
@@ -27,9 +28,10 @@ class Comment : PFObject, PFSubclassing {
         return "Comment"
     }
     
-    init(user: User, content: String) {
+    init(user: User, dateIdea: DateIdea, content: String) {
         super.init()
         self.user = user
+        self.dateIdea = dateIdea
         self.content = content
     }
     

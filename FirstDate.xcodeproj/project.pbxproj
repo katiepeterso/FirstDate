@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA52F2C01BB39D7700E52B43 /* HeartedDateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */; };
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
 		AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */; };
@@ -15,6 +14,7 @@
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
 		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; };
+		C72C4E5E1BB47BAE009ABAE0 /* Heart.m in Sources */ = {isa = PBXBuildFile; fileRef = C72C4E5D1BB47BAE009ABAE0 /* Heart.m */; settings = {ASSET_TAGS = (); }; };
 		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; };
 		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; };
 		C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */; };
@@ -30,8 +30,6 @@
 /* Begin PBXFileReference section */
 		3FDF7E20801C91CB5916C438 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F0086CB6008AF31DD8ACF1B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		AA52F2BE1BB39D7700E52B43 /* HeartedDateIdea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartedDateIdea.h; sourceTree = "<group>"; };
-		AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartedDateIdea.m; sourceTree = "<group>"; };
 		AA934980D9E080716E04BF14 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AAD8D9FD1BAE04BB00218CC9 /* FirstDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD8DA011BAE04BB00218CC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -45,6 +43,8 @@
 		AAD8DA111BAE04BB00218CC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FirstDate-Bridging-Header.h"; sourceTree = "<group>"; };
 		C70460301BB210EF005D8335 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		C72C4E5C1BB47BAE009ABAE0 /* Heart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heart.h; sourceTree = "<group>"; };
+		C72C4E5D1BB47BAE009ABAE0 /* Heart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Heart.m; sourceTree = "<group>"; };
 		C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaDetailViewController.h; sourceTree = "<group>"; };
 		C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeaDetailViewController.m; sourceTree = "<group>"; };
 		C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaFeedCell.h; sourceTree = "<group>"; };
@@ -99,10 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				C70460301BB210EF005D8335 /* Comment.swift */,
+				C72C4E5C1BB47BAE009ABAE0 /* Heart.h */,
+				C72C4E5D1BB47BAE009ABAE0 /* Heart.m */,
 				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
 				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
-				AA52F2BE1BB39D7700E52B43 /* HeartedDateIdea.h */,
-				AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */,
 				C73AA5ED1BB0B88B00EAD889 /* User.h */,
 				C73AA5EE1BB0B88B00EAD889 /* User.m */,
 			);
@@ -306,7 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA52F2C01BB39D7700E52B43 /* HeartedDateIdea.m in Sources */,
+				C72C4E5E1BB47BAE009ABAE0 /* Heart.m in Sources */,
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,

@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "DateIdea.h"
+
+@protocol FeedCellDelegate <NSObject>
+
+- (void)showAlertController:(UIAlertController *)alertController;
+
+@end
+
 @interface IdeaFeedCell : UITableViewCell
 
 @property (nonatomic, strong) DateIdea *dateIdea;
+@property (nonatomic, weak) id<FeedCellDelegate> delegate;
 
 @end

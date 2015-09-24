@@ -12,12 +12,12 @@
 #import "IdeaFeedCell.h"
 #import "DateIdea.h"
 #import "FirstDate-Swift.h"
-#import "HeartedDateIdea.h"
+#import "Heart.h"
 
-@interface IdeasFeedViewController () //<UITableViewDataSource, UITableViewDelegate>
+@interface IdeasFeedViewController () <FeedCellDelegate>
 
 @property (nonatomic, strong) DateIdea *dateIdea;
-@property (nonatomic, strong) NSArray *ideas;
+@property (nonatomic, strong) NSMutableArray *ideas;
 @property (nonatomic, strong) User *currentUser;
 
 @end
@@ -39,9 +39,13 @@
     [self.refreshControl addTarget:self action:@selector(fetchDateIdeas) forControlEvents:UIControlEventValueChanged];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setHidden:NO];
     [self fetchDateIdeas];
 }
 
@@ -57,69 +61,6 @@
     [self performSegueWithIdentifier:@"showLogin" sender:self];
 }
 
-- (IBAction)hearted:(UIButton *)heartbutton {
-//    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    User *currentUser = [User currentUser];
-    HeartedDateIdea *currentHeart = [[HeartedDateIdea alloc]init];
-    
-    CGPoint touchedPoint = [self.tableView convertPoint:heartbutton.center fromView:[heartbutton superview]];
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchedPoint];
-
-    if (indexPath) {
-        DateIdea *currentDateIdea = self.ideas[indexPath.row];
-        
-        PFQuery *query = [PFQuery queryWithClassName:@"HeartedDateIdea"];
-        [query whereKey:@"user" equalTo:currentUser];
-        [query whereKey:@"dateIdea" equalTo:currentDateIdea];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-            if (results.count) {
-                [results[0] deleteInBackground];
-            } else {
-                currentHeart.user = currentUser;
-                currentHeart.dateIdea = currentDateIdea;
-                [currentHeart saveInBackground];
-            }
-        }];
-
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
-
-    }
-    
-}
-
-- (IBAction)comment:(UIButton *)commentButton {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter a comment" message:@"Please be respectful!" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"Your comment goes here...";
-    }];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }]];
-    
-    UITextField *commentTextField = alertController.textFields[0];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        Comment *comment = [[Comment alloc] initWithUser:self.currentUser content:commentTextField.text];
-        
-        CGPoint touchedPoint = [self.tableView convertPoint:commentButton.center fromView:[commentButton superview]];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchedPoint];
-        
-        if (indexPath) {
-            DateIdea *currentDateIdea = self.ideas[indexPath.row];
-            
-//            [currentDateIdea.comments addObject:comment];
-        }
-        
-    }]];
-    
-    [self presentViewController:alertController animated:YES completion:^{
-        //
-    }];
-}
-
 - (void)fetchDateIdeas {
     if (self.currentUser) {
         NSLog(@"Current user: %@", self.currentUser.username);
@@ -127,7 +68,7 @@
         query.limit = 30;
         [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             NSLog(@"Finished Query %@", error);
-            self.ideas = objects;
+            self.ideas = [objects mutableCopy];
             [self.tableView reloadData];
         }];
         
@@ -147,6 +88,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     IdeaFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ideaFeedCell" forIndexPath:indexPath];
+    cell.delegate = self;
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
     
@@ -181,6 +123,12 @@
         ideaDetailVC.dateIdea = dateIdea;
     }
     
+}
+
+#pragma mark - Feed Cell Delegate
+
+- (void)showAlertController:(UIAlertController *)alertController {
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
