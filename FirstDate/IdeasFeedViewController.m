@@ -12,6 +12,7 @@
 #import "IdeaFeedCell.h"
 #import "DateIdea.h"
 #import "FirstDate-Swift.h"
+#import "HeartedDateIdea.h"
 
 @interface IdeasFeedViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -64,28 +65,30 @@
 - (IBAction)hearted:(UIButton *)heartbutton {
 //    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     User *currentUser = [User currentUser];
+    HeartedDateIdea *currentHeart = [[HeartedDateIdea alloc]init];
     
     CGPoint touchedPoint = [self.tableView convertPoint:heartbutton.center fromView:[heartbutton superview]];
     
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchedPoint];
-    
+
     if (indexPath) {
         DateIdea *currentDateIdea = self.ideas[indexPath.row];
         
-        PFRelation *relation = [currentDateIdea relationForKey:@"heartedBy"];
-        PFQuery *query = [relation query];
-        
-        [query whereKey:@"heartedBy" equalTo:currentUser];
+        PFQuery *query = [PFQuery queryWithClassName:@"HeartedDateIdea"];
+        [query whereKey:@"user" equalTo:currentUser];
+        [query whereKey:@"dateIdea" equalTo:currentDateIdea];
         [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-            if (results.count > 0) {
-                [relation removeObject:currentUser];
+            if (results.count) {
+                [results[0] deleteInBackground];
             } else {
-                [relation addObject:currentUser];
-                [currentDateIdea saveInBackground];
+                currentHeart.user = currentUser;
+                currentHeart.dateIdea = currentDateIdea;
+                [currentHeart saveInBackground];
             }
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
         }];
-        
+
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+
     }
     
 }

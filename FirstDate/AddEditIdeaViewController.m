@@ -106,11 +106,11 @@
     DateIdea *currentDateIdea = [[DateIdea alloc]init];
     currentDateIdea.title = self.currentDateIdea.title;
     currentDateIdea.details = self.currentDateIdea.details;
-//    currentDateIdea[@"user"] = self.currentDateIdea.user;
+    currentDateIdea.user = [User currentUser];
 //    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
 //    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
     
-    NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
+    NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
     currentDateIdea.photo = [PFFile fileWithData:data];
     [currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

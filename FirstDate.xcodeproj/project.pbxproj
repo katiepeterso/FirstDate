@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA52F2C01BB39D7700E52B43 /* HeartedDateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */; settings = {ASSET_TAGS = (); }; };
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
 		AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		3FDF7E20801C91CB5916C438 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F0086CB6008AF31DD8ACF1B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		AA52F2BE1BB39D7700E52B43 /* HeartedDateIdea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartedDateIdea.h; sourceTree = "<group>"; };
+		AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartedDateIdea.m; sourceTree = "<group>"; };
 		AA934980D9E080716E04BF14 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AAD8D9FD1BAE04BB00218CC9 /* FirstDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD8DA011BAE04BB00218CC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -92,6 +95,51 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AA52F2BB1BB39D1A00E52B43 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */,
+				C70460301BB210EF005D8335 /* Comment.swift */,
+				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
+				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
+				AA52F2BE1BB39D7700E52B43 /* HeartedDateIdea.h */,
+				AA52F2BF1BB39D7700E52B43 /* HeartedDateIdea.m */,
+				C73AA5ED1BB0B88B00EAD889 /* User.h */,
+				C73AA5EE1BB0B88B00EAD889 /* User.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		AA52F2BC1BB39D2B00E52B43 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C752C5121BB36DCE00651DC9 /* SignupViewController.h */,
+				C752C5131BB36DCE00651DC9 /* SignupViewController.m */,
+				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
+				C752C5151BB36DCE00651DC9 /* LoginViewController.m */,
+				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
+				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
+				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
+				C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */,
+				C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */,
+				C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		AA52F2BD1BB39D3C00E52B43 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */,
+				C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */,
+				C73AA5E11BB0B39700EAD889 /* IdeaDescriptionCell.h */,
+				C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */,
+				C73AA5E41BB0B3BC00EAD889 /* CommentCell.h */,
+				C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		AAD8D9F41BAE04BB00218CC9 = {
 			isa = PBXGroup;
 			children = (
@@ -115,28 +163,9 @@
 			children = (
 				AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */,
 				AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */,
-				C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */,
-				C70460301BB210EF005D8335 /* Comment.swift */,
-				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
-				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
-				C73AA5ED1BB0B88B00EAD889 /* User.h */,
-				C73AA5EE1BB0B88B00EAD889 /* User.m */,
-				C752C5121BB36DCE00651DC9 /* SignupViewController.h */,
-				C752C5131BB36DCE00651DC9 /* SignupViewController.m */,
-				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
-				C752C5151BB36DCE00651DC9 /* LoginViewController.m */,
-				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
-				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
-				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
-				C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */,
-				C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */,
-				C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */,
-				C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */,
-				C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */,
-				C73AA5E11BB0B39700EAD889 /* IdeaDescriptionCell.h */,
-				C73AA5E21BB0B39700EAD889 /* IdeaDescriptionCell.m */,
-				C73AA5E41BB0B3BC00EAD889 /* CommentCell.h */,
-				C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */,
+				AA52F2BB1BB39D1A00E52B43 /* Model */,
+				AA52F2BC1BB39D2B00E52B43 /* Controllers */,
+				AA52F2BD1BB39D3C00E52B43 /* Views */,
 				AAD8DA091BAE04BB00218CC9 /* Main.storyboard */,
 				AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */,
 				AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */,
@@ -277,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA52F2C01BB39D7700E52B43 /* HeartedDateIdea.m in Sources */,
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
