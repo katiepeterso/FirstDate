@@ -110,7 +110,7 @@
 //    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
 //    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
     
-    NSData* data = UIImagePNGRepresentation(self.photoImageView.image);
+    NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
     currentDateIdea.photo = [PFFile fileWithData:data];
     [currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

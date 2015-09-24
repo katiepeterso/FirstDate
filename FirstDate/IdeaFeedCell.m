@@ -8,6 +8,7 @@
 
 #import "IdeaFeedCell.h"
 #import "AppDelegate.h"
+#import <UIKit/UIKit.h>
 
 @interface IdeaFeedCell ()
 
@@ -21,7 +22,11 @@
 
 - (void)setup {
     
-//    self.dateImageView.image = self.dateIdea.photo; // TODO: Get image from file
+    [self.dateIdea.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            self.dateImageView.image = [UIImage imageWithData:data];
+        }
+    }];
     
     self.dateTitleLabel.text = self.dateIdea.title;
     

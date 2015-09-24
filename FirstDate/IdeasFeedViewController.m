@@ -31,27 +31,18 @@
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        self.ideas = appDelegate.ideas;
-        
-        
-        
-        DateIdea *dateIdea = [[DateIdea alloc] init]; //initWithUser:self.currentUser title:@"Dinner&Movie" details:@"Going to The Keg for dinner and Scotiabank Theater for Mission Impossible: Rouge Nation"];
-        
-        dateIdea.user = self.currentUser;
-        dateIdea.title = @"Dinner&Movie";
-        dateIdea.details = @"Going to The Keg for dinner and Scotiabank Theater for Mission Impossible: Rouge Nation";
-        [dateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            NSLog(@"is successful %@ with error %@", succeeded, error);
+        PFQuery *query = [PFQuery queryWithClassName:@"DateIdea"];
+        query.limit = 30;
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            NSLog(@"Finished Query %@", error);
+            self.ideas = [objects mutableCopy];
+            [self.tableView reloadData];
         }];
+
         
-        [self.ideas addObject:dateIdea];
-        
-    } else {
+        } else {
         [self performSegueWithIdentifier:@"showLogin" sender:self];
     }
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -71,7 +62,7 @@
 }
 
 - (IBAction)hearted:(UIButton *)heartbutton {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+//    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     User *currentUser = [User currentUser];
     
     CGPoint touchedPoint = [self.tableView convertPoint:heartbutton.center fromView:[heartbutton superview]];
@@ -140,14 +131,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     IdeaFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ideaFeedCell" forIndexPath:indexPath];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
+    
+    
     
     NSArray *sortedArray = [self.ideas sortedArrayUsingDescriptors:@[sortDescriptor]];
     
     cell.dateIdea = sortedArray[indexPath.row];
     self.ideas = [sortedArray mutableCopy];
     
-    [sortedArray[indexPath.row] saveInBackground];
+    [self.ideas[indexPath.row] saveInBackground];
     
     return cell;
 }
