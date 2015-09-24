@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ezA-Wl-3eM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15B17c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ezA-Wl-3eM">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -47,7 +47,7 @@
                                             <state key="normal" image="edit"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAS-ve-owY">
-                                            <rect key="frame" x="337" y="142" width="30" height="30"/>
+                                            <rect key="frame" x="319" y="142" width="30" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="VpZ-k7-Cw1"/>
@@ -55,15 +55,35 @@
                                             </constraints>
                                             <state key="normal" image="heart"/>
                                             <state key="selected" image="heart_selected"/>
+                                            <connections>
+                                                <action selector="hearted:" destination="YeE-EQ-uGT" eventType="touchUpInside" id="Mp4-Y8-IlI"/>
+                                            </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhQ-7U-g1I">
-                                            <rect key="frame" x="299" y="142" width="30" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voL-kE-jph">
+                                            <rect key="frame" x="357" y="148" width="10" height="18"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiD-il-C8A">
+                                            <rect key="frame" x="301" y="148" width="10" height="18"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhQ-7U-g1I">
+                                            <rect key="frame" x="263" y="142" width="30" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="JRV-HZ-p9y"/>
                                                 <constraint firstAttribute="width" constant="30" id="UxP-Wq-stD"/>
                                             </constraints>
                                             <state key="normal" image="comment"/>
+                                            <connections>
+                                                <action selector="comment:" destination="YeE-EQ-uGT" eventType="touchUpInside" id="Ne7-EI-BCQ"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <animations/>
@@ -73,11 +93,16 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="xhQ-7U-g1I" secondAttribute="bottom" id="AeG-vo-82x"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="fQ8-cF-Z1S" secondAttribute="bottom" id="EcH-ri-M5n"/>
                                         <constraint firstItem="baA-Qk-mHY" firstAttribute="top" secondItem="vle-OW-Vo8" secondAttribute="topMargin" id="EdK-l2-qB1"/>
+                                        <constraint firstItem="TiD-il-C8A" firstAttribute="leading" secondItem="xhQ-7U-g1I" secondAttribute="trailing" constant="8" id="Evj-x3-iux"/>
                                         <constraint firstItem="fQ8-cF-Z1S" firstAttribute="top" secondItem="baA-Qk-mHY" secondAttribute="bottom" constant="8" symbolic="YES" id="J4q-gk-3jC"/>
+                                        <constraint firstItem="voL-kE-jph" firstAttribute="centerY" secondItem="cAS-ve-owY" secondAttribute="centerY" id="KeN-Zm-7de"/>
                                         <constraint firstItem="fQ8-cF-Z1S" firstAttribute="leading" secondItem="sQr-St-Qar" secondAttribute="trailing" constant="8" id="Khq-x0-Yge"/>
+                                        <constraint firstItem="cAS-ve-owY" firstAttribute="leading" secondItem="TiD-il-C8A" secondAttribute="trailing" constant="8" id="Kj2-Z4-WZL"/>
+                                        <constraint firstItem="voL-kE-jph" firstAttribute="trailing" secondItem="vle-OW-Vo8" secondAttribute="trailingMargin" id="L6b-Kh-4PA"/>
+                                        <constraint firstItem="voL-kE-jph" firstAttribute="leading" secondItem="cAS-ve-owY" secondAttribute="trailing" constant="8" id="OLs-KR-dbJ"/>
                                         <constraint firstItem="baA-Qk-mHY" firstAttribute="leading" secondItem="sQr-St-Qar" secondAttribute="trailing" constant="8" id="Q38-2l-AoW"/>
-                                        <constraint firstItem="cAS-ve-owY" firstAttribute="trailing" secondItem="vle-OW-Vo8" secondAttribute="trailingMargin" id="a6I-PH-e5V"/>
-                                        <constraint firstItem="cAS-ve-owY" firstAttribute="leading" secondItem="xhQ-7U-g1I" secondAttribute="trailing" constant="8" id="eMu-4X-2Ia"/>
+                                        <constraint firstItem="xhQ-7U-g1I" firstAttribute="centerY" secondItem="TiD-il-C8A" secondAttribute="centerY" id="Sql-J5-9qc"/>
+                                        <constraint firstItem="cAS-ve-owY" firstAttribute="centerY" secondItem="TiD-il-C8A" secondAttribute="centerY" id="fEl-ev-YAP"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="cAS-ve-owY" secondAttribute="bottom" id="nyV-Iy-cMB"/>
                                         <constraint firstItem="sQr-St-Qar" firstAttribute="top" secondItem="vle-OW-Vo8" secondAttribute="top" constant="-8" id="rWU-FT-YhT"/>
                                         <constraint firstItem="baA-Qk-mHY" firstAttribute="trailing" secondItem="vle-OW-Vo8" secondAttribute="trailingMargin" id="zgn-hS-zol"/>
@@ -86,9 +111,13 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.73333333329999995" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
+                                    <outlet property="commentButton" destination="xhQ-7U-g1I" id="inQ-Ka-bjr"/>
+                                    <outlet property="commentCountLabel" destination="TiD-il-C8A" id="BdG-pA-5qk"/>
                                     <outlet property="dateImageView" destination="sQr-St-Qar" id="C3W-2r-DPh"/>
                                     <outlet property="dateTitleLabel" destination="baA-Qk-mHY" id="Plb-u5-jeb"/>
+                                    <outlet property="editButton" destination="fQ8-cF-Z1S" id="0cs-eo-Q2u"/>
                                     <outlet property="heartButton" destination="cAS-ve-owY" id="CXW-dH-VIf"/>
+                                    <outlet property="heartCountLabel" destination="voL-kE-jph" id="1GY-hP-rKN"/>
                                     <segue destination="a6X-CY-DzT" kind="show" identifier="showDetail" id="TiW-Xy-lQK"/>
                                 </connections>
                             </tableViewCell>
@@ -121,10 +150,12 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lCc-gQ-LrV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="kVC-Yd-um6">
                             <rect key="frame" x="0.0" y="64" width="375" height="333.5"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
                         </imageView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="numberOfHeartsCell" rowHeight="44" id="1VK-eF-Sn9" customClass="NumberOfHeartsCell">
@@ -136,6 +167,7 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_selected" translatesAutoresizingMaskIntoConstraints="NO" id="tKb-SO-L8L">
                                             <rect key="frame" x="8" y="12" width="20" height="20"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="tKb-SO-L8L" secondAttribute="height" multiplier="1:1" id="hDD-ah-RtX"/>
                                                 <constraint firstAttribute="width" constant="20" id="rx5-a3-l8b"/>
@@ -143,11 +175,13 @@
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="❤︎ Number of hearts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwE-cS-VHK">
                                             <rect key="frame" x="36" y="12" width="153.5" height="20.5"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.019607843140000001" green="0.0078431372550000003" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstItem="tKb-SO-L8L" firstAttribute="leading" secondItem="yJu-fY-ayr" secondAttribute="leading" constant="8" id="LhQ-Va-NMM"/>
                                         <constraint firstItem="zwE-cS-VHK" firstAttribute="leading" secondItem="tKb-SO-L8L" secondAttribute="trailing" constant="8" id="XnI-ts-EuN"/>
@@ -155,6 +189,7 @@
                                         <constraint firstItem="tKb-SO-L8L" firstAttribute="centerY" secondItem="yJu-fY-ayr" secondAttribute="centerY" id="tCl-8A-ywY"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <animations/>
                                 <connections>
                                     <outlet property="heartImageView" destination="tKb-SO-L8L" id="J81-bL-dWE"/>
                                     <outlet property="numberOfHeartsLabel" destination="zwE-cS-VHK" id="8W4-9m-5Zx"/>
@@ -169,21 +204,26 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoC-RG-rKO">
                                             <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                            <animations/>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5a-o5-quc">
                                             <rect key="frame" x="46" y="7" width="68" height="30"/>
+                                            <animations/>
                                             <state key="normal" title="username">
                                                 <color key="titleColor" red="0.043137254899999998" green="0.59215686270000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="comment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbk-ox-aMq">
                                             <rect key="frame" x="122" y="0.0" width="245" height="44"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.019607843140000001" green="0.0078431372550000003" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <animations/>
                                 </tableViewCellContentView>
+                                <animations/>
                                 <connections>
                                     <outlet property="authorImageView" destination="GoC-RG-rKO" id="nu4-bS-bpr"/>
                                     <outlet property="authorUsernameButton" destination="u5a-o5-quc" id="3uR-xq-fmz"/>
@@ -199,18 +239,22 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b78-id-utM">
                                             <rect key="frame" x="46" y="11" width="68" height="22"/>
+                                            <animations/>
                                             <state key="normal" title="username">
                                                 <color key="titleColor" red="0.043137254899999998" green="0.59215686270000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="comment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QW6-rA-hxJ">
                                             <rect key="frame" x="122" y="0.0" width="244" height="44"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.019607843140000001" green="0.0078431372550000003" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <animations/>
                                 </tableViewCellContentView>
+                                <animations/>
                                 <connections>
                                     <outlet property="commentLabel" destination="QW6-rA-hxJ" id="ZZj-sz-6Zn"/>
                                     <outlet property="commenterUsernameButton" destination="b78-id-utM" id="bdB-XY-aXQ"/>
@@ -569,16 +613,16 @@
                                     <action selector="login:" destination="dla-oq-GdH" eventType="touchUpInside" id="juc-Zu-R4X"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTB-mG-Nkz">
-                                <rect key="frame" x="159" y="284" width="55" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTB-mG-Nkz">
+                                <rect key="frame" x="160" y="318" width="55" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <segue destination="Tcb-PL-8l2" kind="show" id="RLH-4d-d5g"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Don't have an account yet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd0-8i-Mkm">
-                                <rect key="frame" x="83" y="256" width="207" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account yet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd0-8i-Mkm">
+                                <rect key="frame" x="84" y="290" width="207" height="20.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -655,16 +699,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACk-kO-rBE">
-                                <rect key="frame" x="280" y="318" width="38" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACk-kO-rBE">
+                                <rect key="frame" x="168.5" y="318" width="38" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="dismiss:" destination="Tcb-PL-8l2" eventType="touchUpInside" id="ZUr-4i-X9s"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-yS-FfW">
-                                <rect key="frame" x="201" y="290" width="196" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-yS-FfW">
+                                <rect key="frame" x="89" y="290" width="196" height="20.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
