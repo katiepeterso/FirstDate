@@ -1,8 +1,8 @@
 //
-//  CommentCell.h
+//  NumberOfHeartsCell.h
 //  FirstDate
 //
-//  Created by Alp Eren Can on 21/09/15.
+//  Created by Katherine Peterson on 2015-09-24.
 //  Copyright © 2015 KatieExpatriated. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @class DateIdea;
 
-@interface CommentCell : UITableViewCell
+@interface NumberOfHeartsCell : UITableViewCell
 
 - (void)setDateIdea:(DateIdea *)dateIdea;
 

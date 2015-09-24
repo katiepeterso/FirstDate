@@ -1,23 +1,23 @@
 //
-//  CommentCell.m
+//  NumberOfHeartsCell.m
 //  FirstDate
 //
-//  Created by Alp Eren Can on 21/09/15.
+//  Created by Katherine Peterson on 2015-09-24.
 //  Copyright © 2015 KatieExpatriated. All rights reserved.
 //
 
-#import "CommentCell.h"
+#import "NumberOfHeartsCell.h"
 #import "DateIdea.h"
 
-@interface CommentCell ()
+@interface NumberOfHeartsCell ()
 
-@property (weak, nonatomic) IBOutlet UIButton *commenterUsernameButton;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *heartImageView;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfHeartsLabel;
 @property (nonatomic) DateIdea *selectedDateIdea;
 
 @end
 
-@implementation CommentCell
+@implementation NumberOfHeartsCell
 
 - (void)setup {
     
@@ -33,6 +33,7 @@
 
 
 - (void)awakeFromNib {
+    // Initialization code
     [self setup];
 }
 
