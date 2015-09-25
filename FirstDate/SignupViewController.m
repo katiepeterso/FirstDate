@@ -71,14 +71,6 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
     
-//    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (succeeded) {
-//            // The object has been saved.
-//        } else {
-//            // There was a problem, check error.description
-//        }
-//    }];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -131,6 +123,34 @@
 - (IBAction)dismiss:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    frame.origin.y = -[self getKeyboardHeight:notification];
+    self.view.frame = frame;
+
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    frame.origin.y = 0;
+    self.view.frame = frame;
+}
+
+- (CGFloat)getKeyboardHeight:(NSNotification *)notification {
+    NSValue *keyboardSize = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
+    return keyboardSize.CGRectValue.size.height;
+}
+
+- (void)subscribeToKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)unsubscribeToKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 @end
