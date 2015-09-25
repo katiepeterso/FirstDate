@@ -114,7 +114,7 @@
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         Comment *comment = [[Comment alloc] initWithUser:self.currentUser dateIdea:self.dateIdea content:commentTextField.text];
-        [self.delegate performSegueWithIdentifier:@"showDetail"];
+        [self.delegate performSegueWithIdentifier:@"showDetail" fromCell:self];
 //        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
 //        IdeaDetailViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"IdeaDetailViewController"];
 //        detailVC.dateIdea = self.dateIdea;

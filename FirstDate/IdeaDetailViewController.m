@@ -31,6 +31,15 @@
         }
     }];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fetchComments];
+    [self.tableView reloadData];
+}
+
+- (void)fetchComments {
     PFQuery *getComments = [PFQuery queryWithClassName:@"Comment"];
     [getComments whereKey:@"dateIdea" equalTo:self.dateIdea];
     [getComments findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
@@ -41,10 +50,7 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - Table View Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

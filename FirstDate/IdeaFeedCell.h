@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "DateIdea.h"
 
+@class IdeaFeedCell;
+
 @protocol FeedCellDelegate <NSObject>
 
 - (void)showAlertController:(UIAlertController *)alertController;
-- (void)performSegueWithIdentifier:(NSString *)identifier;
+- (void)performSegueWithIdentifier:(NSString *)identifier fromCell:(IdeaFeedCell *)cell;
 
 @end
 

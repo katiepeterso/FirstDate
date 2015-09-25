@@ -112,11 +112,13 @@
     if ([segue.identifier isEqualToString:@"showLogin"]) {
         [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
     } else if ([segue.identifier isEqualToString:@"showDetail"]) {
-        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        DateIdea *dateIdea = self.ideas[path.row];
+//        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+        IdeaFeedCell *feedCell = (IdeaFeedCell *)sender;
+        DateIdea *dateIdea = feedCell.dateIdea;//self.ideas[path.row];
         
         IdeaDetailViewController *ideaDetailVC = segue.destinationViewController;
         ideaDetailVC.dateIdea = dateIdea;
+        NSLog(@"%@", sender);
     }
     
 }
@@ -127,8 +129,8 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)performSegueWithIdentifier:(NSString *)identifier {
-    [self performSegueWithIdentifier:identifier sender:nil];
+- (void)performSegueWithIdentifier:(NSString *)identifier fromCell:(id)cell{
+    [self performSegueWithIdentifier:identifier sender:cell];
 }
 
 
