@@ -54,7 +54,6 @@
                                                 <constraint firstAttribute="height" constant="30" id="ldV-uA-IZ2"/>
                                             </constraints>
                                             <state key="normal" image="heart"/>
-                                            <state key="selected" image="heart_selected"/>
                                             <connections>
                                                 <action selector="hearted:" destination="YeE-EQ-uGT" eventType="touchUpInside" id="Mp4-Y8-IlI"/>
                                             </connections>
@@ -435,10 +434,10 @@
             </objects>
             <point key="canvasLocation" x="1822.5" y="1070.5"/>
         </scene>
-        <!--View Controller-->
+        <!--User Profile View Controller-->
         <scene sceneID="yLf-5t-Juk">
             <objects>
-                <viewController id="ncP-rl-hWS" sceneMemberID="viewController">
+                <viewController id="ncP-rl-hWS" customClass="UserProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EwX-P8-cj5"/>
                         <viewControllerLayoutGuide type="bottom" id="54c-vi-YGJ"/>
@@ -454,7 +453,7 @@
                                         <rect key="frame" x="325" y="10" width="42" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.019607843140000001" green="0.0078431372550000003" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N1-DQ-3vX">
@@ -476,7 +475,7 @@
                                         <rect key="frame" x="116" y="10" width="117" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.019607843137254902" green="0.0078431372549019607" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -533,6 +532,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="ageLabel" destination="IlZ-aU-Ovt" id="VV2-I7-jIC"/>
+                        <outlet property="fullNameLabel" destination="eb3-TT-w3B" id="O4S-ls-xc4"/>
+                        <outlet property="photoImageView" destination="Jes-9H-KBS" id="GyZ-3s-X8e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oWa-UW-rph" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -811,6 +815,5 @@
         <image name="comment" width="24" height="21"/>
         <image name="edit" width="24" height="24"/>
         <image name="heart" width="27" height="21"/>
-        <image name="heart_selected" width="27" height="21"/>
     </resources>
 </document>

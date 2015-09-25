@@ -15,6 +15,7 @@
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
 		AAEDA22C1BB496DD008C61FF /* NumberOfHeartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA22B1BB496DD008C61FF /* NumberOfHeartsCell.m */; settings = {ASSET_TAGS = (); }; };
+		AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
 		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; };
 		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; };
 		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; };
@@ -46,6 +47,8 @@
 		AAD8DA111BAE04BB00218CC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAEDA22A1BB496DD008C61FF /* NumberOfHeartsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberOfHeartsCell.h; sourceTree = "<group>"; };
 		AAEDA22B1BB496DD008C61FF /* NumberOfHeartsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberOfHeartsCell.m; sourceTree = "<group>"; };
+		AAEDA22D1BB4FFD8008C61FF /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
+		AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FirstDate-Bridging-Header.h"; sourceTree = "<group>"; };
 		C70460301BB210EF005D8335 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaDetailViewController.h; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 				C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */,
 				C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */,
 				C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */,
+				AAEDA22D1BB4FFD8008C61FF /* UserProfileViewController.h */,
+				AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
 				C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */,
+				AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */,
 				AAEDA22C1BB496DD008C61FF /* NumberOfHeartsCell.m in Sources */,
 				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
 				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
