@@ -61,11 +61,9 @@
 
 - (void)fetchDateIdeas {
     if (self.currentUser) {
-        NSLog(@"Current user: %@", self.currentUser.username);
         PFQuery *query = [PFQuery queryWithClassName:@"DateIdea"];
         query.limit = 30;
         [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            NSLog(@"Finished Query %@", error);
             self.ideas = [objects mutableCopy];
             [self.tableView reloadData];
         }];
