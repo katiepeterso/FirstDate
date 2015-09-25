@@ -11,7 +11,7 @@
 #import <Parse/Parse.h>
 #import "User.h"
 
-@interface SignupViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface SignupViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
@@ -26,6 +26,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.usernameField.delegate = self;
+    self.passwordField.delegate = self;
+    self.emailField.delegate = self;
+    self.ageField.delegate = self;
+    
+    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
+    done.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
+    
+    [accessoryView setItems:@[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
+    
+    self.ageField.inputAccessoryView = accessoryView;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self subscribeToKeyboardNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self unsubscribeToKeyboardNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -82,7 +104,7 @@
     NSString *age = [self.ageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     
-    if ([username length] == 0 || [password length] == 0 || [email length] == 0 || [age length] == 0 || !self.photoImageView.image) {
+    if ([username length] == 0 || [password length] == 0 || [email length] == 0 || [age length] == 0 || !self.photoImageView.image ) {
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
                                                                                  message:@"Make sure you provide a photo, enter a username, password, email address and your age!"
@@ -127,7 +149,7 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    frame.origin.y = -[self getKeyboardHeight:notification];
+    frame.origin.y = -[self getKeyboardHeight:notification] / 2;
     self.view.frame = frame;
 
 }
@@ -151,6 +173,16 @@
 - (void)unsubscribeToKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+                                                                                                          
+- (void)hideKeyboard {
+    [self.ageField resignFirstResponder];
+}
+                                                                                                          
+#pragma mark Text Field Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
