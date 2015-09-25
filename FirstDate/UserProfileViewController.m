@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
-@property (weak, nonatomic) IBOutlet UILabel *photoLabel;
 
 @end
 
@@ -29,7 +28,6 @@
     self.fullNameLabel.text = self.currentUser.name;
     self.ageLabel.text = [NSString stringWithFormat:@"%lu",self.currentUser.age];
     if ([self.currentUser.photo isDataAvailable]) {
-        self.photoLabel.hidden = YES;
         [self.currentUser.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if (!error) {
                 self.photoImageView.image = [UIImage imageWithData:data];
@@ -89,7 +87,6 @@
     }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.photoLabel.hidden = YES;
 }
 
 @end
