@@ -11,7 +11,7 @@
 
 @protocol FeedCellDelegate <NSObject>
 
-- (void)showAlertController:(UIAlertController *)alertController;
+- (void)showController:(UIViewController *)controller;
 
 @end
 

@@ -30,7 +30,7 @@
                 self.heartImageView.image = [UIImage imageNamed:@"heart"];
             }else {
                 self.numberOfHeartsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)results.count];
-                self.heartImageView.image = [UIImage imageNamed:@"heart_selected"];
+                self.heartImageView.image = [UIImage imageNamed:@"hearted"];
             }
         }];
     }
