@@ -52,18 +52,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    IdeaDescriptionCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"ideaDescriptionCell" forIndexPath:indexPath];
-    CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:@"commentCell" forIndexPath:indexPath];
-    NumberOfHeartsCell *heartsCell = [tableView dequeueReusableCellWithIdentifier:@"numberOfHeartsCell" forIndexPath:indexPath];
     
     if (indexPath.row == 0) {
+        NumberOfHeartsCell *heartsCell = [tableView dequeueReusableCellWithIdentifier:@"numberOfHeartsCell" forIndexPath:indexPath];
         [heartsCell setDateIdea:self.dateIdea];
         return heartsCell;
     }else if (indexPath.row == 1) {
+        IdeaDescriptionCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"ideaDescriptionCell" forIndexPath:indexPath];
         [descriptionCell setDateIdea:self.dateIdea];
         return descriptionCell;
     }else {
-        [commentCell setDateIdea:self.dateIdea];
+        CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:@"commentCell" forIndexPath:indexPath];
+        [commentCell setDateIdea:self.dateIdea andComment:self.comments[indexPath.row - 2]];
         return commentCell;
     }
 }

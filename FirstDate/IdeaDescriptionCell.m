@@ -23,14 +23,23 @@
 
 - (void)setup {
     
-    [[User currentUser].photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
-            self.authorImageView.image = [UIImage imageWithData:data];
-        }
-    }];
-    
-    [self.authorUsernameButton setTitle:[User currentUser].username forState:UIControlStateNormal];
     self.dateDescriptionLabel.text = self.selectedDateIdea.details;
+    __weak IdeaDescriptionCell* weakSelf = self;
+    
+    if (self.selectedDateIdea) {
+        PFQuery *getAuthor = [PFUser query];
+        [getAuthor getObjectInBackgroundWithId:self.selectedDateIdea.user.objectId block:^(PFObject *object, NSError *error){
+            User *currentUser = (User *) object;
+            [weakSelf.authorUsernameButton setTitle:currentUser.username forState:UIControlStateNormal];
+            if ([currentUser.photo isDataAvailable]) {
+                [currentUser.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        self.authorImageView.image = [UIImage imageWithData:data];
+                    }
+                }];
+            }
+        }];
+    }
 }
 
 - (void)setDateIdea:(DateIdea *)dateIdea {
@@ -40,7 +49,7 @@
 }
 
 - (void)awakeFromNib {
-    [self setup];
+//
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

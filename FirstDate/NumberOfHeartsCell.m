@@ -8,6 +8,7 @@
 
 #import "NumberOfHeartsCell.h"
 #import "DateIdea.h"
+#import "Heart.h"
 
 @interface NumberOfHeartsCell ()
 
@@ -20,15 +21,18 @@
 @implementation NumberOfHeartsCell
 
 - (void)setup {
-    
-//    [[User currentUser].photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//        if (!error) {
-//            self.authorImageView.image = [UIImage imageWithData:data];
-//        }
-//    }];
-//    
-//    self.authorUsernameButton.titleLabel.text = [User currentUser].username;
-//    self.dateDescriptionLabel.text = self.selectedDateIdea.description;
+    if (self.selectedDateIdea) {
+        PFQuery *getHearts = [PFQuery queryWithClassName:@"Heart"];
+        [getHearts whereKey:@"dateIdea" equalTo:self.selectedDateIdea];
+        [getHearts findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+            if (results.count==0) {
+                self.numberOfHeartsLabel.text = @"";
+                self.heartImageView.image = [UIImage imageNamed:@"heart"];
+            }else {
+                self.numberOfHeartsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)results.count];
+            }
+        }];
+    }
 }
 
 
