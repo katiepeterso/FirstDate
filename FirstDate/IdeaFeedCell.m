@@ -8,6 +8,7 @@
 
 #import "IdeaFeedCell.h"
 #import <UIKit/UIKit.h>
+#import "IdeaDetailViewController.h"
 #import "FirstDate-Swift.h"
 #import "Heart.h"
 
@@ -89,13 +90,39 @@
     
     if (!heartedBefore) {
         Heart *currentHeart = [[Heart alloc] initWithUser:self.currentUser dateIdea:self.dateIdea];
-        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState: UIControlStateNormal];
+        [self.heartButton setImage:[UIImage imageNamed:@"hearted"] forState: UIControlStateNormal];
         self.heartCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.hearts.count + 1];
         [currentHeart saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             [self fetchCellData];
         }];
     }
     
+}
+
+- (IBAction)comment:(UIButton *)commentButton {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter a comment" message:@"Please be respectful!" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Your comment goes here...";
+    }];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    UITextField *commentTextField = alertController.textFields[0];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        Comment *comment = [[Comment alloc] initWithUser:self.currentUser dateIdea:self.dateIdea content:commentTextField.text];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        IdeaDetailViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"IdeaDetailViewController"];
+        detailVC.dateIdea = self.dateIdea;
+        [self.delegate showController:detailVC];
+        [comment pinInBackground];
+        [comment saveInBackground];
+        
+    }]];
+    
+    [self.delegate showController:alertController];
 }
 
 - (void)fetchCellData {
@@ -112,7 +139,7 @@
                 
                 if ([heart.user.objectId isEqualToString:self.currentUser.objectId]) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState: UIControlStateNormal];
+                        [self.heartButton setImage:[UIImage imageNamed:@"hearted"] forState: UIControlStateNormal];
                     });
                     break;
                 }
@@ -132,46 +159,23 @@
     
     
     
-//    PFQuery *commentQuery = [PFQuery queryWithClassName:@"Comment"];
-//    [commentQuery whereKey:@"dateIdea" equalTo:self.dateIdea];
-//    [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-//        if (!error) {
-//            self.comments = results;
-//            self.commentCountLabel.text = [NSString stringWithFormat:@"%lul", (unsigned long)self.comments.count];
-//        } else {
-//            
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."
-//                                                                message:[NSString stringWithFormat:@"%@", error.description]
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"OK"
-//                                                      otherButtonTitles:nil];
-//            [alertView show];
-//        }
-//    }];
-    
-}
-
-- (IBAction)comment:(UIButton *)commentButton {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter a comment" message:@"Please be respectful!" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"Your comment goes here...";
+    PFQuery *commentQuery = [PFQuery queryWithClassName:@"Comment"];
+    [commentQuery whereKey:@"dateIdea" equalTo:self.dateIdea];
+    [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+        if (!error) {
+            self.comments = [results mutableCopy];
+            self.commentCountLabel.text = [NSString stringWithFormat:@"%lul", (unsigned long)self.comments.count];
+        } else {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."
+                                                                message:[NSString stringWithFormat:@"%@", error.description]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
     }];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }]];
-    
-    UITextField *commentTextField = alertController.textFields[0];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        Comment *comment = [[Comment alloc] initWithUser:self.currentUser dateIdea:self.dateIdea content:commentTextField.text];
-        [comment pinInBackground];
-        [comment saveInBackground];
-        
-    }]];
-    
-    [self.delegate showAlertController:alertController];
 }
-
 
 @end
