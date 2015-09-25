@@ -123,8 +123,12 @@
 
 #pragma mark - Feed Cell Delegate
 
-- (void)showController:(UIAlertController *)alertController {
+- (void)showAlertController:(UIAlertController *)alertController {
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)performSegueWithIdentifier:(NSString *)identifier {
+    [self performSegueWithIdentifier:identifier sender:nil];
 }
 
 

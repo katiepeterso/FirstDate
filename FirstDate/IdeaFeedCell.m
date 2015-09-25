@@ -8,6 +8,7 @@
 
 #import "IdeaFeedCell.h"
 #import <UIKit/UIKit.h>
+#import "IdeasFeedViewController.h"
 #import "IdeaDetailViewController.h"
 #import "FirstDate-Swift.h"
 #import "Heart.h"
@@ -113,16 +114,17 @@
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         Comment *comment = [[Comment alloc] initWithUser:self.currentUser dateIdea:self.dateIdea content:commentTextField.text];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        IdeaDetailViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"IdeaDetailViewController"];
-        detailVC.dateIdea = self.dateIdea;
-        [self.delegate showController:detailVC];
+        [self.delegate performSegueWithIdentifier:@"showDetail"];
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+//        IdeaDetailViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"IdeaDetailViewController"];
+//        detailVC.dateIdea = self.dateIdea;
+//        [self.delegate showController:detailVC];
         [comment pinInBackground];
         [comment saveInBackground];
         
     }]];
     
-    [self.delegate showController:alertController];
+    [self.delegate showAlertController:alertController];
 }
 
 - (void)fetchCellData {
@@ -164,7 +166,7 @@
     [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
         if (!error) {
             self.comments = [results mutableCopy];
-            self.commentCountLabel.text = [NSString stringWithFormat:@"%lul", (unsigned long)self.comments.count];
+            self.commentCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.comments.count];
         } else {
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."

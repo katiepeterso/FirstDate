@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ezA-Wl-3eM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15B17c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ezA-Wl-3eM">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -145,7 +145,7 @@
         <!--Idea Detail View Controller-->
         <scene sceneID="DCt-RH-EB8">
             <objects>
-                <tableViewController id="a6X-CY-DzT" customClass="IdeaDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="IdeaDetailViewController" id="a6X-CY-DzT" customClass="IdeaDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lCc-gQ-LrV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,8 +172,8 @@
                                                 <constraint firstAttribute="width" constant="20" id="rx5-a3-l8b"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwE-cS-VHK">
-                                            <rect key="frame" x="36" y="12" width="153.5" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwE-cS-VHK">
+                                            <rect key="frame" x="36" y="8" width="331" height="28"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.019607843140000001" green="0.0078431372550000003" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -185,6 +185,9 @@
                                         <constraint firstItem="tKb-SO-L8L" firstAttribute="leading" secondItem="yJu-fY-ayr" secondAttribute="leading" constant="8" id="LhQ-Va-NMM"/>
                                         <constraint firstItem="zwE-cS-VHK" firstAttribute="leading" secondItem="tKb-SO-L8L" secondAttribute="trailing" constant="8" id="XnI-ts-EuN"/>
                                         <constraint firstItem="zwE-cS-VHK" firstAttribute="centerY" secondItem="yJu-fY-ayr" secondAttribute="centerY" id="YwO-yb-UU8"/>
+                                        <constraint firstItem="zwE-cS-VHK" firstAttribute="top" secondItem="yJu-fY-ayr" secondAttribute="topMargin" id="ZPs-F9-3IG"/>
+                                        <constraint firstItem="zwE-cS-VHK" firstAttribute="bottom" secondItem="yJu-fY-ayr" secondAttribute="bottomMargin" id="e0R-kV-sid"/>
+                                        <constraint firstItem="zwE-cS-VHK" firstAttribute="trailing" secondItem="yJu-fY-ayr" secondAttribute="trailingMargin" id="frp-xo-Dc7"/>
                                         <constraint firstItem="tKb-SO-L8L" firstAttribute="centerY" secondItem="yJu-fY-ayr" secondAttribute="centerY" id="tCl-8A-ywY"/>
                                     </constraints>
                                 </tableViewCellContentView>
