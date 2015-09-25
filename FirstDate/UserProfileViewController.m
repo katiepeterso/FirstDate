@@ -9,13 +9,17 @@
 #import "UserProfileViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "User.h"
+#import "DateIdea.h"
+#import "UserProfileDateIdeasCell.h"
 
-@interface UserProfileViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface UserProfileViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) User *currentUser;
 
 @property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (nonatomic) NSMutableArray *createdDateIdeas;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -23,6 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.createdDateIdeas = [NSMutableArray array];
     self.currentUser = [User currentUser];
     // Do any additional setup after loading the view.
     self.fullNameLabel.text = self.currentUser.name;
@@ -34,6 +40,23 @@
             }
         }];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fetchIdeas];
+    [self.collectionView reloadData];
+}
+
+- (void)fetchIdeas {
+    PFQuery *getIdeas = [PFQuery queryWithClassName:@"DateIdea"];
+    [getIdeas whereKey:@"user" equalTo:[User currentUser]];
+    [getIdeas findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+        if (results.count) {
+            self.createdDateIdeas = [results mutableCopy];
+            [self.collectionView reloadData];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,5 +111,25 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+#pragma mark - Collection View Delegate
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
+    return self.createdDateIdeas.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UserProfileDateIdeasCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"userIdeaCell" forIndexPath:indexPath];
+    
+    if (self.createdDateIdeas.count) {
+        [cell setDateIdea:self.createdDateIdeas[indexPath.row]];
+    }
+    return cell;
+}
+
 
 @end
