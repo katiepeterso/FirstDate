@@ -475,7 +475,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eb3-TT-w3B">
-                                        <rect key="frame" x="116" y="10" width="117" height="21"/>
+                                        <rect key="frame" x="116" y="10" width="117" height="20.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.019607843137254902" green="0.0078431372549019607" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
@@ -574,6 +574,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.043137254899999998" green="0.59215686270000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" red="0.043137254899999998" green="0.59215686270000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.043137254901960784" green="0.59215686274509804" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="Kdv-uB-aUH" kind="relationship" relationship="viewControllers" id="6lZ-qJ-yJB"/>
@@ -620,16 +627,16 @@
                                     <action selector="login:" destination="dla-oq-GdH" eventType="touchUpInside" id="juc-Zu-R4X"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTB-mG-Nkz">
-                                <rect key="frame" x="160" y="318" width="55" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTB-mG-Nkz">
+                                <rect key="frame" x="160" y="293" width="55" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <segue destination="Tcb-PL-8l2" kind="show" id="RLH-4d-d5g"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account yet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd0-8i-Mkm">
-                                <rect key="frame" x="84" y="290" width="207" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Don't have an account yet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd0-8i-Mkm">
+                                <rect key="frame" x="84" y="265" width="207" height="20.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -706,16 +713,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACk-kO-rBE">
-                                <rect key="frame" x="168.5" y="318" width="38" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACk-kO-rBE">
+                                <rect key="frame" x="168" y="293" width="38" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="dismiss:" destination="Tcb-PL-8l2" eventType="touchUpInside" id="ZUr-4i-X9s"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-yS-FfW">
-                                <rect key="frame" x="89" y="290" width="196" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-yS-FfW">
+                                <rect key="frame" x="89" y="265" width="196" height="20.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -757,7 +764,7 @@
         <scene sceneID="zcs-7j-4ft">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kdv-uB-aUH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feed" id="gVH-d6-nVV"/>
+                    <tabBarItem key="tabBarItem" title="Feed" image="home" id="gVH-d6-nVV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="h3g-30-L5B">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -773,11 +780,11 @@
             </objects>
             <point key="canvasLocation" x="1055" y="339"/>
         </scene>
-        <!--Add Idea-->
+        <!--Navigation Controller-->
         <scene sceneID="0sG-U9-wPg">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vFm-CA-nU1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Add Idea" id="Asz-zk-re5"/>
+                    <tabBarItem key="tabBarItem" title="" image="create" id="Asz-zk-re5"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="S0N-9u-rH3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -797,7 +804,7 @@
         <scene sceneID="WwM-40-8QO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zaq-5P-S6U" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Me" id="MNW-VG-rec"/>
+                    <tabBarItem key="tabBarItem" title="Me" image="user" id="MNW-VG-rec"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="n2Q-nX-B2e">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -816,7 +823,11 @@
     </scenes>
     <resources>
         <image name="comment" width="24" height="21"/>
+        <image name="create" width="22" height="30"/>
         <image name="edit" width="24" height="24"/>
         <image name="heart" width="27" height="21"/>
+        <image name="home" width="28" height="25"/>
+        <image name="user" width="29" height="28"/>
     </resources>
+    <color key="tintColor" red="0.043137254899999998" green="0.59215686270000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
 </document>

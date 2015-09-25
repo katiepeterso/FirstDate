@@ -21,6 +21,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     // Enabling Parse Local Datastore
     [Parse enableLocalDatastore];
     
