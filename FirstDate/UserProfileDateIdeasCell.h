@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class DateIdea;
+
 @interface UserProfileDateIdeasCell : UICollectionViewCell
+
+@property (nonatomic) DateIdea *currentDateIdea;
+
+- (void)setDateIdea:(DateIdea *)dateIdea;
 
 @end
