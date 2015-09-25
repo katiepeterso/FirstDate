@@ -8,12 +8,14 @@
 
 #import "CommentCell.h"
 #import "DateIdea.h"
+#import "FirstDate-Swift.h"
 
 @interface CommentCell ()
 
 @property (weak, nonatomic) IBOutlet UIButton *commenterUsernameButton;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (nonatomic) DateIdea *selectedDateIdea;
+@property (nonatomic) Comment *currentComment;
 
 @end
 
@@ -21,19 +23,19 @@
 
 - (void)setup {
     
-//    [[User currentUser].photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//        if (!error) {
-//            self.authorImageView.image = [UIImage imageWithData:data];
-//        }
-//    }];
-//    
-//    self.authorUsernameButton.titleLabel.text = [User currentUser].username;
-//    self.dateDescriptionLabel.text = self.selectedDateIdea.description;
+    self.commentLabel.text = self.currentComment.content;
+    if (self.currentComment) {
+        PFQuery *getAuthor = [PFUser query];
+        [getAuthor getObjectInBackgroundWithId:self.currentComment.user.objectId block:^(PFObject *object, NSError *error){
+            User *currentUser = (User *) object;
+            [self.commenterUsernameButton setTitle:currentUser.username forState:UIControlStateNormal];
+        }];
+    }
 }
 
 
 - (void)awakeFromNib {
-    [self setup];
+//    [self setup];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -42,8 +44,9 @@
     // Configure the view for the selected state
 }
 
-- (void)setDateIdea:(DateIdea *)dateIdea {
+- (void)setDateIdea:(DateIdea *)dateIdea andComment:(Comment *)currentComment {
     _selectedDateIdea = dateIdea;
+    _currentComment = currentComment;
     
     [self setup];
 }

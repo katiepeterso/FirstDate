@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Comment;
 @class DateIdea;
 
 @interface CommentCell : UITableViewCell
 
-- (void)setDateIdea:(DateIdea *)dateIdea;
+- (void)setDateIdea:(DateIdea *)dateIdea andComment:(Comment *)currentComment;
 
 @end
