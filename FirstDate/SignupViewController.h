@@ -10,7 +10,5 @@
 
 @interface SignupViewController : UIViewController <UIGestureRecognizerDelegate>
 
-- (IBAction)signup:(id)sender;
-- (IBAction)dismiss:(id)sender;
 
 @end

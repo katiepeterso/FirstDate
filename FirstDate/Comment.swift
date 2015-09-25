@@ -35,4 +35,8 @@ class Comment : PFObject, PFSubclassing {
         self.content = content
     }
     
+    override init() {
+        super.init()
+    }
+    
 }

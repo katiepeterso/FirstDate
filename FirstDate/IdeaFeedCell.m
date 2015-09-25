@@ -1,4 +1,4 @@
-//
+    //
 //  IdeaFeedCell.m
 //  FirstDate
 //
@@ -14,6 +14,9 @@
 @interface IdeaFeedCell ()
 
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, strong) NSMutableArray *hearts;
+@property (nonatomic, strong) NSMutableArray *comments;
+@property (nonatomic) BOOL hasFetched;
 
 @property (nonatomic, weak) IBOutlet UIImageView *dateImageView;
 @property (nonatomic, weak) IBOutlet UILabel *dateTitleLabel;
@@ -21,7 +24,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *commentButton;
 @property (nonatomic, weak) IBOutlet UILabel *heartCountLabel;
 @property (nonatomic, weak) IBOutlet UILabel *commentCountLabel;
-@property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (nonatomic, weak) IBOutlet UIButton *editButton;
 
 @end
 
@@ -30,6 +33,9 @@
 - (void)setup {
     
     self.currentUser = [User currentUser];
+    if ([self.dateIdea.user isEqual:self.currentUser]) {
+        self.editButton.hidden = NO;
+    }
     
     [self.dateIdea.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -37,16 +43,15 @@
         }
     }];
     
-    if ([self.dateIdea.user isEqual:self.currentUser]) {
-        self.editButton.hidden = NO;
-    }
-    
     self.dateTitleLabel.text = self.dateIdea.title;
     
 }
 
 - (void)setDateIdea:(DateIdea *)dateIdea {
     _dateIdea = dateIdea;
+    self.hearts = [NSMutableArray array];
+    
+    [self fetchCellData];
     
     [self setup];
 }
@@ -63,32 +68,86 @@
 
 - (IBAction)hearted:(UIButton *)heartbutton {
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Heart"];
-    [query whereKey:@"user" equalTo:self.currentUser];
-    [query whereKey:@"dateIdea" equalTo:self.dateIdea];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+    if (!self.hasFetched) {
+        return;
+    }
+    
+    self.hasFetched = NO;
+    BOOL heartedBefore = NO;
+    
+    for (Heart *heart in self.hearts) {
+        if ([heart.user.objectId isEqualToString:self.currentUser.objectId]) {
+            heartedBefore = YES;
+            [self.heartButton setImage:[UIImage imageNamed:@"heart"] forState: UIControlStateNormal];
+            self.heartCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.hearts.count - 1];
+            [heart deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                [self fetchCellData];
+            }];
+            return;
+        }
+    }
+    
+    if (!heartedBefore) {
+        Heart *currentHeart = [[Heart alloc] initWithUser:self.currentUser dateIdea:self.dateIdea];
+        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState: UIControlStateNormal];
+        self.heartCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.hearts.count + 1];
+        [currentHeart saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            [self fetchCellData];
+        }];
+    }
+    
+}
+
+- (void)fetchCellData {
+    
+    self.hasFetched = NO;
+    PFQuery *heartQuery = [PFQuery queryWithClassName:@"Heart"];
+    [heartQuery whereKey:@"dateIdea" equalTo:self.dateIdea];
+    [heartQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
         if (!error) {
-            if (results.count) {
-                [self.heartButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
-                [results[0] deleteInBackground];
+            self.hearts = [results mutableCopy];
+            self.heartCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.hearts.count];
+            
+            for (Heart *heart in self.hearts) {
                 
-            } else {
-                Heart *currentHeart = [[Heart alloc] initWithUser:self.currentUser dateIdea:self.dateIdea];
-                [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState: UIControlStateNormal];
-                [currentHeart saveInBackground];
+                if ([heart.user.objectId isEqualToString:self.currentUser.objectId]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.heartButton setImage:[UIImage imageNamed:@"heart_selected"] forState: UIControlStateNormal];
+                    });
+                    break;
+                }
             }
         } else {
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."
-                                                                message:@"You may be hearing an idea that is already been deleted."
+                                                                message:[NSString stringWithFormat:@"%@", error.description]
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
             [alertView show];
-            
         }
         
+        self.hasFetched = YES;
     }];
+    
+    
+    
+//    PFQuery *commentQuery = [PFQuery queryWithClassName:@"Comment"];
+//    [commentQuery whereKey:@"dateIdea" equalTo:self.dateIdea];
+//    [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+//        if (!error) {
+//            self.comments = results;
+//            self.commentCountLabel.text = [NSString stringWithFormat:@"%lul", (unsigned long)self.comments.count];
+//        } else {
+//            
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."
+//                                                                message:[NSString stringWithFormat:@"%@", error.description]
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"OK"
+//                                                      otherButtonTitles:nil];
+//            [alertView show];
+//        }
+//    }];
     
 }
 

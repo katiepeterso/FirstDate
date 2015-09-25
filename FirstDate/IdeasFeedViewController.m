@@ -27,12 +27,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.currentUser = [User currentUser];
-    
-    if (!self.currentUser) {
-        [self performSegueWithIdentifier:@"showLogin" sender:self];
-    }
-    
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor orangeColor];
     
@@ -42,11 +36,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    
+    self.currentUser = [User currentUser];
+    
+    if (!self.currentUser) {
+        [self performSegueWithIdentifier:@"showLogin" sender:self];
+    }
+    
     [self fetchDateIdeas];
+    
 }
 
 - (void)didReceiveMemoryWarning {

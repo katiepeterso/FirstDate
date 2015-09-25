@@ -10,6 +10,5 @@
 
 @interface LoginViewController : UIViewController <UIGestureRecognizerDelegate>
 
-- (IBAction)login:(id)sender;
 
 @end
