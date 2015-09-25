@@ -106,19 +106,13 @@
         textField.placeholder = @"Your comment goes here...";
     }];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }]];
     
     UITextField *commentTextField = alertController.textFields[0];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         Comment *comment = [[Comment alloc] initWithUser:self.currentUser dateIdea:self.dateIdea content:commentTextField.text];
         [self.delegate performSegueWithIdentifier:@"showDetail" fromCell:self];
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-//        IdeaDetailViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"IdeaDetailViewController"];
-//        detailVC.dateIdea = self.dateIdea;
-//        [self.delegate showController:detailVC];
         [comment pinInBackground];
         [comment saveInBackground];
         
@@ -148,18 +142,14 @@
             }
         } else {
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."
-                                                                message:[NSString stringWithFormat:@"%@", error.description]
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong." message:[NSString stringWithFormat:@"%@", error.description] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+            
+            [self.delegate showAlertController:alertController];
         }
         
         self.hasFetched = YES;
     }];
-    
-    
     
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"Comment"];
     [commentQuery whereKey:@"dateIdea" equalTo:self.dateIdea];
@@ -169,12 +159,10 @@
             self.commentCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.comments.count];
         } else {
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Something went wrong."
-                                                                message:[NSString stringWithFormat:@"%@", error.description]
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong." message:[NSString stringWithFormat:@"%@", error.description] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+            
+            [self.delegate showAlertController:alertController];
         }
     }];
     

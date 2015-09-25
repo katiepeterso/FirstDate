@@ -43,22 +43,26 @@
     NSString *password = [self.passwordField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     if ([username length] == 0 || [password length] == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                            message:@"Make sure you enter a username and password!"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
+                                                                                 message:@"Make sure you enter a username and password!"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }
     else {
         [User logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
             if (error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry!"
-                                                                    message:[error.userInfo objectForKey:@"error"]
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles: nil];
-                [alertView show];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
+                                                                                         message:[NSString stringWithFormat:@"%@", error.description]
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+                
             } else {
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }

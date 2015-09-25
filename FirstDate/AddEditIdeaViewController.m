@@ -99,16 +99,12 @@
 
 - (IBAction)submitIdea:(UIButton *)sender {
     
-//    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
     self.currentDateIdea = [[DateIdea alloc]initWithUser:[User currentUser] title:self.titleField.text details:self.descriptionView.text];
     
     DateIdea *currentDateIdea = [[DateIdea alloc]init];
     currentDateIdea.title = self.currentDateIdea.title;
     currentDateIdea.details = self.currentDateIdea.details;
     currentDateIdea.user = [User currentUser];
-//    currentDateIdea[@"comments"] = self.currentDateIdea.comments;
-//    currentDateIdea[@"hearts"] = [NSArray arrayWithObject:self.currentDateIdea.hearts];
     
     if (self.photoImageView.image) {
         NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);

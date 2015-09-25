@@ -34,17 +34,6 @@
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)signup:(id)sender
 {
     NSString *username = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -52,12 +41,13 @@
     NSString *email = [self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     if ([username length] == 0 || [password length] == 0 || [email length] == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                            message:@"Make sure you enter a username, password and email address!"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
+                                                                                 message:@"Make sure you enter a username, password and email address!"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
     else {
         PFUser *newUser = [PFUser user];
@@ -67,12 +57,13 @@
         
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry!"
-                                                                    message:[error.userInfo objectForKey:@"error"]
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles: nil];
-                [alertView show];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
+                                                                                         message:[NSString stringWithFormat:@"%@", error.description]
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
             } else {
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
