@@ -16,6 +16,7 @@
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
 		AAEDA22C1BB496DD008C61FF /* NumberOfHeartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA22B1BB496DD008C61FF /* NumberOfHeartsCell.m */; settings = {ASSET_TAGS = (); }; };
 		AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
+		AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA2311BB5C7B9008C61FF /* UserProfileDateIdeasCell.m */; settings = {ASSET_TAGS = (); }; };
 		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; };
 		C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */; };
 		C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */; };
@@ -49,6 +50,8 @@
 		AAEDA22B1BB496DD008C61FF /* NumberOfHeartsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberOfHeartsCell.m; sourceTree = "<group>"; };
 		AAEDA22D1BB4FFD8008C61FF /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
+		AAEDA2301BB5C7B9008C61FF /* UserProfileDateIdeasCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileDateIdeasCell.h; sourceTree = "<group>"; };
+		AAEDA2311BB5C7B9008C61FF /* UserProfileDateIdeasCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileDateIdeasCell.m; sourceTree = "<group>"; };
 		C704602F1BB210EF005D8335 /* FirstDate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FirstDate-Bridging-Header.h"; sourceTree = "<group>"; };
 		C70460301BB210EF005D8335 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeaDetailViewController.h; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				C73AA5E51BB0B3BC00EAD889 /* CommentCell.m */,
 				AAEDA22A1BB496DD008C61FF /* NumberOfHeartsCell.h */,
 				AAEDA22B1BB496DD008C61FF /* NumberOfHeartsCell.m */,
+				AAEDA2301BB5C7B9008C61FF /* UserProfileDateIdeasCell.h */,
+				AAEDA2311BB5C7B9008C61FF /* UserProfileDateIdeasCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
 				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
+				AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */,
 				C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */,
 				C70460311BB210EF005D8335 /* Comment.swift in Sources */,
 				C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */,
