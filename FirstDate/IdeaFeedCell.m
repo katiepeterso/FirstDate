@@ -22,6 +22,7 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *dateImageView;
 @property (nonatomic, weak) IBOutlet UILabel *dateTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateDetailsLabel;
 @property (nonatomic, weak) IBOutlet UIButton *heartButton;
 @property (nonatomic, weak) IBOutlet UIButton *commentButton;
 @property (nonatomic, weak) IBOutlet UILabel *heartCountLabel;
@@ -46,6 +47,7 @@
     }];
     
     self.dateTitleLabel.text = self.dateIdea.title;
+    self.dateDetailsLabel.text = self.dateIdea.details;
     
 }
 

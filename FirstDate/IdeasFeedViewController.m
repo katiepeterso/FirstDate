@@ -54,9 +54,20 @@
 
 - (IBAction)logOut:(UIBarButtonItem *)sender {
     
-    [User logOut];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Log Out" style:(UIAlertActionStyleDestructive) handler:^(UIAlertAction * _Nonnull action) {
+        [User logOut];
+        
+        [self performSegueWithIdentifier:@"showLogin" sender:self];
+    }]];
     
-    [self performSegueWithIdentifier:@"showLogin" sender:self];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
 }
 
 - (void)fetchDateIdeas {
