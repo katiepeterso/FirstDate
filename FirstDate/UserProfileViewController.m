@@ -31,7 +31,7 @@
     self.createdDateIdeas = [NSMutableArray array];
     self.currentUser = [User currentUser];
     // Do any additional setup after loading the view.
-    self.fullNameLabel.text = self.currentUser.name;
+    self.fullNameLabel.text = self.currentUser.username;
     self.ageLabel.text = [NSString stringWithFormat:@"%lu",self.currentUser.age];
     if ([self.currentUser.photo isDataAvailable]) {
         [self.currentUser.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
