@@ -41,8 +41,6 @@
     self.descriptionView.textColor = [UIColor lightGrayColor];
     self.descriptionView.delegate = self;
     
-    self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
-    
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
     
