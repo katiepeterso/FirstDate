@@ -27,6 +27,7 @@
 		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; };
 		C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5131BB36DCE00651DC9 /* SignupViewController.m */; };
 		C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5151BB36DCE00651DC9 /* LoginViewController.m */; };
+		C7DA79731BC0AAB300D3E5F4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		D57AF32CFD284D7F5C98354B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDF7E20801C91CB5916C438 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		C752C5141BB36DCE00651DC9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		C752C5151BB36DCE00651DC9 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C7B582931BB24B0600114385 /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
+		C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				C752C5151BB36DCE00651DC9 /* LoginViewController.m */,
 				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
 				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
+				C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */,
 				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
 				C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */,
 				C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */,
@@ -331,6 +334,7 @@
 				C73AA5E61BB0B3BC00EAD889 /* CommentCell.m in Sources */,
 				C73AA5E01BB0B15A00EAD889 /* IdeaFeedCell.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
+				C7DA79731BC0AAB300D3E5F4 /* FeedViewController.swift in Sources */,
 				AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */,
 				C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */,
 				C70460311BB210EF005D8335 /* Comment.swift in Sources */,
