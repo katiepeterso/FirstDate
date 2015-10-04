@@ -89,6 +89,14 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
     
+    if (!self.currentDateIdea) {
+        self.currentDateIdea = [[DateIdea alloc]init];
+    }
+    
+    NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
+    self.currentDateIdea.photo = [PFFile fileWithData:data];
+    [self.currentDateIdea.photo saveInBackground];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     self.photoLabel.text = @"Change date photo";
 }
@@ -97,31 +105,25 @@
 
 - (IBAction)submitIdea:(UIButton *)sender {
     
-    self.currentDateIdea = [[DateIdea alloc]initWithUser:[User currentUser] title:self.titleField.text details:self.descriptionView.text];
-    
-    DateIdea *currentDateIdea = [[DateIdea alloc]init];
-    currentDateIdea.title = self.currentDateIdea.title;
-    currentDateIdea.details = self.currentDateIdea.details;
-    currentDateIdea.user = [User currentUser];
-    
-    if (self.photoImageView.image) {
-        NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
-        currentDateIdea.photo = [PFFile fileWithData:data];
+    if (!self.currentDateIdea) {
+        self.currentDateIdea = [[DateIdea alloc]initWithUser:[User currentUser] title:self.titleField.text details:self.descriptionView.text];
+    } else {
+        self.currentDateIdea.title = self.titleField.text;
+        self.currentDateIdea.details = self.descriptionView.text;
     }
     
-    [currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            // The object has been saved.
-        } else {
-            // There was a problem, check error.description
-        }
-    }];
+    self.currentDateIdea.user = [User currentUser];
+    
+    [self.currentDateIdea pinInBackgroundWithName:USER_DATA_PINNING_LABEL];
+    [self.currentDateIdea saveEventually];
     
     [self.tabBarController setSelectedIndex:0];
     self.photoLabel.text = @"Select date photo";
     self.titleField.text = @"";
-    self.descriptionView.text = @"";
+    self.descriptionView.text = @"Enter date description here...";
+    self.descriptionView.textColor = [UIColor lightGrayColor];
     self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
+    self.currentDateIdea = nil;
 }
 
 #pragma mark - Text view placeholder

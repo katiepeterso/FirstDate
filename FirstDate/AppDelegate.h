@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define USER_DATA_PINNING_LABEL @"UserData"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
