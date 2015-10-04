@@ -113,13 +113,8 @@
     
     self.currentDateIdea.user = [User currentUser];
     
-    [self.currentDateIdea saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            // The object has been saved.
-        } else {
-            // There was a problem, check error.description
-        }
-    }];
+    [self.currentDateIdea pinInBackgroundWithName:USER_DATA_PINNING_LABEL];
+    [self.currentDateIdea saveInBackground];
     
     [self.tabBarController setSelectedIndex:0];
     self.photoLabel.text = @"Select date photo";
