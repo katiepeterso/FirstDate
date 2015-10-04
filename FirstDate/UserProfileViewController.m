@@ -49,12 +49,22 @@
 }
 
 - (void)fetchIdeas {
-    PFQuery *getIdeas = [PFQuery queryWithClassName:@"DateIdea"];
-    [getIdeas whereKey:@"user" equalTo:[User currentUser]];
-    [getIdeas findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+    PFQuery *getLocalIdeas = [PFQuery queryWithClassName:@"DateIdea"];
+    [getLocalIdeas whereKey:@"user" equalTo:[User currentUser]];
+    [getLocalIdeas fromLocalDatastore];
+    [getLocalIdeas findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
         if (results.count) {
             self.createdDateIdeas = [results mutableCopy];
             [self.collectionView reloadData];
+        } else {
+            PFQuery *getNetworkIdeas = [PFQuery queryWithClassName:@"DateIdea"];
+            [getNetworkIdeas whereKey:@"user" equalTo:[User currentUser]];
+            [getNetworkIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                if (results.count) {
+                    self.createdDateIdeas = [results mutableCopy];
+                    [self.collectionView reloadData];
+                }
+            }];
         }
     }];
 }

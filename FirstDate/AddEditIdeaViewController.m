@@ -95,6 +95,7 @@
     
     NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
     self.currentDateIdea.photo = [PFFile fileWithData:data];
+    [self.currentDateIdea.photo saveInBackground];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     self.photoLabel.text = @"Change date photo";
@@ -114,13 +115,15 @@
     self.currentDateIdea.user = [User currentUser];
     
     [self.currentDateIdea pinInBackgroundWithName:USER_DATA_PINNING_LABEL];
-    [self.currentDateIdea saveInBackground];
+    [self.currentDateIdea saveEventually];
     
     [self.tabBarController setSelectedIndex:0];
     self.photoLabel.text = @"Select date photo";
     self.titleField.text = @"";
-    self.descriptionView.text = @"";
+    self.descriptionView.text = @"Enter date description here...";
+    self.descriptionView.textColor = [UIColor lightGrayColor];
     self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
+    self.currentDateIdea = nil;
 }
 
 #pragma mark - Text view placeholder
