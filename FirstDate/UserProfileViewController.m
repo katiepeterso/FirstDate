@@ -11,6 +11,7 @@
 #import "User.h"
 #import "DateIdea.h"
 #import "UserProfileDateIdeasCell.h"
+#import "FirstDate-Swift.h"
 
 @interface UserProfileViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) User *currentUser;
@@ -38,8 +39,13 @@
     self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
     self.userPhotoImageView.layer.masksToBounds = true;
     
-    self.photoImageView.image = [UIImage imageWithData:[self getPhotoInBackground:self.currentUser.coverPhoto]];
-    self.userPhotoImageView.image = [UIImage imageWithData:[self getPhotoInBackground:self.currentUser.userPhoto]];
+    PhotoHelper *photoHelper = [[PhotoHelper alloc]init];
+    [photoHelper getPhotoInBackground:self.currentUser.userPhoto completionHandler:^(UIImage *userPhoto) {
+        self.userPhotoImageView.image = userPhoto;
+    }];
+    [photoHelper getPhotoInBackground:self.currentUser.coverPhoto completionHandler:^(UIImage *coverPhoto) {
+        self.photoImageView.image = coverPhoto;
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -120,18 +126,6 @@
     }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(NSData *)getPhotoInBackground:(PFFile *)photo {
-    if ([photo isDataAvailable]) {
-        [photo getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
-            if (!error) {
-                return data;
-            }else {
-                return [[NSData alloc]init];
-            }
-        }];
-    }
 }
 
 
