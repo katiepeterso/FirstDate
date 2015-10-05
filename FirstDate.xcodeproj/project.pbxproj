@@ -27,7 +27,9 @@
 		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; };
 		C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5131BB36DCE00651DC9 /* SignupViewController.m */; };
 		C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5151BB36DCE00651DC9 /* LoginViewController.m */; };
+		C7D761131BC2D83200170F3A /* IdeaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7D761121BC2D83200170F3A /* IdeaView.xib */; settings = {ASSET_TAGS = (); }; };
 		C7DA79731BC0AAB300D3E5F4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		C7DA79751BC20AE300D3E5F4 /* IdeaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DA79741BC20AE300D3E5F4 /* IdeaView.swift */; settings = {ASSET_TAGS = (); }; };
 		D57AF32CFD284D7F5C98354B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDF7E20801C91CB5916C438 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -74,7 +76,9 @@
 		C752C5141BB36DCE00651DC9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		C752C5151BB36DCE00651DC9 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C7B582931BB24B0600114385 /* APIKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
+		C7D761121BC2D83200170F3A /* IdeaView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdeaView.xib; sourceTree = "<group>"; };
 		C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		C7DA79741BC20AE300D3E5F4 /* IdeaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeaView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,8 @@
 		AA52F2BD1BB39D3C00E52B43 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C7D761121BC2D83200170F3A /* IdeaView.xib */,
+				C7DA79741BC20AE300D3E5F4 /* IdeaView.swift */,
 				C73AA5DE1BB0B15A00EAD889 /* IdeaFeedCell.h */,
 				C73AA5DF1BB0B15A00EAD889 /* IdeaFeedCell.m */,
 				C73AA5E11BB0B39700EAD889 /* IdeaDescriptionCell.h */,
@@ -266,6 +272,7 @@
 				AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */,
 				AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */,
 				AAD8DA0B1BAE04BB00218CC9 /* Main.storyboard in Resources */,
+				C7D761131BC2D83200170F3A /* IdeaView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +345,7 @@
 				AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */,
 				C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */,
 				C70460311BB210EF005D8335 /* Comment.swift in Sources */,
+				C7DA79751BC20AE300D3E5F4 /* IdeaView.swift in Sources */,
 				C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */,
 				C73AA5DD1BB0B10300EAD889 /* IdeaDetailViewController.m in Sources */,
 				AAD8DA021BAE04BB00218CC9 /* main.m in Sources */,
