@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (nonatomic) NSMutableArray *createdDateIdeas;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 
 @end
 
@@ -30,16 +31,15 @@
     
     self.createdDateIdeas = [NSMutableArray array];
     self.currentUser = [User currentUser];
-    // Do any additional setup after loading the view.
+    
     self.fullNameLabel.text = self.currentUser.username;
     self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.currentUser.age];
-    if ([self.currentUser.photo isDataAvailable]) {
-        [self.currentUser.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!error) {
-                self.photoImageView.image = [UIImage imageWithData:data];
-            }
-        }];
-    }
+    
+    self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
+    self.userPhotoImageView.layer.masksToBounds = true;
+    
+    self.photoImageView.image = [UIImage imageWithData:[self getPhotoInBackground:self.currentUser.coverPhoto]];
+    self.userPhotoImageView.image = [UIImage imageWithData:[self getPhotoInBackground:self.currentUser.userPhoto]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -108,7 +108,7 @@
     self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
     if (self.photoImageView.image) {
         NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
-        self.currentUser.photo = [PFFile fileWithData:data];
+        self.currentUser.coverPhoto = [PFFile fileWithData:data];
     }
     
     [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -120,6 +120,18 @@
     }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(NSData *)getPhotoInBackground:(PFFile *)photo {
+    if ([photo isDataAvailable]) {
+        [photo getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
+            if (!error) {
+                return data;
+            }else {
+                return [[NSData alloc]init];
+            }
+        }];
+    }
 }
 
 
