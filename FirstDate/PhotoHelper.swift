@@ -13,12 +13,11 @@ import Parse
 @objc class PhotoHelper: NSObject {
 //    var photo = UIImage()
     
-    func getPhotoInBackground(file: PFFile, completionHandler:(resultImage:UIImage?) -> Void) {
+    class func getPhotoInBackground(file: PFFile, completionHandler:(resultImage:UIImage?) -> Void) {
         if file.isDataAvailable {
             file.getDataInBackgroundWithBlock{
                 (imageData: NSData?, error: NSError?) -> Void in
                 if (error == nil && imageData != nil) {
-//                        self.photo = UIImage(data:imageData!)!
                         completionHandler(resultImage: UIImage(data:imageData!))
                 } else {
                     completionHandler(resultImage: nil)
