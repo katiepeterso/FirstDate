@@ -36,6 +36,9 @@
     
     self.titleField.text = @"";
     self.titleField.delegate = self;
+    UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
+    [self.titleField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.titleField setLeftView:spacerView];
     
     self.descriptionView.text = @"Enter date description here...";
     self.descriptionView.textColor = [UIColor lightGrayColor];
@@ -122,7 +125,6 @@
     self.titleField.text = @"";
     self.descriptionView.text = @"Enter date description here...";
     self.descriptionView.textColor = [UIColor lightGrayColor];
-    self.photoImageView.image = [UIImage imageNamed:@"placeholder.png"];
     self.currentDateIdea = nil;
 }
 
