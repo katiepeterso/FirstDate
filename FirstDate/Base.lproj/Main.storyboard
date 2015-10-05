@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ezA-Wl-3eM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bFH-xD-8zS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -531,12 +531,14 @@
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add photo" translatesAutoresizingMaskIntoConstraints="NO" id="QXN-Au-yXM">
                                                     <rect key="frame" x="145" y="100" width="85" height="85"/>
+                                                    <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="85" id="2aX-UG-Pk2"/>
                                                         <constraint firstAttribute="width" constant="85" id="QoW-mb-sqh"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstItem="IlZ-aU-Ovt" firstAttribute="top" secondItem="eb3-TT-w3B" secondAttribute="bottom" constant="8.5" id="0b6-Bg-jab"/>
                                                 <constraint firstItem="QXN-Au-yXM" firstAttribute="top" secondItem="IlZ-aU-Ovt" secondAttribute="bottom" constant="8.5" id="AsV-Te-O4i"/>
@@ -547,6 +549,7 @@
                                                 <constraint firstItem="eb3-TT-w3B" firstAttribute="centerX" secondItem="JuO-qE-bbC" secondAttribute="centerX" id="lDJ-eh-WY8"/>
                                             </constraints>
                                         </view>
+                                        <animations/>
                                         <blurEffect style="light"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="XBL-79-9Bh" appends="YES" id="TcQ-Rx-Jzg"/>
@@ -712,7 +715,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_signup" translatesAutoresizingMaskIntoConstraints="NO" id="XrB-Qy-gKJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea" translatesAutoresizingMaskIntoConstraints="NO" id="XrB-Qy-gKJ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                             </imageView>
@@ -726,50 +729,22 @@
                                 <animations/>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="emD-dC-QcX">
-                                <rect key="frame" x="16" y="166.5" width="343" height="334"/>
-                                <subviews>
-                                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_signup" translatesAutoresizingMaskIntoConstraints="NO" id="HWY-vR-c1q">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="334"/>
-                                        <animations/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="L78-dd-vd4" appends="YES" id="jBn-OC-vdx"/>
-                                        </connections>
-                                    </imageView>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="HWY-vR-c1q" secondAttribute="trailing" id="9P2-ue-bmk"/>
-                                    <constraint firstAttribute="bottom" secondItem="HWY-vR-c1q" secondAttribute="bottom" id="9Rs-Rq-zyj"/>
-                                    <constraint firstItem="HWY-vR-c1q" firstAttribute="top" secondItem="emD-dC-QcX" secondAttribute="top" id="MD5-zn-e4U"/>
-                                    <constraint firstItem="HWY-vR-c1q" firstAttribute="leading" secondItem="emD-dC-QcX" secondAttribute="leading" id="w0D-4U-KAe"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="emD-dC-QcX" firstAttribute="centerY" secondItem="f5b-fb-NvA" secondAttribute="centerY" id="12B-lt-e8a"/>
                             <constraint firstItem="Bmf-u8-lCP" firstAttribute="top" secondItem="f5b-fb-NvA" secondAttribute="top" id="Ghd-kj-TGv"/>
-                            <constraint firstItem="emD-dC-QcX" firstAttribute="height" secondItem="f5b-fb-NvA" secondAttribute="height" multiplier="0.5" id="UQl-1x-ypq"/>
                             <constraint firstItem="Bmf-u8-lCP" firstAttribute="leading" secondItem="f5b-fb-NvA" secondAttribute="leading" id="Vh6-r3-i1d"/>
                             <constraint firstAttribute="trailing" secondItem="XrB-Qy-gKJ" secondAttribute="trailing" id="cn6-tn-uWZ"/>
                             <constraint firstItem="SYk-MY-gdP" firstAttribute="top" secondItem="XrB-Qy-gKJ" secondAttribute="bottom" id="esN-7A-0G8"/>
-                            <constraint firstItem="emD-dC-QcX" firstAttribute="centerX" secondItem="f5b-fb-NvA" secondAttribute="centerX" id="hdU-NF-UcO"/>
                             <constraint firstAttribute="trailing" secondItem="Bmf-u8-lCP" secondAttribute="trailing" id="i0M-cI-JXz"/>
-                            <constraint firstItem="emD-dC-QcX" firstAttribute="trailing" secondItem="f5b-fb-NvA" secondAttribute="trailingMargin" id="rWi-78-oUt"/>
                             <constraint firstItem="XrB-Qy-gKJ" firstAttribute="leading" secondItem="f5b-fb-NvA" secondAttribute="leading" id="sL0-j9-fJe"/>
                             <constraint firstItem="XrB-Qy-gKJ" firstAttribute="top" secondItem="f5b-fb-NvA" secondAttribute="top" id="sWm-ae-X9j"/>
                             <constraint firstItem="SYk-MY-gdP" firstAttribute="top" secondItem="Bmf-u8-lCP" secondAttribute="bottom" id="vQV-XI-qpT"/>
-                            <constraint firstItem="emD-dC-QcX" firstAttribute="leading" secondItem="f5b-fb-NvA" secondAttribute="leadingMargin" id="wSP-C4-7U2"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="ideaView" destination="emD-dC-QcX" id="VxH-fT-am8"/>
-                        <outlet property="ideaViewCenterY" destination="12B-lt-e8a" id="l85-i6-umg"/>
                         <outlet property="panRecognizer" destination="L78-dd-vd4" id="3OH-Wf-HMi"/>
                     </connections>
                 </viewController>
@@ -1091,6 +1066,7 @@
     <resources>
         <image name="add photo" width="240" height="240"/>
         <image name="bg" width="750" height="1334"/>
+        <image name="bg_idea" width="750" height="1334"/>
         <image name="bg_signup" width="750" height="1334"/>
         <image name="comment" width="24" height="21"/>
         <image name="create" width="22" height="30"/>
