@@ -31,13 +31,13 @@
         [getAuthor getObjectInBackgroundWithId:self.selectedDateIdea.user.objectId block:^(PFObject *object, NSError *error){
             User *currentUser = (User *) object;
             [weakSelf.authorUsernameButton setTitle:currentUser.username forState:UIControlStateNormal];
-            if ([currentUser.photo isDataAvailable]) {
-                [currentUser.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                    if (!error) {
-                        self.authorImageView.image = [UIImage imageWithData:data];
-                    }
-                }];
-            }
+//            if ([currentUser.photo isDataAvailable]) {
+//                [currentUser.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//                    if (!error) {
+//                        self.authorImageView.image = [UIImage imageWithData:data];
+//                    }
+//                }];
+//            }
         }];
     }
 }

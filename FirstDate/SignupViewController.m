@@ -122,7 +122,7 @@
         
         if (self.photoImageView.image) {
             NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
-            newUser.photo = [PFFile fileWithData:data];
+//            newUser.photo = [PFFile fileWithData:data];
         }
         
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
