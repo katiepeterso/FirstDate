@@ -13,7 +13,7 @@
 #import "UserProfileDateIdeasCell.h"
 #import "FirstDate-Swift.h"
 
-const CGFloat coverPhotoOffset = 30;
+const CGFloat coverPhotoOffset = 50;
 
 @interface UserProfileViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) User *currentUser;
@@ -24,6 +24,7 @@ const CGFloat coverPhotoOffset = 30;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (nonatomic) CGFloat kTableHeaderHeight;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 
 @end
 
@@ -49,7 +50,7 @@ const CGFloat coverPhotoOffset = 30;
     }];
     
     self.kTableHeaderHeight = self.photoImageView.frame.size.height;
-//    [self updateHeaderView];
+    [self addDiagonalMaskToImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -127,30 +128,17 @@ const CGFloat coverPhotoOffset = 30;
 }
 
 #pragma mark - Cover Photo Mask
--(void)updateHeaderView {
-    self.collectionView.contentInset = UIEdgeInsetsMake(self.kTableHeaderHeight-coverPhotoOffset, 0, 0, 0);
-    CGRect headerOriginFrame = CGRectMake(0, coverPhotoOffset-self.kTableHeaderHeight, self.collectionView.bounds.size.width, self.photoImageView.frame.size.height);
-    self.photoImageView.frame = headerOriginFrame;
-    
-    if (self.collectionView.contentOffset.y < coverPhotoOffset-self.kTableHeaderHeight) {
-        CGRect frame = CGRectMake(self.photoImageView.frame.origin.x, self.collectionView.contentOffset.y, self.photoImageView.frame.size.width, -self.collectionView.contentOffset.y+coverPhotoOffset);
-        self.photoImageView.frame = frame;
-    }
-    [self addDiagonalMaskToImage];
-}
 
 -(void)addDiagonalMaskToImage {
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
     UIBezierPath *trianglePath = [[UIBezierPath alloc]init];
-    [trianglePath moveToPoint:(CGPointMake(self.photoImageView.frame.origin.x, self.photoImageView.frame.origin.y))];
-    [trianglePath addLineToPoint:CGPointMake(self.photoImageView.frame.size.width, self.photoImageView.frame.origin.y)];
-    [trianglePath addLineToPoint:CGPointMake(self.photoImageView.frame.size.width, self.photoImageView.frame.size.height)];
-    [trianglePath addLineToPoint:CGPointMake(self.photoImageView.frame.origin.x, self.photoImageView.frame.size.height - coverPhotoOffset)];
+    [trianglePath moveToPoint:(CGPointMake(0, 0))];
+    [trianglePath addLineToPoint:CGPointMake(self.headerView.frame.size.width, 0)];
+    [trianglePath addLineToPoint:CGPointMake(self.headerView.frame.size.width, self.headerView.frame.size.height - coverPhotoOffset)];
+    [trianglePath addLineToPoint:CGPointMake(0, self.headerView.frame.size.height)];
     [trianglePath closePath];
-    maskLayer.fillColor = (__bridge CGColorRef _Nullable)([UIColor whiteColor]);
-    maskLayer.backgroundColor = (__bridge CGColorRef _Nullable)([UIColor clearColor]);
     maskLayer.path = trianglePath.CGPath;
-    self.photoImageView.layer.mask = maskLayer;
+    self.headerView.layer.mask = maskLayer;
 }
 
 

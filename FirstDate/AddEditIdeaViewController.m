@@ -53,6 +53,8 @@
     
     self.titleField.inputAccessoryView = accessoryView;
     self.descriptionView.inputAccessoryView = accessoryView;
+    [self.submitEditButton setEnabled:NO];
+    self.submitEditButton.alpha = 0.5;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,6 +83,12 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
     self.photoLabel.text = @"Change date photo";
+    if (![self.descriptionView.text isEqualToString:@"Enter date description here..."]) {
+        if (![self.titleField.text isEqualToString:@""]) {
+            [self.submitEditButton setEnabled:YES];
+            self.submitEditButton.alpha = 1.0;
+        }
+    }
 }
 
 #pragma mark - Submit new idea
@@ -106,6 +114,8 @@
     self.descriptionView.text = @"Enter date description here...";
     self.descriptionView.textColor = [UIColor lightGrayColor];
     self.currentDateIdea = nil;
+    [self.submitEditButton setEnabled:NO];
+    self.submitEditButton.alpha = 0.5;
 }
 
 #pragma mark - Text view placeholder
@@ -125,12 +135,24 @@
         textView.text = @"Enter date description here...";
         textView.textColor = [UIColor lightGrayColor];
     }
+    if (self.photoImageView.image != [UIImage imageNamed:@"add photo"]) {
+        if (![self.titleField.text isEqualToString:@""]) {
+            [self.submitEditButton setEnabled:YES];
+            self.submitEditButton.alpha = 1.0;
+        }
+    }
     [self hideKeyboard];
 }
 
 #pragma mark - Text Edit Resign First Responder
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self hideKeyboard];
+    if (self.photoImageView.image != [UIImage imageNamed:@"add photo"]) {
+        if (![self.descriptionView.text isEqualToString:@"Enter date description here..."]) {
+            [self.submitEditButton setEnabled:YES];
+            self.submitEditButton.alpha = 1.0;
+        }
+    }
     return YES;
 }
 
