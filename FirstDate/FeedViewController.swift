@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import Parse
 
 class FeedViewController: UIViewController {
     
+    var ideas: [DateIdea] = [DateIdea]()
+    
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
     
+    var dateView: DateView!
+    var incomingDateView: DateView!
+    
+    var doubleTapRecognizer: UITapGestureRecognizer!
     var panRecognizer: UIPanGestureRecognizer!
     
-    var incomingDateView: DateView!
-    var dateView: DateView!
+    var activityIndicator: UIActivityIndicatorView!
     
     var animator:UIDynamicAnimator!
     var snapBehavior: UISnapBehavior!
@@ -25,9 +31,20 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dateView = getDateView()
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        view.insertSubview(activityIndicator, belowSubview: visualEffectView)
+        activityIndicator.startAnimating()
         
         animator = UIDynamicAnimator(referenceView: view)
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchDateIdeas()
+        
+        dateView = getDateView()
         
     }
     
@@ -37,8 +54,22 @@ class FeedViewController: UIViewController {
         
     }
     
+    func fetchDateIdeas() {
+        let query = PFQuery(className: "DateIdea")
+        query.limit = 10;
+        query.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
+            if (error != nil) {
+                self.ideas += dateIdeas as! [DateIdea]
+//                self.activityIndicator.stopAnimating()
+            }
+        }
+    }
+    
     func getDateView() -> DateView {
         let dv = NSBundle.mainBundle().loadNibNamed("DateView", owner:self, options: nil)[0] as! DateView
+        if self.ideas.count > 0 {
+            dv.idea = self.ideas.removeFirst()
+        }
         
         view.insertSubview(dv, aboveSubview: visualEffectView)
         
@@ -56,10 +87,17 @@ class FeedViewController: UIViewController {
         
         view.addConstraints([dateViewCenterX, dateViewCenterY, dateViewHeight, dateViewLeadingMargin, dateViewTrailingMargin])
         
+        doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "handleDoubleTapGesture:")
+        dv.addGestureRecognizer(doubleTapRecognizer)
+        
         panRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         dv.addGestureRecognizer(panRecognizer)
         
         return dv
+    }
+    
+    func handleDoubleTapGesture(sender: UITapGestureRecognizer) {
+        
     }
 
     func handlePanGesture(sender: UIPanGestureRecognizer) {
@@ -94,7 +132,7 @@ class FeedViewController: UIViewController {
             animator.addBehavior(attachmentBehavior.1)
         } else if sender.state == UIGestureRecognizerState.Changed {
             attachmentBehavior.0.anchorPoint = location
-            attachmentBehavior.1.anchorPoint = location
+            attachmentBehavior.1.anchorPoint = CGPoint(x: location.x - 100, y: location.y - 500)
         } else if sender.state == UIGestureRecognizerState.Ended {
             animator.removeBehavior(attachmentBehavior.0)
             
@@ -103,7 +141,7 @@ class FeedViewController: UIViewController {
             
             animator.removeBehavior(attachmentBehavior.1)
             
-            snapBehavior = UISnapBehavior(item: incomingDateView, snapToPoint: CGPoint(x: view.frame.size.width/2, y: -1000))
+            snapBehavior = UISnapBehavior(item: incomingDateView, snapToPoint: CGPoint(x: view.frame.size.width/2, y: -300))
             animator.addBehavior(snapBehavior)
             
             let translation = sender.translationInView(view)
@@ -121,6 +159,10 @@ class FeedViewController: UIViewController {
                 delay(0.3, closure: { () -> () in
                     self.dateView.removeFromSuperview()
                     self.dateView = self.incomingDateView
+                    
+                    if self.ideas.count < 5 {
+                        self.fetchDateIdeas()
+                    }
                 })
             }
         }
