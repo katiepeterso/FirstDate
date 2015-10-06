@@ -41,7 +41,6 @@ const CGFloat coverPhotoOffset = 30;
     self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
     self.userPhotoImageView.layer.masksToBounds = true;
     
-//    PhotoHelper *photoHelper = [[PhotoHelper alloc]init];
     [PhotoHelper getPhotoInBackground:self.currentUser.userPhoto completionHandler:^(UIImage *userPhoto) {
         self.userPhotoImageView.image = userPhoto;
     }];
@@ -50,7 +49,7 @@ const CGFloat coverPhotoOffset = 30;
     }];
     
     self.kTableHeaderHeight = self.photoImageView.frame.size.height;
-    [self updateHeaderView];
+//    [self updateHeaderView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -87,32 +86,7 @@ const CGFloat coverPhotoOffset = 30;
 
 #pragma mark - Image Picker and display
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
-    
-    UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
-    pickerController.delegate = self;
-    pickerController.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Photo Library" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:pickerController animated:YES completion:nil];
-        
-    }]];
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Take Photo or Video" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self presentViewController:pickerController animated:YES completion:nil];
-            
-        }]];
-    }
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-    
+    [PhotoHelper displayImagePicker:self delegate:self];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -162,12 +136,7 @@ const CGFloat coverPhotoOffset = 30;
         CGRect frame = CGRectMake(self.photoImageView.frame.origin.x, self.collectionView.contentOffset.y, self.photoImageView.frame.size.width, -self.collectionView.contentOffset.y+coverPhotoOffset);
         self.photoImageView.frame = frame;
     }
-    
     [self addDiagonalMaskToImage];
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self updateHeaderView];
 }
 
 -(void)addDiagonalMaskToImage {

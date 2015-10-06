@@ -10,6 +10,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Parse/Parse.h>
 #import "User.h"
+#import "FirstDate-Swift.h"
 
 @interface SignupViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
 
@@ -62,32 +63,7 @@
 
 #pragma mark - Image Picker and display
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
-    
-    UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
-    pickerController.delegate = self;
-    pickerController.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Photo Library" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:pickerController animated:YES completion:nil];
-        
-    }]];
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Take Photo or Video" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self presentViewController:pickerController animated:YES completion:nil];
-            
-        }]];
-    }
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-    
+    [PhotoHelper displayImagePicker:self delegate:self];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -122,7 +98,7 @@
         
         if (self.photoImageView.image) {
             NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
-//            newUser.photo = [PFFile fileWithData:data];
+            newUser.userPhoto = [PFFile fileWithData:data];
         }
         
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
