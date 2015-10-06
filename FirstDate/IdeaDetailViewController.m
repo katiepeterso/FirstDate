@@ -68,9 +68,9 @@
         [descriptionCell setDateIdea:self.dateIdea];
         return descriptionCell;
     }else {
-        CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:@"commentCell" forIndexPath:indexPath];
-        [commentCell setDateIdea:self.dateIdea andComment:self.comments[indexPath.row - 2]];
-        return commentCell;
+//        CommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:@"commentCell" forIndexPath:indexPath];
+//        [commentCell setDateIdea:self.dateIdea andComment:self.comments[indexPath.row - 2]];
+        return nil; //TODO: remove this
     }
 }
 

@@ -32,7 +32,10 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityIndicator.center = view.center
+        activityIndicator.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
         view.insertSubview(activityIndicator, belowSubview: visualEffectView)
+        
         activityIndicator.startAnimating()
         
         animator = UIDynamicAnimator(referenceView: view)
@@ -42,31 +45,41 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchDateIdeas()
+        fetchDateIdeas() {
+            self.dateView = self.getDateView()
+            
+            if let dateView = self.dateView {
+                self.snapBehavior = UISnapBehavior(item: dateView, snapToPoint: self.view.center)
+                self.animator.addBehavior(self.snapBehavior)
+            }
+            
+            
+        }
         
-        dateView = getDateView()
         
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.snapBehavior = UISnapBehavior(item: self.dateView!, snapToPoint: self.view.center)
-        self.animator.addBehavior(self.snapBehavior)
+
         
     }
     
-    func fetchDateIdeas() {
+    func fetchDateIdeas(completion: (Void -> Void)?) {
         let query = PFQuery(className: "DateIdea")
+        query.includeKey("user")
         query.limit = 10;
         query.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
-            if (error != nil) {
+            if (error == nil) {
                 self.ideas += dateIdeas as! [DateIdea]
-//                self.activityIndicator.stopAnimating()
+                self.activityIndicator.stopAnimating()
+                completion?()
             }
         }
     }
     
     func getDateView() -> DateView {
         let dv = NSBundle.mainBundle().loadNibNamed("DateView", owner:self, options: nil)[0] as! DateView
+        
         if self.ideas.count > 0 {
             dv.idea = self.ideas.removeFirst()
         }
@@ -92,6 +105,8 @@ class FeedViewController: UIViewController {
         
         panRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         dv.addGestureRecognizer(panRecognizer)
+
+
         
         return dv
     }
@@ -161,10 +176,22 @@ class FeedViewController: UIViewController {
                     self.dateView = self.incomingDateView
                     
                     if self.ideas.count < 5 {
-                        self.fetchDateIdeas()
+                        self.fetchDateIdeas(nil)
                     }
                 })
             }
+        }
+    }
+    
+    // MARK: -Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showAdd" {
+            
+        } else if segue.identifier == "showDetail" {
+            
+        } else if segue.identifier == "showProfile" {
+            
         }
     }
     

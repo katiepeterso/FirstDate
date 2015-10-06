@@ -23,9 +23,13 @@ class DateView: UIView {
     
     var idea: DateIdea? {
         didSet {
-            dateTitleLabel.text = idea?.title ?? ""
-            usernameLabel.text = idea?.user.username
             
+            guard let i = idea else {
+                return
+            }
+            
+            dateTitleLabel.text = i.title ?? ""
+            usernameLabel.text = i.user?.username
         }
     }
     
