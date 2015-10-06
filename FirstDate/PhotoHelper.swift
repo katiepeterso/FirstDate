@@ -10,7 +10,7 @@ import UIKit
 import ParseUI
 import Parse
 
-@objc class PhotoHelper: NSObject {
+@objc class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 //    var photo = UIImage()
     
     class func getPhotoInBackground(file: PFFile, completionHandler:(resultImage:UIImage?) -> Void) {
@@ -26,6 +26,35 @@ import Parse
         } else {
             completionHandler(resultImage: UIImage(named: "add photo")!)
         }
+    }
+    
+    
+    class func displayImagePicker(controller: UIViewController, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = delegate
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+            pickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            controller.presentViewController(pickerController, animated: true, completion: nil)
+        }
+        alertController.addAction(photoLibraryAction)
+            
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            let cameraAction = UIAlertAction(title: "Take Photo or Video", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+                pickerController.sourceType = UIImagePickerControllerSourceType.Camera
+                controller.presentViewController(pickerController, animated: true, completion: nil)
+            })
+            alertController.addAction(cameraAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (UIAlertAction) -> Void in
+            controller.dismissViewControllerAnimated(true, completion: nil)
+        })
+        alertController.addAction(cancelAction)
+        
+        controller.presentViewController(alertController, animated: true, completion: nil)
     }
 }
 

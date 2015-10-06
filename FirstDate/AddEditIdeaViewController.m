@@ -13,6 +13,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Parse/Parse.h>
 #import <ParseUI/ParseUI.h>
+#import "FirstDate-Swift.h"
 
 @interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 
@@ -33,6 +34,7 @@
     
     self.imageIsPicked = NO;
     self.photoLabel.text = @"Select date photo";
+    self.photoImageView.image = [UIImage imageNamed:@"add photo"];
     
     self.titleField.text = @"";
     self.titleField.delegate = self;
@@ -62,30 +64,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 1) {
-        UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
-        pickerController.delegate = self;
-        pickerController.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Photo Library" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            [self presentViewController:pickerController animated:YES completion:nil];
-            
-        }]];
-        
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [alertController addAction:[UIAlertAction actionWithTitle:@"Take Photo or Video" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-                [self presentViewController:pickerController animated:YES completion:nil];
-                
-            }]];
-        }
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }]];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
+        [PhotoHelper displayImagePicker:self delegate:self];
     }
 }
 
@@ -122,6 +101,7 @@
     
     [self.tabBarController setSelectedIndex:0];
     self.photoLabel.text = @"Select date photo";
+    self.photoImageView.image = [UIImage imageNamed:@"add photo"];
     self.titleField.text = @"";
     self.descriptionView.text = @"Enter date description here...";
     self.descriptionView.textColor = [UIColor lightGrayColor];
