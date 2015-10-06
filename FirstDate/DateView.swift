@@ -1,5 +1,5 @@
 //
-//  IdeaView.swift
+//  DateView.swift
 //  FirstDate
 //
 //  Created by Alp Eren Can on 04/10/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IdeaView: UIView {
+class DateView: UIView {
     
     // MARK: Properties & Outlets
     
@@ -21,10 +21,10 @@ class IdeaView: UIView {
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var heartCountLabel: UILabel!
     
-    var dateIdea: DateIdea? {
+    var idea: DateIdea? {
         didSet {
-            dateTitleLabel.text = dateIdea?.title ?? ""
-            usernameLabel.text = dateIdea?.user.username
+            dateTitleLabel.text = idea?.title ?? ""
+            usernameLabel.text = idea?.user.username
             
         }
     }

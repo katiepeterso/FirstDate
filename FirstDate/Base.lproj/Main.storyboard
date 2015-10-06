@@ -719,7 +719,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                             </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bmf-u8-lCP">
+                            <visualEffectView opaque="NO" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bmf-u8-lCP">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GwR-QS-9Qn">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -745,15 +745,10 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="panRecognizer" destination="L78-dd-vd4" id="3OH-Wf-HMi"/>
+                        <outlet property="visualEffectView" destination="Bmf-u8-lCP" id="Wn7-QX-AjD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0E-g0-tzb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="L78-dd-vd4">
-                    <connections>
-                        <action selector="handlePanGesture:" destination="bFH-xD-8zS" id="RVy-gh-SG2"/>
-                    </connections>
-                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1814.5" y="-387.5"/>
         </scene>
