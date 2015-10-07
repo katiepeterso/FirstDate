@@ -405,7 +405,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea" translatesAutoresizingMaskIntoConstraints="NO" id="XrB-Qy-gKJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="XrB-Qy-gKJ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                             </imageView>
@@ -883,7 +883,7 @@
     <resources>
         <image name="add photo" width="240" height="240"/>
         <image name="bg" width="750" height="1334"/>
-        <image name="bg_idea" width="750" height="1334"/>
+        <image name="bg_idea_2" width="345" height="360"/>
         <image name="bg_signup" width="750" height="1334"/>
         <image name="create" width="22" height="30"/>
         <image name="hearted" width="27" height="21"/>
