@@ -34,8 +34,6 @@
     // Initialize Parse.
     [Parse setApplicationId:PARSE_API_APPLICATION_ID clientKey:PARSE_API_CLIENT_KEY];
     
-    self.ideas = [NSMutableArray array];
-    
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     return YES;

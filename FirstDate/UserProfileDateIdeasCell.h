@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class DateIdea;
+@class Heart;
 
 @interface UserProfileDateIdeasCell : UICollectionViewCell
 
 @property (nonatomic) DateIdea *currentDateIdea;
+@property (nonatomic) Heart *currentHeart;
 
 - (void)setDateIdea:(DateIdea *)dateIdea;
+- (void)setHeart:(Heart *)heart;
 
 @end
