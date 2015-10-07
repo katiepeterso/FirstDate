@@ -17,9 +17,13 @@ class DateView: UIView {
     
     // MARK: Properties & Outlets
     
+    weak var delegate: DateViewDelegate!
+    
     @IBOutlet weak var view: UIView!
     
     @IBOutlet weak var dateImageView: UIImageView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var dateTitleLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -38,8 +42,6 @@ class DateView: UIView {
         }
     }
     
-    weak var delegate: DateViewDelegate?
-    
     func setup() {
         layer.cornerRadius = frame.height / 24.0
     }
@@ -50,8 +52,9 @@ class DateView: UIView {
     }
     
     @IBAction func hearted(button: UIButton) {
-        heartButton.setImage(UIImage(named: "hearted"), forState: .Normal)
-        
-        delegate?.dateViewDidHeart(self)
+        if (delegate.dateViewShouldHeart(self)) {
+            button.setImage(UIImage(named: "hearted"), forState: .Normal)
+            delegate.dateViewDidHeart(self)
+        }
     }
 }
