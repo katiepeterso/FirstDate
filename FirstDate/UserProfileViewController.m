@@ -140,6 +140,7 @@ const CGFloat coverPhotoOffset = 50;
     
     if (self.userIdeasControl.selectedSegmentIndex == 0) {
         if (self.createdDateIdeas.count) {
+            
             [cell setDateIdea:self.createdDateIdeas[indexPath.row]];
         }
     }else {

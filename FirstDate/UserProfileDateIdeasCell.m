@@ -27,14 +27,13 @@
     
     self.dateIdeaLabel.text = date.title;
     
+    self.dateIdeaImageView.image = nil;
     [PhotoHelper getPhotoInBackground:date.photo completionHandler:^(UIImage *datePhoto) {
-        self.dateIdeaImageView.image = datePhoto;
+        if ([date.objectId isEqualToString:self.currentDateIdea.objectId] ) {
+            self.dateIdeaImageView.image = datePhoto;
+        }
+        
     }];
-}
-
-
-- (void)awakeFromNib {
-    //    [self setup];
 }
 
 - (void)setDateIdea:(DateIdea *)dateIdea {

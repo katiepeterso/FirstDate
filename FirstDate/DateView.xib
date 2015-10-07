@@ -150,6 +150,5 @@
         <image name="add photo" width="240" height="240"/>
         <image name="bg_idea" width="750" height="1334"/>
         <image name="heart" width="27" height="21"/>
-        <image name="hearted" width="27" height="21"/>
     </resources>
 </document>
