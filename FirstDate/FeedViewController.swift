@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import Spring
 
 class FeedViewController: UIViewController, DateViewDelegate {
     

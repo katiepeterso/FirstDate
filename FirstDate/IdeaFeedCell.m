@@ -8,7 +8,6 @@
 
 #import "IdeaFeedCell.h"
 #import <UIKit/UIKit.h>
-#import "IdeasFeedViewController.h"
 #import "IdeaDetailViewController.h"
 #import "FirstDate-Swift.h"
 #import "Heart.h"

@@ -49,6 +49,10 @@
     [self setInitialAddViewState];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -93,8 +97,6 @@
     }
     
     self.currentDateIdea.user = [User currentUser];
-    
-//    [self.currentDateIdea pinInBackgroundWithName:USER_DATA_PINNING_LABEL];
     [self.currentDateIdea saveEventually];
     
     [self dismissViewControllerAnimated:YES completion:nil];
