@@ -8,6 +8,8 @@
 
 #import "UserProfileDateIdeasCell.h"
 #import "DateIdea.h"
+#import "FirstDate-Swift.h"
+#import "Heart.h"
 
 @interface UserProfileDateIdeasCell ()
 
@@ -18,16 +20,16 @@
 
 @implementation UserProfileDateIdeasCell
 
-- (void)setup {
+- (void)setupForDate:(DateIdea *)date {
     
-    self.dateIdeaLabel.text = self.currentDateIdea.title;
-    if ([self.currentDateIdea.photo isDataAvailable]) {
-        [self.currentDateIdea.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!error) {
-                self.dateIdeaImageView.image = [UIImage imageWithData:data];
-            }
-        }];
-    }
+    self.layer.cornerRadius = self.frame.size.height / 12.0;
+    self.layer.masksToBounds = true;
+    
+    self.dateIdeaLabel.text = date.title;
+    
+    [PhotoHelper getPhotoInBackground:date.photo completionHandler:^(UIImage *datePhoto) {
+        self.dateIdeaImageView.image = datePhoto;
+    }];
 }
 
 
@@ -38,7 +40,12 @@
 - (void)setDateIdea:(DateIdea *)dateIdea {
     _currentDateIdea = dateIdea;
     
-    [self setup];
+    [self setupForDate:self.currentDateIdea];
+}
+
+- (void)setHeart:(Heart *)heart {
+    _currentHeart = heart;
+    [self setupForDate:self.currentHeart.dateIdea];
 }
 
 

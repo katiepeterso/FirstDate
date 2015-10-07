@@ -11,20 +11,15 @@ import ParseUI
 import Parse
 
 @objc class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    var photo = UIImage()
     
     class func getPhotoInBackground(file: PFFile, completionHandler:(resultImage:UIImage?) -> Void) {
-        if file.isDataAvailable {
-            file.getDataInBackgroundWithBlock{
-                (imageData: NSData?, error: NSError?) -> Void in
-                if (error == nil && imageData != nil) {
-                        completionHandler(resultImage: UIImage(data:imageData!))
-                } else {
-                    completionHandler(resultImage: nil)
-                }
+        file.getDataInBackgroundWithBlock{
+            (imageData: NSData?, error: NSError?) -> Void in
+            if (error == nil && imageData != nil) {
+                    completionHandler(resultImage: UIImage(data:imageData!))
+            } else {
+                completionHandler(resultImage: UIImage(named: "add photo")!)
             }
-        } else {
-            completionHandler(resultImage: UIImage(named: "add photo")!)
         }
     }
     
@@ -49,12 +44,15 @@ import Parse
             alertController.addAction(cameraAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (UIAlertAction) -> Void in
-            controller.dismissViewControllerAnimated(true, completion: nil)
-        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         controller.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    class func setView(view: UIImageView, toImage: UIImage) -> NSData {
+        view.image = toImage
+        return UIImageJPEGRepresentation(toImage, 0.95)!
     }
 }
 

@@ -31,30 +31,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.imageIsPicked = NO;
-    self.photoLabel.text = @"Select date photo";
-    self.photoImageView.image = [UIImage imageNamed:@"add photo"];
-    
-    self.titleField.text = @"";
+
     self.titleField.delegate = self;
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
     [self.titleField setLeftViewMode:UITextFieldViewModeAlways];
     [self.titleField setLeftView:spacerView];
     
-    self.descriptionView.text = @"Enter date description here...";
-    self.descriptionView.textColor = [UIColor lightGrayColor];
     self.descriptionView.delegate = self;
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
-    
     [accessoryView setItems:@[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
     
     self.titleField.inputAccessoryView = accessoryView;
     self.descriptionView.inputAccessoryView = accessoryView;
-    [self.submitEditButton setEnabled:NO];
-    self.submitEditButton.alpha = 0.5;
+    
+    [self setInitialAddViewState];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,13 +63,11 @@
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
-    
     if (!self.currentDateIdea) {
         self.currentDateIdea = [[DateIdea alloc]init];
     }
     
-    NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
+    NSData* data = [PhotoHelper setView:self.photoImageView toImage:info[UIImagePickerControllerOriginalImage]];
     self.currentDateIdea.photo = [PFFile fileWithData:data];
     [self.currentDateIdea.photo saveInBackground];
     
@@ -104,18 +94,12 @@
     
     self.currentDateIdea.user = [User currentUser];
     
-    [self.currentDateIdea pinInBackgroundWithName:USER_DATA_PINNING_LABEL];
+//    [self.currentDateIdea pinInBackgroundWithName:USER_DATA_PINNING_LABEL];
     [self.currentDateIdea saveEventually];
     
-    [self.tabBarController setSelectedIndex:0];
-    self.photoLabel.text = @"Select date photo";
-    self.photoImageView.image = [UIImage imageNamed:@"add photo"];
-    self.titleField.text = @"";
-    self.descriptionView.text = @"Enter date description here...";
-    self.descriptionView.textColor = [UIColor lightGrayColor];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self setInitialAddViewState];
     self.currentDateIdea = nil;
-    [self.submitEditButton setEnabled:NO];
-    self.submitEditButton.alpha = 0.5;
 }
 
 #pragma mark - Text view placeholder
@@ -124,7 +108,7 @@
 {
     if ([textView.text isEqualToString:@"Enter date description here..."]) {
         textView.text = @"";
-        textView.textColor = [UIColor blackColor];
+        textView.textColor = [UIColor darkGrayColor];
     }
     [textView becomeFirstResponder];
 }
@@ -159,6 +143,21 @@
 - (void)hideKeyboard {
     [self.titleField resignFirstResponder];
     [self.descriptionView resignFirstResponder];
+}
+
+#pragma mark - Setup states for add view
+
+-(void)setInitialAddViewState {
+    self.photoLabel.text = @"Select date photo";
+    self.photoImageView.image = [UIImage imageNamed:@"add photo"];
+    self.imageIsPicked = NO;
+    
+    self.titleField.text = @"";
+    self.descriptionView.text = @"Enter date description here...";
+    self.descriptionView.textColor = [UIColor lightGrayColor];
+
+    [self.submitEditButton setEnabled:NO];
+    self.submitEditButton.alpha = 0.5;
 }
 
 @end

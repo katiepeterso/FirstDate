@@ -16,15 +16,16 @@
 const CGFloat coverPhotoOffset = 50;
 
 @interface UserProfileViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-@property (strong, nonatomic) User *currentUser;
 @property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (nonatomic) NSMutableArray *createdDateIdeas;
+@property (nonatomic) NSMutableArray *heartedDateIdeas;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
-@property (nonatomic) CGFloat kTableHeaderHeight;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (nonatomic) BOOL userPhotoSelected;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *userIdeasControl;
 
 @end
 
@@ -34,48 +35,50 @@ const CGFloat coverPhotoOffset = 50;
     [super viewDidLoad];
     
     self.createdDateIdeas = [NSMutableArray array];
-    self.currentUser = [User currentUser];
+    self.heartedDateIdeas = [NSMutableArray array];
     
-    self.fullNameLabel.text = self.currentUser.username;
-    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.currentUser.age];
+    self.fullNameLabel.text = User.currentUser.username;
+    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",User.currentUser.age];
     
     self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
     self.userPhotoImageView.layer.masksToBounds = true;
     
-    [PhotoHelper getPhotoInBackground:self.currentUser.userPhoto completionHandler:^(UIImage *userPhoto) {
+    [PhotoHelper getPhotoInBackground:User.currentUser.userPhoto completionHandler:^(UIImage *userPhoto) {
         self.userPhotoImageView.image = userPhoto;
     }];
-    [PhotoHelper getPhotoInBackground:self.currentUser.coverPhoto completionHandler:^(UIImage *coverPhoto) {
+    [PhotoHelper getPhotoInBackground:User.currentUser.coverPhoto completionHandler:^(UIImage *coverPhoto) {
         self.photoImageView.image = coverPhoto;
     }];
     
-    self.kTableHeaderHeight = self.photoImageView.frame.size.height;
     [self addDiagonalMaskToImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self fetchIdeas];
-    [self.collectionView reloadData];
+    [self fetchHearts];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)fetchIdeas {
-    PFQuery *getLocalIdeas = [PFQuery queryWithClassName:@"DateIdea"];
-    [getLocalIdeas whereKey:@"user" equalTo:[User currentUser]];
-    [getLocalIdeas fromLocalDatastore];
-    [getLocalIdeas findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-        if (results.count) {
-            self.createdDateIdeas = [results mutableCopy];
+    PFQuery *getNetworkIdeas = [PFQuery queryWithClassName:@"DateIdea"];
+    [getNetworkIdeas whereKey:@"user" equalTo:[User currentUser]];
+    [getNetworkIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count) {
+            self.createdDateIdeas = [objects mutableCopy];
             [self.collectionView reloadData];
-        } else {
-            PFQuery *getNetworkIdeas = [PFQuery queryWithClassName:@"DateIdea"];
-            [getNetworkIdeas whereKey:@"user" equalTo:[User currentUser]];
-            [getNetworkIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-                if (results.count) {
-                    self.createdDateIdeas = [results mutableCopy];
-                    [self.collectionView reloadData];
-                }
-            }];
+        }
+    }];
+}
+
+- (void)fetchHearts {
+    PFQuery *getHearts = [PFQuery queryWithClassName:@"Heart"];
+    [getHearts whereKey:@"user" equalTo:[User currentUser]];
+    [getHearts includeKey:@"dateIdea"];
+    [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count) {
+            self.heartedDateIdeas = [objects mutableCopy];
+            [self.collectionView reloadData];
         }
     }];
 }
@@ -88,30 +91,44 @@ const CGFloat coverPhotoOffset = 50;
 #pragma mark - Image Picker and display
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
     [PhotoHelper displayImagePicker:self delegate:self];
+    self.userPhotoSelected = NO;
+}
+
+- (IBAction)userPhotoTapped:(UITapGestureRecognizer *)sender {
+    [PhotoHelper displayImagePicker:self delegate:self];
+    self.userPhotoSelected = YES;
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
-    if (self.photoImageView.image) {
-        NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
-        self.currentUser.coverPhoto = [PFFile fileWithData:data];
+
+    if (info[UIImagePickerControllerOriginalImage]) {
+        if (self.userPhotoSelected) {
+            NSData *data = [PhotoHelper setView:self.userPhotoImageView toImage:info[UIImagePickerControllerOriginalImage]];
+            User.currentUser.userPhoto = [PFFile fileWithData:data];
+        }else {
+            NSData *data = [PhotoHelper setView:self.photoImageView toImage:info[UIImagePickerControllerOriginalImage]];
+            User.currentUser.coverPhoto = [PFFile fileWithData:data];
+        }
     }
     
-    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [User.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             // The object has been saved.
         } else {
-            // There was a problem, check error.description
+            NSLog(@"Error saving cover photo");
         }
     }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
 #pragma mark - Collection View Delegate
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
-    return self.createdDateIdeas.count;
+    if (self.userIdeasControl.selectedSegmentIndex == 0) {
+        return self.createdDateIdeas.count;
+    }else {
+        return self.heartedDateIdeas.count;
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
@@ -121,8 +138,14 @@ const CGFloat coverPhotoOffset = 50;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UserProfileDateIdeasCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"userIdeaCell" forIndexPath:indexPath];
     
-    if (self.createdDateIdeas.count) {
-        [cell setDateIdea:self.createdDateIdeas[indexPath.row]];
+    if (self.userIdeasControl.selectedSegmentIndex == 0) {
+        if (self.createdDateIdeas.count) {
+            [cell setDateIdea:self.createdDateIdeas[indexPath.row]];
+        }
+    }else {
+        if (self.heartedDateIdeas.count) {
+            [cell setHeart:self.heartedDateIdeas[indexPath.row]];
+        }
     }
     return cell;
 }
@@ -141,6 +164,9 @@ const CGFloat coverPhotoOffset = 50;
     self.headerView.layer.mask = maskLayer;
 }
 
-
+#pragma mark - Segmented Control
+- (IBAction)userIdeasControlAction:(UISegmentedControl *)sender {
+    [self.collectionView reloadData];
+}
 
 @end

@@ -66,7 +66,7 @@
                 [self presentViewController:alertController animated:YES completion:nil];
                 
             } else {
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
     }
