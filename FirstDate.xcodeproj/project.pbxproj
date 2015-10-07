@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AA41877B1BC301E90044A60D /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA41877A1BC301E90044A60D /* PhotoHelper.swift */; settings = {ASSET_TAGS = (); }; };
-		AA52F2C01BB39D7700E52B43 /* Heart.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52F2BF1BB39D7700E52B43 /* Heart.m */; };
 		AABD120F1BC5CE5A00A3236C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
@@ -34,8 +33,6 @@
 		3FDF7E20801C91CB5916C438 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90BA5665804395EF77725357 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AA41877A1BC301E90044A60D /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
-		AA52F2BE1BB39D7700E52B43 /* Heart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heart.h; sourceTree = "<group>"; };
-		AA52F2BF1BB39D7700E52B43 /* Heart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Heart.m; sourceTree = "<group>"; };
 		AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AAD8D9FD1BAE04BB00218CC9 /* FirstDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD8DA011BAE04BB00218CC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -103,8 +100,6 @@
 				C70460301BB210EF005D8335 /* Comment.swift */,
 				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
 				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
-				AA52F2BE1BB39D7700E52B43 /* Heart.h */,
-				AA52F2BF1BB39D7700E52B43 /* Heart.m */,
 				C73AA5ED1BB0B88B00EAD889 /* User.h */,
 				C73AA5EE1BB0B88B00EAD889 /* User.m */,
 			);
@@ -119,11 +114,11 @@
 				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
 				C752C5151BB36DCE00651DC9 /* LoginViewController.m */,
 				C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */,
+				AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */,
 				C73AA5E71BB0B42200EAD889 /* AddEditIdeaViewController.h */,
 				C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */,
 				AAEDA22D1BB4FFD8008C61FF /* UserProfileViewController.h */,
 				AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */,
-				AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -256,7 +251,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA52F2C01BB39D7700E52B43 /* Heart.m in Sources */,
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
 				AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */,
