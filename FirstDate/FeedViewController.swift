@@ -53,14 +53,12 @@ class FeedViewController: UIViewController, DateViewDelegate {
                 if self.dateView == nil {
                     self.dateView = self.getDateView()
                     self.dateView.delegate = self
-                    if let dateView = self.dateView {
-                        self.snapBehavior = UISnapBehavior(item: dateView, snapToPoint: self.view.center)
-                        self.animator.addBehavior(self.snapBehavior)
-                        for constraint in self.view.constraints {
-                            if let identifier = constraint.identifier {
-                                if identifier == "dateViewCenterY" {
-                                    constraint.constant = 0.0
-                                }
+                    self.snapBehavior = UISnapBehavior(item: self.dateView, snapToPoint: self.view.center)
+                    self.animator.addBehavior(self.snapBehavior)
+                    for constraint in self.view.constraints {
+                        if let identifier = constraint.identifier {
+                            if identifier == "dateViewCenterY" {
+                                constraint.constant = 0.0
                             }
                         }
                     }
@@ -93,7 +91,7 @@ class FeedViewController: UIViewController, DateViewDelegate {
         
         dv.translatesAutoresizingMaskIntoConstraints = false
         
-        let dateViewCenterX = NSLayoutConstraint(item: dv,attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant:0.0)
+        let dateViewCenterX = NSLayoutConstraint(item: dv,attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0.0)
         
         let dateViewCenterY = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: -1000.0)
         dateViewCenterY.identifier = "dateViewCenterY"
@@ -186,6 +184,18 @@ class FeedViewController: UIViewController, DateViewDelegate {
                         self.fetchDateIdeas(nil)
                     }
                 })
+            } else if translation.y < -100 {
+                animator.removeAllBehaviors()
+                
+                UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+                    self.dateView.frame = self.view.frame
+                    self.dateView.layer.cornerRadius = 0
+                    self.dateView.dateImageView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width / 2, self.view.frame.height / 2)
+                    self.dateView.headerView.alpha = 0
+                    self.dateView.footerView.alpha = 0
+                    }, completion: { finished in
+                        self.performSegueWithIdentifier("showDetail", sender: self)
+                })
             }
         }
     }
@@ -194,11 +204,16 @@ class FeedViewController: UIViewController, DateViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showAdd" {
+            if User.currentUser() == nil {
+                performSegueWithIdentifier("showLogin", sender: sender)
+            }
             
         } else if segue.identifier == "showDetail" {
             
         } else if segue.identifier == "showProfile" {
-            
+            if User.currentUser() == nil {
+                performSegueWithIdentifier("showLogin", sender: sender)
+            }
         }
     }
     
@@ -219,12 +234,19 @@ class FeedViewController: UIViewController, DateViewDelegate {
         if (User.currentUser() != nil) {
             return true
         } else {
+//            performSegueWithIdentifier("showLogin", sender: <#T##AnyObject?#>)
             return false
         }
     }
     
     func dateViewDidHeart(dateView: DateView) {
+        let relationForUser = User.currentUser()?.relationForKey("hearts")
+        relationForUser?.addObject(dateView.idea!)
+        User.currentUser()?.saveInBackground()
         
+        let relationForDateIdea = dateView.idea!.relationForKey("heartedBy")
+        relationForDateIdea.addObject(User.currentUser()!)
+        dateView.idea!.saveInBackground()
     }
 
 }

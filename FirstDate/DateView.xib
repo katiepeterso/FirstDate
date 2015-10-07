@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -15,7 +15,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ee-zo-09u">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea" translatesAutoresizingMaskIntoConstraints="NO" id="wt0-ZY-aLs">
+                        <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="wt0-ZY-aLs">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             <animations/>
                         </imageView>
@@ -85,9 +85,12 @@
                                         <constraint firstAttribute="width" secondItem="xCY-m0-2SQ" secondAttribute="height" multiplier="1:1" id="wxe-wC-JTu"/>
                                     </constraints>
                                     <state key="normal" image="heart"/>
+                                    <connections>
+                                        <action selector="hearted:" destination="iN0-l3-epB" eventType="touchUpInside" id="Lii-bp-Zmg"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2J-X6-acm">
-                                    <rect key="frame" x="338.5" y="21" width="41.5" height="20.5"/>
+                                    <rect key="frame" x="338" y="21" width="42" height="21"/>
                                     <animations/>
                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -137,6 +140,8 @@
             <connections>
                 <outlet property="dateImageView" destination="wt0-ZY-aLs" id="exI-nu-dLo"/>
                 <outlet property="dateTitleLabel" destination="H6T-oE-yRL" id="skR-ha-cE6"/>
+                <outlet property="footerView" destination="mi2-NU-LzD" id="Z20-FM-YGT"/>
+                <outlet property="headerView" destination="8zW-Uy-u5Y" id="iip-HS-7rA"/>
                 <outlet property="heartButton" destination="xCY-m0-2SQ" id="HMS-um-68a"/>
                 <outlet property="heartCountLabel" destination="l2J-X6-acm" id="Q1u-tL-cBR"/>
                 <outlet property="userImageView" destination="Mss-kf-R9s" id="MbM-vU-qLH"/>
@@ -148,7 +153,7 @@
     </objects>
     <resources>
         <image name="add photo" width="240" height="240"/>
-        <image name="bg_idea" width="750" height="1334"/>
+        <image name="bg_idea_2" width="345" height="360"/>
         <image name="heart" width="27" height="21"/>
     </resources>
 </document>
