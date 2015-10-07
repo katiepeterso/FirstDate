@@ -11,7 +11,6 @@
 		AA52F2C01BB39D7700E52B43 /* Heart.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52F2BF1BB39D7700E52B43 /* Heart.m */; };
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
-		AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */; };
 		AAD8DA0B1BAE04BB00218CC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA091BAE04BB00218CC9 /* Main.storyboard */; };
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
@@ -45,8 +44,6 @@
 		AAD8DA011BAE04BB00218CC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AAD8DA031BAE04BB00218CC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdeasFeedViewController.h; sourceTree = "<group>"; };
-		AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdeasFeedViewController.m; sourceTree = "<group>"; };
 		AAD8DA0A1BAE04BB00218CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAD8DA0F1BAE04BB00218CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -134,8 +131,6 @@
 				C752C5131BB36DCE00651DC9 /* SignupViewController.m */,
 				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
 				C752C5151BB36DCE00651DC9 /* LoginViewController.m */,
-				AAD8DA061BAE04BB00218CC9 /* IdeasFeedViewController.h */,
-				AAD8DA071BAE04BB00218CC9 /* IdeasFeedViewController.m */,
 				C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */,
 				C73AA5DB1BB0B10300EAD889 /* IdeaDetailViewController.h */,
 				C73AA5DC1BB0B10300EAD889 /* IdeaDetailViewController.m */,
@@ -285,7 +280,6 @@
 			files = (
 				AA52F2C01BB39D7700E52B43 /* Heart.m in Sources */,
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
-				AAD8DA081BAE04BB00218CC9 /* IdeasFeedViewController.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
 				C73AA5E31BB0B39700EAD889 /* IdeaDescriptionCell.m in Sources */,
 				AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */,

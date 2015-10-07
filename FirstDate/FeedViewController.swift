@@ -8,8 +8,9 @@
 
 import UIKit
 import Parse
+import Spring
 
-class FeedViewController: UIViewController {
+class FeedViewController: UIViewController, DateViewDelegate {
     
     var ideas: [DateIdea] = [DateIdea]()
     
@@ -45,23 +46,28 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchDateIdeas() {
-            self.dateView = self.getDateView()
-            
-            if let dateView = self.dateView {
-                self.snapBehavior = UISnapBehavior(item: dateView, snapToPoint: self.view.center)
-                self.animator.addBehavior(self.snapBehavior)
+        navigationController?.navigationBarHidden = true
+        
+        if self.ideas.count == 0 {
+            fetchDateIdeas() {
+                
+                if self.dateView == nil {
+                    self.dateView = self.getDateView()
+                    self.dateView.delegate = self
+                    if let dateView = self.dateView {
+                        self.snapBehavior = UISnapBehavior(item: dateView, snapToPoint: self.view.center)
+                        self.animator.addBehavior(self.snapBehavior)
+                        for constraint in self.view.constraints {
+                            if let identifier = constraint.identifier {
+                                if identifier == "dateViewCenterY" {
+                                    constraint.constant = 0.0
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            
-            
         }
-        
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-
-        
     }
     
     func fetchDateIdeas(completion: (Void -> Void)?) {
@@ -88,9 +94,10 @@ class FeedViewController: UIViewController {
         
         dv.translatesAutoresizingMaskIntoConstraints = false
         
-        let dateViewCenterX = NSLayoutConstraint(item: dv,attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0.0)
+        let dateViewCenterX = NSLayoutConstraint(item: dv,attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant:0.0)
         
-        let dateViewCenterY = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterY, multiplier: -1.0, constant: 0.0)
+        let dateViewCenterY = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: -1000.0)
+        dateViewCenterY.identifier = "dateViewCenterY"
         
         let dateViewHeight = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: dv, attribute: NSLayoutAttribute.Width, multiplier: 1.0, constant: 0.0)
         
@@ -101,18 +108,18 @@ class FeedViewController: UIViewController {
         view.addConstraints([dateViewCenterX, dateViewCenterY, dateViewHeight, dateViewLeadingMargin, dateViewTrailingMargin])
         
         doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "handleDoubleTapGesture:")
+        doubleTapRecognizer.numberOfTapsRequired = 2
         dv.addGestureRecognizer(doubleTapRecognizer)
         
         panRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         dv.addGestureRecognizer(panRecognizer)
-
-
         
         return dv
     }
     
     func handleDoubleTapGesture(sender: UITapGestureRecognizer) {
         
+        dateView.hearted(dateView.heartButton)
     }
 
     func handlePanGesture(sender: UIPanGestureRecognizer) {
@@ -127,6 +134,7 @@ class FeedViewController: UIViewController {
             
             // create a new incoming dateView
             incomingDateView = getDateView()
+            incomingDateView.delegate = self
 
             // animate them together
             
@@ -183,7 +191,7 @@ class FeedViewController: UIViewController {
         }
     }
     
-    // MARK: -Navigation
+    // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showAdd" {
@@ -206,14 +214,18 @@ class FeedViewController: UIViewController {
             dispatch_get_main_queue(), closure)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: Date View Delegate
+    
+    func dateViewShouldHeart(dateView: DateView) -> Bool {
+        if (User.currentUser() != nil) {
+            return true
+        } else {
+            return false
+        }
     }
-    */
+    
+    func dateViewDidHeart(dateView: DateView) {
+        
+    }
 
 }

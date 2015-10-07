@@ -131,6 +131,9 @@
                 <constraint firstAttribute="bottom" secondItem="5ee-zo-09u" secondAttribute="bottom" id="xL8-mZ-Ce5"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="string" keyPath="layer.animation" value="slideDown"/>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="dateImageView" destination="wt0-ZY-aLs" id="exI-nu-dLo"/>
                 <outlet property="dateTitleLabel" destination="H6T-oE-yRL" id="skR-ha-cE6"/>
@@ -147,5 +150,6 @@
         <image name="add photo" width="240" height="240"/>
         <image name="bg_idea" width="750" height="1334"/>
         <image name="heart" width="27" height="21"/>
+        <image name="hearted" width="27" height="21"/>
     </resources>
 </document>

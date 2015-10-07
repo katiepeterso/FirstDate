@@ -8,6 +8,11 @@
 
 import UIKit
 
+@objc protocol DateViewDelegate {
+    func dateViewShouldHeart(dateView: DateView) -> Bool
+    func dateViewDidHeart(dateView: DateView)
+}
+
 class DateView: UIView {
     
     // MARK: Properties & Outlets
@@ -33,6 +38,8 @@ class DateView: UIView {
         }
     }
     
+    weak var delegate: DateViewDelegate?
+    
     func setup() {
         layer.cornerRadius = frame.height / 24.0
     }
@@ -40,5 +47,11 @@ class DateView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
+    }
+    
+    @IBAction func hearted(button: UIButton) {
+        heartButton.setImage(UIImage(named: "hearted"), forState: .Normal)
+        
+        delegate?.dateViewDidHeart(self)
     }
 }

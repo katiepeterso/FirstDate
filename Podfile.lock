@@ -1,18 +1,27 @@
 PODS:
   - Bolts/Tasks (1.2.2)
+  - DBImageColorPicker (1.0.5)
   - Parse (1.8.5):
     - Bolts/Tasks (>= 1.2.2)
   - ParseUI (1.1.6):
     - Bolts/Tasks (~> 1.2)
     - Parse (~> 1.8)
+  - SZTextView (1.2.1)
+  - UIImage+MDContentColor (1.0.1)
 
 DEPENDENCIES:
+  - DBImageColorPicker
   - Parse
   - ParseUI
+  - SZTextView
+  - UIImage+MDContentColor
 
 SPEC CHECKSUMS:
   Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
+  DBImageColorPicker: b0b419b0653338544d766ed2008f2558b899fc60
   Parse: 17ad8e0677ed682f7f00503860fcda0f4eb74168
   ParseUI: 8a22e448c03f825203d8c379c80523517f68baa3
+  SZTextView: 906df45afd3c1b24fc5252088d5ef8061513c238
+  UIImage+MDContentColor: ad6fbb236189ca3b5cfadacb509111dbaca2cb08
 
 COCOAPODS: 0.38.2
