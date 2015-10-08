@@ -20,7 +20,7 @@ const CGFloat coverPhotoOffset = 50;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (nonatomic) NSMutableArray *createdDateIdeas;
-//@property (nonatomic) NSMutableArray *heartedDateIdeas;
+@property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -56,14 +56,14 @@ const CGFloat coverPhotoOffset = 50;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self fetchIdeas];
-//    [self fetchHearts];
+    [self fetchHearts];
     self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)fetchIdeas {
-    PFQuery *getNetworkIdeas = [PFQuery queryWithClassName:@"DateIdea"];
-    [getNetworkIdeas whereKey:@"user" equalTo:[User currentUser]];
-    [getNetworkIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    PFQuery *getCreatedIdeas = [PFQuery queryWithClassName:@"DateIdea"];
+    [getCreatedIdeas whereKey:@"user" equalTo:[User currentUser]];
+    [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count) {
             self.createdDateIdeas = [objects mutableCopy];
             [self.collectionView reloadData];
@@ -71,17 +71,16 @@ const CGFloat coverPhotoOffset = 50;
     }];
 }
 
-//- (void)fetchHearts {
-//    PFQuery *getHearts = [PFQuery queryWithClassName:@"Heart"];
-//    [getHearts whereKey:@"user" equalTo:[User currentUser]];
-//    [getHearts includeKey:@"dateIdea"];
-//    [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-//        if (objects.count) {
-//            self.heartedDateIdeas = [objects mutableCopy];
-//            [self.collectionView reloadData];
-//        }
-//    }];
-//}
+- (void)fetchHearts {
+    PFQuery *getHearts = [PFQuery queryWithClassName:@"DateIdea"];
+    [getHearts whereKey:@"heartedBy" equalTo:[User currentUser]];
+    [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count) {
+            self.heartedDateIdeas = [objects mutableCopy];
+            [self.collectionView reloadData];
+        }
+    }];
+}
 
 #pragma mark - Image Picker and display
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
@@ -119,14 +118,9 @@ const CGFloat coverPhotoOffset = 50;
 
 #pragma mark - Collection View Delegate
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
-//    return (self.userIdeasControl.selectedSegmentIndex == 0) ?
-//      self.createdDateIdeas.count:
-//      self.heartedDateIdeas.count;
-    if (self.userIdeasControl.selectedSegmentIndex == 0) {
-        return self.createdDateIdeas.count;
-    }else {
-        return self.heartedDateIdeas.count;
-    }
+    return (self.userIdeasControl.selectedSegmentIndex == 0) ?
+      self.createdDateIdeas.count:
+      self.heartedDateIdeas.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -143,6 +137,15 @@ const CGFloat coverPhotoOffset = 50;
         }
     }
     return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DetailViewController *dateDetail = (DetailViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
+    dateDetail.detailIdea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
+        self.createdDateIdeas[indexPath.row]:
+        self.heartedDateIdeas[indexPath.row];
+    [self presentViewController:dateDetail animated:YES completion:nil];
 }
 
 #pragma mark - Cover Photo Mask

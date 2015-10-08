@@ -14,9 +14,7 @@
 @interface UserProfileDateIdeasCell : UICollectionViewCell
 
 @property (nonatomic) DateIdea *currentDateIdea;
-//@property (nonatomic) Heart *currentHeart;
 
 - (void)setDateIdea:(DateIdea *)dateIdea;
-//- (void)setHeart:(Heart *)heart;
 
 @end

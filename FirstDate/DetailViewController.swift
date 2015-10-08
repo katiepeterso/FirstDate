@@ -15,30 +15,28 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    let detailIdea = DateIdea()
+    var detailIdea: DateIdea!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setup()
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func backButtonPressed(sender: UIButton) {
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func setup() {
+        if (detailIdea != nil) {
+            PhotoHelper.getPhotoInBackground(detailIdea.photo) { (resultImage) -> Void in
+                self.detailIdeaImageView.image = resultImage
+            }
+            PhotoHelper.getPhotoInBackground(detailIdea.user.userPhoto) { (resultImage) -> Void in
+                self.profileImageView.image = resultImage
+            }
+            self.usernameLabel.text = self.detailIdea.user.username
+//            self.descriptionLabel.text = self.detailIdea.description
+        }
     }
-    */
 
 }

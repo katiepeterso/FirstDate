@@ -42,10 +42,4 @@
     [self setupForDate:self.currentDateIdea];
 }
 
-//- (void)setHeart:(Heart *)heart {
-//    _currentHeart = heart;
-//    [self setupForDate:self.currentHeart.dateIdea];
-//}
-
-
 @end
