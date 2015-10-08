@@ -436,7 +436,7 @@
                                             </constraints>
                                             <state key="normal" image="user"/>
                                             <connections>
-                                                <segue destination="ncP-rl-hWS" kind="show" id="mg0-qv-3sC"/>
+                                                <segue destination="ncP-rl-hWS" kind="show" identifier="showProfile" id="mg0-qv-3sC"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -469,6 +469,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="XrB-Qy-gKJ" id="bdq-iF-AEZ"/>
+                        <outlet property="createButton" destination="kB0-LT-Xel" id="T7g-uj-Xxf"/>
+                        <outlet property="profileButton" destination="Jry-6V-E2y" id="tCx-nw-Sk3"/>
                         <outlet property="visualEffectView" destination="Bmf-u8-lCP" id="Wn7-QX-AjD"/>
                         <segue destination="dla-oq-GdH" kind="presentation" identifier="showLogin" id="LaS-4j-2Mk"/>
                         <segue destination="dED-9t-yuE" kind="show" identifier="showDetail" animates="NO" id="hHH-B4-V92"/>

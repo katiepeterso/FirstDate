@@ -60,6 +60,7 @@ class DateView: UIView {
     }
     
     func setup() {
+        userImageView.layer.cornerRadius = userImageView.frame.width / 2
         layer.cornerRadius = frame.height / 24.0
         heartCountLabel.text = " "
     }
