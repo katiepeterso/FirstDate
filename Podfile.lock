@@ -1,6 +1,9 @@
 PODS:
   - Bolts/Tasks (1.2.2)
   - DBImageColorPicker (1.0.5)
+  - JSQMessagesViewController (7.2.0):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
   - Parse (1.8.5):
     - Bolts/Tasks (>= 1.2.2)
   - ParseUI (1.1.6):
@@ -11,6 +14,7 @@ PODS:
 
 DEPENDENCIES:
   - DBImageColorPicker
+  - JSQMessagesViewController
   - Parse
   - ParseUI
   - SZTextView
@@ -19,6 +23,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
   DBImageColorPicker: b0b419b0653338544d766ed2008f2558b899fc60
+  JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Parse: 17ad8e0677ed682f7f00503860fcda0f4eb74168
   ParseUI: 8a22e448c03f825203d8c379c80523517f68baa3
   SZTextView: 906df45afd3c1b24fc5252088d5ef8061513c238
