@@ -8,15 +8,18 @@
 
 import UIKit
 import Parse
+import DBImageColorPicker
 
 class FeedViewController: UIViewController, DateViewDelegate, LoginViewControllerDelegate {
     
+    var colorPicker: DBImageColorPicker!
+    
     var ideas: [DateIdea] = [DateIdea]()
-    var heartCount: Int32 = 0
     var hearts: [DateIdea] = [DateIdea]()
     
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
     var dateView: DateView!
     var incomingDateView: DateView!
     
@@ -30,10 +33,12 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     var attachmentBehavior: (UIAttachmentBehavior!, UIAttachmentBehavior!)
     var gravityBehavior: UIGravityBehavior!
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge) // TODO: Change to custom activity indicator
         activityIndicator.center = view.center
         activityIndicator.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
         view.insertSubview(activityIndicator, belowSubview: visualEffectView)
@@ -52,7 +57,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         }
         
         navigationController?.navigationBarHidden = true
-        navigationItem.title = "Feed"
+        navigationItem.title = "Explore"
         
         if self.ideas.count == 0 {
             fetchDateIdeas() {
@@ -74,14 +79,16 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         }
     }
     
+    // MARK: - Fetch New Data
+    
     func fetchDateIdeas(completion: (Void -> Void)?) {
         let query = PFQuery(className: "DateIdea")
         query.includeKey("user")
-        query.includeKey("hearts")
         query.limit = 10;
         query.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
             if (error == nil) {
                 self.ideas += dateIdeas as! [DateIdea]
+                print("Date ideas: \(self.ideas)")
                 self.activityIndicator.stopAnimating()
                 completion?()
             }
@@ -96,20 +103,24 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         query?.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
             if (error == nil) {
                 self.hearts = dateIdeas as! [DateIdea]
-                print(self.hearts)
+                print("User's hearted ideas:\(self.hearts)")
             }
         }
     }
+    
+    // MARK: - Create Date View
     
     func getDateView() -> DateView {
         let dv = NSBundle.mainBundle().loadNibNamed("DateView", owner:self, options: nil)[0] as! DateView
         
         let idea = self.ideas.removeFirst()
+        
         let relation = idea.relationForKey("heartedBy")
         let query = relation.query()
         query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if error == nil {
-                self.heartCount = result
+                let heartCount: Int32 = result
+                dv.heartCount = heartCount
             }
         })
         
@@ -146,20 +157,12 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         return dv
     }
     
+    // MARK: - Gesture Recognizers
+    
     func handleDoubleTapGesture(sender: UITapGestureRecognizer) {
-        
-//        dateView.hearted(dateView.heartButton)
-        animator.removeAllBehaviors()
-        
-        UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
-            self.dateView.frame = self.view.frame
-            self.dateView.layer.cornerRadius = 0
-            self.dateView.dateImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height / 2)
-            self.dateView.headerView.alpha = 0
-            self.dateView.footerView.alpha = 0
-            }, completion: { finished in
-                self.performSegueWithIdentifier("showDetail", sender: self)
-        })
+        if dateView.hearted == false {
+            dateView.heart(dateView.heartButton)
+        }
     }
 
     func handlePanGesture(sender: UIPanGestureRecognizer) {
@@ -231,7 +234,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 
                 animator.removeAllBehaviors()
                 
-                dateView.frame = CGRectMake(16, dateView.frame.origin.y + translation.y , dateView.frame.width, dateView.frame.height)
+                dateView.transform = CGAffineTransformMakeRotation(0);
                 
                 UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
                     self.dateView.frame = self.view.bounds
@@ -280,7 +283,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             dispatch_get_main_queue(), closure)
     }
     
-    // MARK: Date View Delegate
+    // MARK: - Date View Delegate
     
     func dateViewShouldHeart(dateView: DateView) -> Bool {
         if (User.currentUser() != nil) {
@@ -301,7 +304,17 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         dateView.idea!.saveInBackground()
     }
     
-    // MARK: Login View Controller Delegate
+    func dateViewDidUnheart(dateView: DateView) {
+        let relationForUser = User.currentUser()?.relationForKey("hearts")
+        relationForUser?.removeObject(dateView.idea!)
+        User.currentUser()?.saveInBackground()
+        
+        let relationForDateIdea = dateView.idea!.relationForKey("heartedBy")
+        relationForDateIdea.removeObject(User.currentUser()!)
+        dateView.idea!.saveInBackground()
+    }
+    
+    // MARK: - Login View Controller Delegate
     
     func loginViewController(loginViewController: LoginViewController!, didLoginUser user: User!) {
         if user != nil {

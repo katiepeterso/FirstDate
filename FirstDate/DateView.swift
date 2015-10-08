@@ -11,17 +11,12 @@ import UIKit
 @objc protocol DateViewDelegate {
     func dateViewShouldHeart(dateView: DateView) -> Bool
     func dateViewDidHeart(dateView: DateView)
+    func dateViewDidUnheart(dateView: DateView)
 }
 
 class DateView: UIView {
     
     // MARK: Properties & Outlets
-    
-    var hearted: Bool = false {
-        didSet {
-            heartButton.setImage(UIImage(named: "hearted"), forState: .Normal)
-        }
-    }
     
     weak var delegate: DateViewDelegate!
     
@@ -48,8 +43,25 @@ class DateView: UIView {
         }
     }
     
+    var hearted: Bool = false {
+        didSet {
+            if hearted {
+                heartButton.setImage(UIImage(named: "hearted"), forState: .Normal)
+            } else {
+                heartButton.setImage(UIImage(named: "heart"), forState: .Normal)
+            }
+        }
+    }
+    
+    var heartCount: Int32 = 0 {
+        didSet {
+            heartCountLabel.text = "\(heartCount)"
+        }
+    }
+    
     func setup() {
         layer.cornerRadius = frame.height / 24.0
+        heartCountLabel.text = " "
     }
     
     override func awakeFromNib() {
@@ -57,10 +69,17 @@ class DateView: UIView {
         setup()
     }
     
-    @IBAction func hearted(button: UIButton) {
-        if (delegate.dateViewShouldHeart(self)) {
+    @IBAction func heart(button: UIButton) {
+        if (delegate.dateViewShouldHeart(self) && !hearted) {
+            heartCount++
+            hearted = true
             button.setImage(UIImage(named: "hearted"), forState: .Normal)
             delegate.dateViewDidHeart(self)
+        } else if (hearted) {
+            heartCount--
+            hearted = false
+            button.setImage(UIImage(named: "heart"), forState: .Normal)
+            delegate.dateViewDidUnheart(self)
         }
     }
 }
