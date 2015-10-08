@@ -10,4 +10,6 @@
 
 @interface UserProfileViewController : UIViewController
 
+@property (strong, nonatomic) NSArray *heartedDateIdeas;
+
 @end

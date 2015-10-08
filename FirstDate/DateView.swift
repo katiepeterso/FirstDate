@@ -17,6 +17,12 @@ class DateView: UIView {
     
     // MARK: Properties & Outlets
     
+    var hearted: Bool = false {
+        didSet {
+            heartButton.setImage(UIImage(named: "hearted"), forState: .Normal)
+        }
+    }
+    
     weak var delegate: DateViewDelegate!
     
     @IBOutlet weak var view: UIView!

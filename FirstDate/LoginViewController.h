@@ -8,7 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class LoginViewController;
+@class User;
+
+@protocol LoginViewControllerDelegate <NSObject>
+
+-(void)loginViewController:(LoginViewController *)loginViewController didLoginUser:(User *)user;
+
+@optional
+-(void)loginViewControllerDidCancelLogin:(LoginViewController *)loginViewController;
+
+@end
+
 @interface LoginViewController : UIViewController <UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) id<LoginViewControllerDelegate> delegate;
 
 @end

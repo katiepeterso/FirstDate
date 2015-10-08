@@ -4,3 +4,5 @@
 
 #import "User.h"
 #import "DateIdea.h"
+#import "LoginViewController.h"
+#import "UserProfileViewController.h"

@@ -9,7 +9,7 @@
 #import "UserProfileDateIdeasCell.h"
 #import "DateIdea.h"
 #import "FirstDate-Swift.h"
-#import "Heart.h"
+//#import "Heart.h"
 
 @interface UserProfileDateIdeasCell ()
 
@@ -42,10 +42,10 @@
     [self setupForDate:self.currentDateIdea];
 }
 
-- (void)setHeart:(Heart *)heart {
-    _currentHeart = heart;
-    [self setupForDate:self.currentHeart.dateIdea];
-}
+//- (void)setHeart:(Heart *)heart {
+//    _currentHeart = heart;
+//    [self setupForDate:self.currentHeart.dateIdea];
+//}
 
 
 @end

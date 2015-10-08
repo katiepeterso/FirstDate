@@ -9,9 +9,11 @@
 import UIKit
 import Parse
 
-class FeedViewController: UIViewController, DateViewDelegate {
+class FeedViewController: UIViewController, DateViewDelegate, LoginViewControllerDelegate {
     
     var ideas: [DateIdea] = [DateIdea]()
+    var heartCount: Int32 = 0
+    var hearts: [DateIdea] = [DateIdea]()
     
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
     
@@ -45,7 +47,12 @@ class FeedViewController: UIViewController, DateViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        if User.currentUser() != nil {
+            getUserHearts()
+        }
+        
         navigationController?.navigationBarHidden = true
+        navigationItem.title = "Feed"
         
         if self.ideas.count == 0 {
             fetchDateIdeas() {
@@ -70,6 +77,7 @@ class FeedViewController: UIViewController, DateViewDelegate {
     func fetchDateIdeas(completion: (Void -> Void)?) {
         let query = PFQuery(className: "DateIdea")
         query.includeKey("user")
+        query.includeKey("hearts")
         query.limit = 10;
         query.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
             if (error == nil) {
@@ -80,11 +88,35 @@ class FeedViewController: UIViewController, DateViewDelegate {
         }
     }
     
+    func getUserHearts()
+    {
+        let relation = User.currentUser()?.relationForKey("hearts")
+        let query = relation?.query()
+        query?.includeKey("user")
+        query?.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
+            if (error == nil) {
+                self.hearts = dateIdeas as! [DateIdea]
+                print(self.hearts)
+            }
+        }
+    }
+    
     func getDateView() -> DateView {
         let dv = NSBundle.mainBundle().loadNibNamed("DateView", owner:self, options: nil)[0] as! DateView
         
-        if self.ideas.count > 0 {
-            dv.idea = self.ideas.removeFirst()
+        let idea = self.ideas.removeFirst()
+        let relation = idea.relationForKey("heartedBy")
+        let query = relation.query()
+        query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
+            if error == nil {
+                self.heartCount = result
+            }
+        })
+        
+        dv.idea = idea
+        
+        if hearts.contains(idea) {
+            dv.hearted = true
         }
         
         view.insertSubview(dv, aboveSubview: visualEffectView)
@@ -116,7 +148,18 @@ class FeedViewController: UIViewController, DateViewDelegate {
     
     func handleDoubleTapGesture(sender: UITapGestureRecognizer) {
         
-        dateView.hearted(dateView.heartButton)
+//        dateView.hearted(dateView.heartButton)
+        animator.removeAllBehaviors()
+        
+        UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+            self.dateView.frame = self.view.frame
+            self.dateView.layer.cornerRadius = 0
+            self.dateView.dateImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height / 2)
+            self.dateView.headerView.alpha = 0
+            self.dateView.footerView.alpha = 0
+            }, completion: { finished in
+                self.performSegueWithIdentifier("showDetail", sender: self)
+        })
     }
 
     func handlePanGesture(sender: UIPanGestureRecognizer) {
@@ -184,13 +227,16 @@ class FeedViewController: UIViewController, DateViewDelegate {
                         self.fetchDateIdeas(nil)
                     }
                 })
-            } else if translation.y < -100 {
+            } else if translation.y < -50 {
+                
                 animator.removeAllBehaviors()
                 
+                dateView.frame = CGRectMake(16, dateView.frame.origin.y + translation.y , dateView.frame.width, dateView.frame.height)
+                
                 UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
-                    self.dateView.frame = self.view.frame
+                    self.dateView.frame = self.view.bounds
                     self.dateView.layer.cornerRadius = 0
-                    self.dateView.dateImageView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width / 2, self.view.frame.height / 2)
+                    self.dateView.dateImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height / 2)
                     self.dateView.headerView.alpha = 0
                     self.dateView.footerView.alpha = 0
                     }, completion: { finished in
@@ -213,7 +259,13 @@ class FeedViewController: UIViewController, DateViewDelegate {
         } else if segue.identifier == "showProfile" {
             if User.currentUser() == nil {
                 performSegueWithIdentifier("showLogin", sender: sender)
+            } else {
+                let userProfileVC = segue.destinationViewController as! UserProfileViewController
+                userProfileVC.heartedDateIdeas = self.hearts
             }
+        } else if segue.identifier == "showLogin" {
+            let loginVC = segue.destinationViewController as! LoginViewController
+            loginVC.delegate = self
         }
     }
     
@@ -247,6 +299,14 @@ class FeedViewController: UIViewController, DateViewDelegate {
         let relationForDateIdea = dateView.idea!.relationForKey("heartedBy")
         relationForDateIdea.addObject(User.currentUser()!)
         dateView.idea!.saveInBackground()
+    }
+    
+    // MARK: Login View Controller Delegate
+    
+    func loginViewController(loginViewController: LoginViewController!, didLoginUser user: User!) {
+        if user != nil {
+            getUserHearts()
+        }
     }
 
 }

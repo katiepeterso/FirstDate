@@ -15,7 +15,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ee-zo-09u">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="wt0-ZY-aLs">
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="wt0-ZY-aLs">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             <animations/>
                         </imageView>
@@ -76,10 +76,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mi2-NU-LzD">
-                            <rect key="frame" x="0.0" y="538.5" width="600" height="61.5"/>
+                            <rect key="frame" x="0.0" y="539" width="600" height="61"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCY-m0-2SQ">
-                                    <rect key="frame" x="269.5" y="0.0" width="61.5" height="61.5"/>
+                                    <rect key="frame" x="270" y="0.0" width="61" height="62"/>
                                     <animations/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="xCY-m0-2SQ" secondAttribute="height" multiplier="1:1" id="wxe-wC-JTu"/>

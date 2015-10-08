@@ -20,7 +20,7 @@ const CGFloat coverPhotoOffset = 50;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (nonatomic) NSMutableArray *createdDateIdeas;
-@property (nonatomic) NSMutableArray *heartedDateIdeas;
+//@property (nonatomic) NSMutableArray *heartedDateIdeas;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -56,7 +56,7 @@ const CGFloat coverPhotoOffset = 50;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self fetchIdeas];
-    [self fetchHearts];
+//    [self fetchHearts];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -71,17 +71,17 @@ const CGFloat coverPhotoOffset = 50;
     }];
 }
 
-- (void)fetchHearts {
-    PFQuery *getHearts = [PFQuery queryWithClassName:@"Heart"];
-    [getHearts whereKey:@"user" equalTo:[User currentUser]];
-    [getHearts includeKey:@"dateIdea"];
-    [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (objects.count) {
-            self.heartedDateIdeas = [objects mutableCopy];
-            [self.collectionView reloadData];
-        }
-    }];
-}
+//- (void)fetchHearts {
+//    PFQuery *getHearts = [PFQuery queryWithClassName:@"Heart"];
+//    [getHearts whereKey:@"user" equalTo:[User currentUser]];
+//    [getHearts includeKey:@"dateIdea"];
+//    [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//        if (objects.count) {
+//            self.heartedDateIdeas = [objects mutableCopy];
+//            [self.collectionView reloadData];
+//        }
+//    }];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -145,7 +145,7 @@ const CGFloat coverPhotoOffset = 50;
         }
     }else {
         if (self.heartedDateIdeas.count) {
-            [cell setHeart:self.heartedDateIdeas[indexPath.row]];
+            [cell setDateIdea:self.heartedDateIdeas[indexPath.row]];
         }
     }
     return cell;

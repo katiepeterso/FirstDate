@@ -7,8 +7,8 @@
 //
 
 #import "LoginViewController.h"
-#import <Parse/Parse.h>
 #import "User.h"
+#import <Parse/Parse.h>
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
@@ -66,6 +66,7 @@
                 [self presentViewController:alertController animated:YES completion:nil];
                 
             } else {
+                [self.delegate loginViewController:self didLoginUser:(User *)user];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
