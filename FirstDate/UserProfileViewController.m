@@ -83,11 +83,6 @@ const CGFloat coverPhotoOffset = 50;
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Image Picker and display
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
     [PhotoHelper displayImagePicker:self delegate:self];
@@ -99,13 +94,13 @@ const CGFloat coverPhotoOffset = 50;
     self.userPhotoSelected = YES;
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
     if (info[UIImagePickerControllerOriginalImage]) {
         if (self.userPhotoSelected) {
             NSData *data = [PhotoHelper setView:self.userPhotoImageView toImage:info[UIImagePickerControllerOriginalImage]];
             User.currentUser.userPhoto = [PFFile fileWithData:data];
-        }else {
+        } else {
             NSData *data = [PhotoHelper setView:self.photoImageView toImage:info[UIImagePickerControllerOriginalImage]];
             User.currentUser.coverPhoto = [PFFile fileWithData:data];
         }
@@ -124,6 +119,9 @@ const CGFloat coverPhotoOffset = 50;
 
 #pragma mark - Collection View Delegate
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
+//    return (self.userIdeasControl.selectedSegmentIndex == 0) ?
+//      self.createdDateIdeas.count:
+//      self.heartedDateIdeas.count;
     if (self.userIdeasControl.selectedSegmentIndex == 0) {
         return self.createdDateIdeas.count;
     }else {
@@ -131,19 +129,15 @@ const CGFloat coverPhotoOffset = 50;
     }
 }
 
-- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
-    return 1;
-}
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    static NSString *cellid = @"userIdeaCell";
     UserProfileDateIdeasCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"userIdeaCell" forIndexPath:indexPath];
     
     if (self.userIdeasControl.selectedSegmentIndex == 0) {
         if (self.createdDateIdeas.count) {
-            
             [cell setDateIdea:self.createdDateIdeas[indexPath.row]];
         }
-    }else {
+    } else {
         if (self.heartedDateIdeas.count) {
             [cell setHeart:self.heartedDateIdeas[indexPath.row]];
         }
@@ -153,7 +147,7 @@ const CGFloat coverPhotoOffset = 50;
 
 #pragma mark - Cover Photo Mask
 
--(void)addDiagonalMaskToImage {
+- (void)addDiagonalMaskToImage {
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
     UIBezierPath *trianglePath = [[UIBezierPath alloc]init];
     [trianglePath moveToPoint:(CGPointMake(0, 0))];

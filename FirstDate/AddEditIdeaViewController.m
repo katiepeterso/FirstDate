@@ -34,8 +34,10 @@
 
     self.titleField.delegate = self;
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
-    [self.titleField setLeftViewMode:UITextFieldViewModeAlways];
-    [self.titleField setLeftView:spacerView];
+    self.titleField.leftViewMode = UITextFieldViewModeAlways;
+    self.titleField.leftView = spacerView;
+//    [self.titleField setLeftViewMode:UITextFieldViewModeAlways];
+//    [self.titleField setLeftView:spacerView];
     
     self.descriptionView.delegate = self;
     
@@ -49,13 +51,8 @@
     [self setInitialAddViewState];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Image Picker and display
@@ -66,7 +63,7 @@
     }
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (!self.currentDateIdea) {
         self.currentDateIdea = [[DateIdea alloc]init];
     }
@@ -106,8 +103,7 @@
 
 #pragma mark - Text view placeholder
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
+- (void)textViewDidBeginEditing:(UITextView *)textView {
     if ([textView.text isEqualToString:@"Enter date description here..."]) {
         textView.text = @"";
         textView.textColor = [UIColor darkGrayColor];
@@ -115,8 +111,7 @@
     [textView becomeFirstResponder];
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
+- (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView.text isEqualToString:@""]) {
         textView.text = @"Enter date description here...";
         textView.textColor = [UIColor lightGrayColor];
