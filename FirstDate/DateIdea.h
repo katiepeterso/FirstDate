@@ -17,7 +17,7 @@
 @property (nonatomic, strong) User *user;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *details;
-@property (nonatomic, strong) NSMutableArray *heartedBy;
+@property (nonatomic, strong) PFRelation *heartedBy;
 @property (nonatomic, strong) PFFile *photo;
 
 + (NSString *)parseClassName;
