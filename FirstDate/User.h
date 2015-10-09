@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, DatingPreference) {
 @property (nonatomic, strong) NSString *about;
 @property (nonatomic, strong) PFFile *coverPhoto;
 @property (nonatomic, strong) PFFile *userPhoto;
+@property (nonatomic, strong) NSDate *lastSeenDateIdeaCreatedAt;
 
 - (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference;
 
