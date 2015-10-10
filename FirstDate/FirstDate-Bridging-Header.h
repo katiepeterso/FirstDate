@@ -6,3 +6,4 @@
 #import "DateIdea.h"
 #import "LoginViewController.h"
 #import "UserProfileViewController.h"
+#import <JSQMessagesViewController/JSQMessages.h> 

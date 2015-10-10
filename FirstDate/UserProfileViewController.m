@@ -41,7 +41,7 @@ const CGFloat coverPhotoOffset = 50;
     self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",User.currentUser.age];
     
     self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
-    self.userPhotoImageView.layer.masksToBounds = true;
+    self.userPhotoImageView.layer.masksToBounds = YES;
     
     [PhotoHelper getPhotoInBackground:User.currentUser.userPhoto completionHandler:^(UIImage *userPhoto) {
         self.userPhotoImageView.image = userPhoto;
@@ -129,11 +129,11 @@ const CGFloat coverPhotoOffset = 50;
     
     if (self.userIdeasControl.selectedSegmentIndex == 0) {
         if (self.createdDateIdeas.count) {
-            [cell setDateIdea:self.createdDateIdeas[indexPath.row]];
+            [cell setDateIdea:self.createdDateIdeas[indexPath.item]];
         }
     } else {
         if (self.heartedDateIdeas.count) {
-            [cell setDateIdea:self.heartedDateIdeas[indexPath.row]];
+            [cell setDateIdea:self.heartedDateIdeas[indexPath.item]];
         }
     }
     return cell;
@@ -143,8 +143,8 @@ const CGFloat coverPhotoOffset = 50;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DetailViewController *dateDetail = (DetailViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
     dateDetail.detailIdea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
-        self.createdDateIdeas[indexPath.row]:
-        self.heartedDateIdeas[indexPath.row];
+        self.createdDateIdeas[indexPath.item]:
+        self.heartedDateIdeas[indexPath.item];
     [self presentViewController:dateDetail animated:YES completion:nil];
 }
 
