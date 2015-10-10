@@ -9,10 +9,14 @@
 import UIKit
 import Parse
 import DBImageColorPicker
+import JKImageColorSense
+import UIImage_MDContentColor
 
 class FeedViewController: UIViewController, DateViewDelegate, LoginViewControllerDelegate {
     
     var colorPicker: DBImageColorPicker!
+    
+    var colorSense: JKImageColorSense!
     
     var ideas: [DateIdea] = [DateIdea]()
     
@@ -39,8 +43,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        backgroundImageView.image = nil
-        view.backgroundColor = UIColor(red: 80.0/255, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+        let profileButtonImage = UIImage(named: "user")?.imageWithRenderingMode(.AlwaysTemplate)
+        profileButton.setImage(profileButtonImage, forState: .Normal)
+        
+        let createButtonImage = UIImage(named: "create")?.imageWithRenderingMode(.AlwaysTemplate)
+        createButton.setImage(createButtonImage, forState: .Normal)
+        
+//        view.backgroundColor = UIColor(red: 80.0/255, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge) // TODO: Change to custom activity indicator
         activityIndicator.center = view.center
@@ -64,15 +73,18 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         querySavedDateIdea.fromPinWithName("LastDateIdeaViewed")
         querySavedDateIdea.includeKey("user")
         querySavedDateIdea.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
-            if dateIdeas?.count > 0 {
-                var dateIdeas = dateIdeas as! [DateIdea]
-                self.activityIndicator.stopAnimating()
-                
-                self.dateView = self.createDateViewWithIdea(dateIdeas.removeFirst())
-                self.dateView.delegate = self
-                self.setupViewWithDateView(self.dateView)
-                self.setupDateView(self.dateView)
-                self.updateLastSeenDateIdeaDate()
+            
+            if let dateIdeas = dateIdeas as? [DateIdea],
+                let firstIdea = dateIdeas.first {
+                    self.activityIndicator.stopAnimating()
+                    
+                    if self.dateView == nil {
+                        self.dateView = self.createDateViewWithIdea(firstIdea)
+                        self.dateView.delegate = self
+                        self.setupViewWithDateView(self.dateView)
+                        self.setupDateView(self.dateView)
+                        self.updateLastSeenDateIdeaDate()
+                    }
             }
         }
         
@@ -80,6 +92,8 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             fetchDateIdeas() { (dateIdeas, success) in
                 if success {
                     self.ideas = dateIdeas
+//                    for idea in self.ideas {
+//                    }
                     self.activityIndicator.stopAnimating()
                     
                     if self.dateView == nil {
@@ -115,8 +129,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
 //        }
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if (error == nil) {
-                let dateIdeas = objects as! [DateIdea]
-                completion?(dateIdeas: dateIdeas, success: true)
+                if let dateIdeas = objects as? [DateIdea] where dateIdeas.count > 0 {
+                    completion?(dateIdeas: dateIdeas, success: true)
+                }
             } else {
                 completion?(dateIdeas: nil, success: false)
             }
@@ -127,20 +142,25 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     
     func setupViewWithDateView(dv: DateView) {
         backgroundImageView.image = dv.dateImageView.image
-        colorPicker = DBImageColorPicker(fromImage: dv.dateImageView.image, withBackgroundType: DBImageColorPickerBackgroundType.Default)
+        
     }
     
     func setupDateView(dv: DateView) {
-        dv.dateTitleLabel.textColor = colorPicker.backgroundColor
-        dv.heartCountLabel.textColor = colorPicker.backgroundColor
-        snapBehavior = UISnapBehavior(item: dv, snapToPoint: view.center)
-        animator.addBehavior(snapBehavior)
-        for constraint in view.constraints {
-            if let identifier = constraint.identifier {
-                if identifier == "dateViewCenterY" {
-                    constraint.constant = 0.0
+        if backgroundImageView.image == dv.dateImageView.image {
+            snapBehavior = UISnapBehavior(item: dv, snapToPoint: view.center)
+            snapBehavior.action = {
+                for constraint in self.view.constraints {
+                    if constraint.identifier == "dateViewCenterY" {
+                        // view.removeConstraint(constraint)
+                        constraint.constant = 0.0
+                    }
+                    
+                        
                 }
             }
+            
+            animator.addBehavior(snapBehavior)
+            
         }
     }
     
@@ -159,16 +179,44 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         
         dv.idea = idea
         
-        PhotoHelper.getPhotoInBackground(idea.photo) { (image) in
-            dv.dateImageView.image = image
+//        let getDateViewComponentsOperation = NSBlockOperation { () -> Void in
+//            dv.dateImageView.image = UIImage(data: (try? idea.photo.getData()) ?? NSData())
+//            dv.userImageView.image = UIImage(data: (try? idea.user.userPhoto.getData()) ?? NSData())
+//        }
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+            var dateImage: UIImage?
+            var userImage: UIImage?
+            
+            if let dateImageData = try? idea.photo.getData() {
+                dateImage = UIImage(data: dateImageData)
+            }
+            
+            if let user = idea.user,
+                let photo = user.userPhoto,
+                userImageData = try? photo.getData() {
+                userImage = UIImage(data: userImageData)
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if self.dateView == dv {
+                    self.backgroundImageView.image = dateImage
+                }
+                    dv.dateImageView.image = dateImage
+                dv.userImageView.image = userImage
+            })
         }
         
-        if let user = idea.user,
-            let photo = user.userPhoto {
-            PhotoHelper.getPhotoInBackground(photo) { (image) in
-                dv.userImageView.image = image
-            }
-        }
+//        PhotoHelper.getPhotoInBackground(idea.photo) { (image) in
+//            dv.dateImageView.image = image
+//        }
+//        
+//        if let user = idea.user,
+//            let photo = user.userPhoto {
+//            PhotoHelper.getPhotoInBackground(photo) { (image) in
+//                dv.userImageView.image = image
+//            }
+//        }
         
         let query = idea.heartedBy.query()
         query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
@@ -183,7 +231,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         
         let dateViewCenterX = NSLayoutConstraint(item: dv,attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0.0)
         
-        let dateViewCenterY = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: -1000.0)
+        let dateViewCenterY = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: -300.0)
         dateViewCenterY.identifier = "dateViewCenterY"
         
         let dateViewHeight = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: dv, attribute: NSLayoutAttribute.Width, multiplier: 1.0, constant: 0.0)
@@ -256,8 +304,16 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             
             animator.removeBehavior(attachmentBehavior.1)
             
-            snapBehavior = UISnapBehavior(item: incomingDateView, snapToPoint: CGPoint(x: view.frame.size.width/2, y: -300))
+            snapBehavior = UISnapBehavior(item: incomingDateView, snapToPoint: CGPoint(x: view.frame.size.width/2, y: -200))
             animator.addBehavior(snapBehavior)
+            
+            for constraint in view.constraints {
+                if let identifier = constraint.identifier {
+                    if identifier == "dateViewCenterY" {
+                        constraint.constant = -300.0
+                    }
+                }
+            }
             
             let translation = sender.translationInView(view)
             if translation.y > 100 {
@@ -292,6 +348,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     self.dateView.headerView.alpha = 0
                     self.dateView.footerView.alpha = 0
                     }, completion: { finished in
+                        self.incomingDateView = nil
                         self.performSegueWithIdentifier("showDetail", sender: self)
                 })
             }
