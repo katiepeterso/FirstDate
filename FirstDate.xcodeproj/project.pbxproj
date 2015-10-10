@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AA41877B1BC301E90044A60D /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA41877A1BC301E90044A60D /* PhotoHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		AA858BFC1BC97DE100462537 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA858BFB1BC97DE100462537 /* Message.swift */; settings = {ASSET_TAGS = (); }; };
+		AA858BFE1BC97E2F00462537 /* MessagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AABD120F1BC5CE5A00A3236C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AAD8DA021BAE04BB00218CC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA011BAE04BB00218CC9 /* main.m */; };
 		AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD8DA041BAE04BB00218CC9 /* AppDelegate.m */; };
@@ -33,6 +35,8 @@
 		3FDF7E20801C91CB5916C438 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90BA5665804395EF77725357 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AA41877A1BC301E90044A60D /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
+		AA858BFB1BC97DE100462537 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingViewController.swift; sourceTree = "<group>"; };
 		AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AAD8D9FD1BAE04BB00218CC9 /* FirstDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD8DA011BAE04BB00218CC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 		AA52F2BB1BB39D1A00E52B43 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AA858BFB1BC97DE100462537 /* Message.swift */,
 				AA41877A1BC301E90044A60D /* PhotoHelper.swift */,
 				C70460301BB210EF005D8335 /* Comment.swift */,
 				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
@@ -109,6 +114,7 @@
 		AA52F2BC1BB39D2B00E52B43 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */,
 				C752C5121BB36DCE00651DC9 /* SignupViewController.h */,
 				C752C5131BB36DCE00651DC9 /* SignupViewController.m */,
 				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
@@ -256,6 +262,7 @@
 				AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */,
 				AAD8DA051BAE04BB00218CC9 /* AppDelegate.m in Sources */,
 				C7DA79731BC0AAB300D3E5F4 /* FeedViewController.swift in Sources */,
+				AA858BFE1BC97E2F00462537 /* MessagingViewController.swift in Sources */,
 				AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */,
 				C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */,
 				AA41877B1BC301E90044A60D /* PhotoHelper.swift in Sources */,
@@ -263,6 +270,7 @@
 				C7DA79751BC20AE300D3E5F4 /* DateView.swift in Sources */,
 				C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */,
 				AABD120F1BC5CE5A00A3236C /* DetailViewController.swift in Sources */,
+				AA858BFC1BC97DE100462537 /* Message.swift in Sources */,
 				AAD8DA021BAE04BB00218CC9 /* main.m in Sources */,
 				C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */,
 			);
