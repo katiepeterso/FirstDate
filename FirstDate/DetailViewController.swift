@@ -35,7 +35,10 @@ class DetailViewController: UIViewController {
                 self.profileImageView.image = resultImage
             }
             self.usernameLabel.text = self.detailIdea.user.username
-//            self.descriptionLabel.text = self.detailIdea.description
+            self.descriptionLabel.text = self.detailIdea.details
+            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2
+            self.profileImageView.layer.masksToBounds = true
+
         }
     }
 

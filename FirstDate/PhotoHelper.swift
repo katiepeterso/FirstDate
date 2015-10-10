@@ -9,6 +9,7 @@
 import UIKit
 import ParseUI
 import Parse
+import JSQMessagesViewController
 
 @objc class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -22,7 +23,6 @@ import Parse
             }
         }
     }
-    
     
     class func displayImagePicker(controller: UIViewController, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) {
         let pickerController = UIImagePickerController()
