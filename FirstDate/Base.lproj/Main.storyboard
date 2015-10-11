@@ -191,7 +191,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wCW-RM-38J">
-                                <rect key="frame" x="0.0" y="64" width="375" height="185"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="185"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add photo" translatesAutoresizingMaskIntoConstraints="NO" id="Jes-9H-KBS">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="185"/>
@@ -202,7 +202,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="185"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" text="Age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IlZ-aU-Ovt">
-                                                <rect key="frame" x="171.5" y="88" width="32" height="22"/>
+                                                <rect key="frame" x="171" y="88" width="32" height="22"/>
                                                 <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21.5" id="qY0-a3-u6n"/>
@@ -250,7 +250,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xJD-qM-9ea">
-                                <rect key="frame" x="0.0" y="248" width="379" height="59"/>
+                                <rect key="frame" x="0.0" y="204" width="379" height="60"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YFk-7Z-yTi">
                                         <rect key="frame" x="120" y="23" width="139" height="29"/>
@@ -268,7 +268,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add photo" translatesAutoresizingMaskIntoConstraints="NO" id="QXN-Au-yXM">
-                                <rect key="frame" x="144" y="182" width="85" height="85"/>
+                                <rect key="frame" x="144" y="138" width="85" height="85"/>
                                 <animations/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -280,7 +280,7 @@
                                 </connections>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VRg-eL-52f">
-                                <rect key="frame" x="0.0" y="307" width="375" height="293"/>
+                                <rect key="frame" x="-1" y="264" width="375" height="403"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="6ab-UX-4oz">
@@ -351,24 +351,24 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="VRg-eL-52f" secondAttribute="trailing" id="E7q-eG-WYC"/>
+                            <constraint firstAttribute="trailing" secondItem="VRg-eL-52f" secondAttribute="trailing" constant="1" id="E7q-eG-WYC"/>
                             <constraint firstItem="VRg-eL-52f" firstAttribute="top" secondItem="xJD-qM-9ea" secondAttribute="bottom" id="IXj-2O-5uz"/>
                             <constraint firstItem="QXN-Au-yXM" firstAttribute="top" secondItem="IlZ-aU-Ovt" secondAttribute="bottom" constant="8" id="Oxj-Ov-vWq"/>
-                            <constraint firstItem="wCW-RM-38J" firstAttribute="top" secondItem="EwX-P8-cj5" secondAttribute="bottom" constant="44" id="Tbq-5t-9lU"/>
+                            <constraint firstItem="wCW-RM-38J" firstAttribute="top" secondItem="EwX-P8-cj5" secondAttribute="bottom" id="Tbq-5t-9lU"/>
                             <constraint firstItem="wCW-RM-38J" firstAttribute="leading" secondItem="CaR-Pv-HFY" secondAttribute="leading" id="bnf-Hr-fI6"/>
                             <constraint firstItem="QXN-Au-yXM" firstAttribute="centerX" secondItem="CaR-Pv-HFY" secondAttribute="centerX" constant="-1" id="cXf-tS-RpU"/>
-                            <constraint firstItem="VRg-eL-52f" firstAttribute="top" secondItem="EwX-P8-cj5" secondAttribute="bottom" constant="287" id="cba-jZ-7Gq"/>
+                            <constraint firstItem="VRg-eL-52f" firstAttribute="top" secondItem="EwX-P8-cj5" secondAttribute="bottom" constant="244" id="cba-jZ-7Gq"/>
                             <constraint firstItem="xJD-qM-9ea" firstAttribute="top" secondItem="wCW-RM-38J" secondAttribute="bottom" constant="-1" id="ffB-a2-QiA"/>
                             <constraint firstItem="xJD-qM-9ea" firstAttribute="leading" secondItem="CaR-Pv-HFY" secondAttribute="leading" id="gvE-rj-FPB"/>
                             <constraint firstAttribute="trailing" secondItem="wCW-RM-38J" secondAttribute="trailing" id="jDh-gb-kpt"/>
-                            <constraint firstAttribute="bottom" secondItem="VRg-eL-52f" secondAttribute="bottom" constant="67" id="ltu-tY-KeC"/>
+                            <constraint firstAttribute="bottom" secondItem="VRg-eL-52f" secondAttribute="bottom" id="ltu-tY-KeC"/>
                             <constraint firstAttribute="trailing" secondItem="xJD-qM-9ea" secondAttribute="trailing" constant="-4" id="uXY-qP-P90"/>
-                            <constraint firstItem="VRg-eL-52f" firstAttribute="leading" secondItem="CaR-Pv-HFY" secondAttribute="leading" id="uid-QN-e1h"/>
+                            <constraint firstItem="VRg-eL-52f" firstAttribute="leading" secondItem="CaR-Pv-HFY" secondAttribute="leading" constant="-1" id="uid-QN-e1h"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="vRD-Ub-kzF"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="ageLabel" destination="IlZ-aU-Ovt" id="VV2-I7-jIC"/>
                         <outlet property="collectionView" destination="VRg-eL-52f" id="YZS-8C-otQ"/>

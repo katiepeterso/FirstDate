@@ -124,7 +124,6 @@ const CGFloat coverPhotoOffset = 50;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    static NSString *cellid = @"userIdeaCell";
     UserProfileDateIdeasCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"userIdeaCell" forIndexPath:indexPath];
     
     if (self.userIdeasControl.selectedSegmentIndex == 0) {
