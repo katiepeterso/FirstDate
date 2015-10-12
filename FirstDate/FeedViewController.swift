@@ -37,11 +37,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let profileButtonImage = UIImage(named: "user")?.imageWithRenderingMode(.AlwaysTemplate)
-        profileButton.setImage(profileButtonImage, forState: .Normal)
+//        let profileButtonImage = UIImage(named: "user")?.imageWithRenderingMode(.AlwaysTemplate)
+//        profileButton.setImage(profileButtonImage, forState: .Normal)
         
-        let createButtonImage = UIImage(named: "create")?.imageWithRenderingMode(.AlwaysTemplate)
-        createButton.setImage(createButtonImage, forState: .Normal)
+//        let createButtonImage = UIImage(named: "create")?.imageWithRenderingMode(.AlwaysTemplate)
+//        createButton.setImage(createButtonImage, forState: .Normal)
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge) // TODO: Change to custom activity indicator
         activityIndicator.center = view.center
@@ -64,7 +64,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         querySavedDateIdea.fromPinWithName("LastDateIdeaViewed")
         querySavedDateIdea.includeKey("user")
         querySavedDateIdea.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
-            
+            print("Retrieving last date idea from local datastore")
             if let dateIdeas = dateIdeas as? [DateIdea],
                 let firstIdea = dateIdeas.first {
                     self.activityIndicator.stopAnimating()
@@ -80,6 +80,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         if ideas.count < 5 {
             fetchDateIdeas() { (dateIdeas, success) in
                 if success {
+                    print("Retrieveing additional date ideas from network")
                     self.ideas += dateIdeas
                     self.activityIndicator.stopAnimating()
                     
@@ -96,7 +97,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     }
     
     override func viewWillDisappear(animated: Bool) {
+        print("ViewWillDisappear fired")
         if dateView != nil {
+            print("Saving last date idea to local datastore")
             DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
             dateView.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
         }
@@ -287,7 +290,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     
                     self.fetchDateIdeas(nil)
                 })
-            } else if translation.y < -100 {
+            } else if translation.y < -75 {
                 
                 dateView.transform = CGAffineTransformMakeRotation(0);
                 
@@ -322,7 +325,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         } else if segue.identifier == "showDetail" {
             let detailVC = segue.destinationViewController as! DetailViewController
             detailVC.idea = dateView.idea
-            
+            print("Passing the idea to detail \(dateView.idea)")
         } else if segue.identifier == "showProfile" {
             if User.currentUser() == nil {
                 performSegueWithIdentifier("showLogin", sender: sender)

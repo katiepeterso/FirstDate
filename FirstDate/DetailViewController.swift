@@ -10,8 +10,12 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
     @IBOutlet weak var detailIdeaImageView: UIImageView!
-    @IBOutlet weak var numberOfHeartsLabel: UILabel!
+    @IBOutlet weak var messageButton: UIButton!
+    @IBOutlet weak var messageButtonTrailing: NSLayoutConstraint!
+    @IBOutlet weak var heartCountLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -19,11 +23,32 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("detail view did load")
+        
+        backButton.transform = CGAffineTransformMakeScale(0.5, 0.5)
+        backButtonLeading.constant = -100
+        
+        messageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)
+        messageButtonTrailing.constant = +100
+        
         setup()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        print("detail view did appear")
+        
+        UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+            self.backButton.transform = CGAffineTransformMakeScale(1, 1)
+            self.backButtonLeading.constant = 0
+            
+            self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
+            self.messageButtonTrailing.constant = 0
+            }, completion: nil)
     }
     
     @IBAction func backButtonPressed(sender: UIButton) {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     func setup() {
@@ -31,9 +56,22 @@ class DetailViewController: UIViewController {
             PhotoHelper.getPhotoInBackground(idea.photo) { (resultImage) -> Void in
                 self.detailIdeaImageView.image = resultImage
             }
-            PhotoHelper.getPhotoInBackground(idea.user.userPhoto) { (resultImage) -> Void in
-                self.profileImageView.image = resultImage
+            
+            if let user = idea.user,
+                let photo = user.userPhoto {
+                    PhotoHelper.getPhotoInBackground(photo) { (resultImage) -> Void in
+                        self.profileImageView.image = resultImage
+                    }
+                    
             }
+            
+            let query = idea.heartedBy.query()
+            query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                if error == nil {
+                    self.heartCountLabel.text = "\(result)"
+                }
+            })
+            
             usernameLabel.text = idea.user.username
             descriptionLabel.text = idea.details
             profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2

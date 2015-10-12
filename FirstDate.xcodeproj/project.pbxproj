@@ -27,7 +27,7 @@
 		C7D761131BC2D83200170F3A /* DateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7D761121BC2D83200170F3A /* DateView.xib */; settings = {ASSET_TAGS = (); }; };
 		C7DA79731BC0AAB300D3E5F4 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DA79721BC0AAB300D3E5F4 /* FeedViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		C7DA79751BC20AE300D3E5F4 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DA79741BC20AE300D3E5F4 /* DateView.swift */; settings = {ASSET_TAGS = (); }; };
-		D57AF32CFD284D7F5C98354B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDF7E20801C91CB5916C438 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D57AF32CFD284D7F5C98354B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDF7E20801C91CB5916C438 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,8 +100,8 @@
 		AA52F2BB1BB39D1A00E52B43 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AA858BFB1BC97DE100462537 /* Message.swift */,
 				AA41877A1BC301E90044A60D /* PhotoHelper.swift */,
+				AA858BFB1BC97DE100462537 /* Message.swift */,
 				C70460301BB210EF005D8335 /* Comment.swift */,
 				C73AA5EA1BB0B76300EAD889 /* DateIdea.h */,
 				C73AA5EB1BB0B76300EAD889 /* DateIdea.m */,
@@ -195,6 +195,7 @@
 				AAD8D9F91BAE04BB00218CC9 /* Sources */,
 				AAD8D9FA1BAE04BB00218CC9 /* Frameworks */,
 				AAD8D9FB1BAE04BB00218CC9 /* Resources */,
+				AD6CB5E4D75679F9CB67B86A /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -251,6 +252,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AD6CB5E4D75679F9CB67B86A /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AAD8D9F91BAE04BB00218CC9 /* Sources */ = {
