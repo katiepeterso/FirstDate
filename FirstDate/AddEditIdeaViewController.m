@@ -15,6 +15,9 @@
 #import <ParseUI/ParseUI.h>
 #import "FirstDate-Swift.h"
 
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
 @interface AddEditIdeaViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *titleField;
@@ -36,8 +39,6 @@
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
     self.titleField.leftViewMode = UITextFieldViewModeAlways;
     self.titleField.leftView = spacerView;
-//    [self.titleField setLeftViewMode:UITextFieldViewModeAlways];
-//    [self.titleField setLeftView:spacerView];
     
     self.descriptionView.delegate = self;
     
@@ -52,6 +53,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -60,6 +62,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 1) {
         [PhotoHelper displayImagePicker:self delegate:self];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 1) {
+        return self.view.frame.size.width;
+    } else {
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 }
 

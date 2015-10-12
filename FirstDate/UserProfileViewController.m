@@ -144,7 +144,12 @@ const CGFloat coverPhotoOffset = 50;
     dateDetail.idea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
         self.createdDateIdeas[indexPath.item]:
         self.heartedDateIdeas[indexPath.item];
-    [self presentViewController:dateDetail animated:YES completion:nil];
+    [self.navigationController pushViewController:dateDetail animated:YES];
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat cellWidth = (self.view.frame.size.width - 30.0) / 2.0;
+    return CGSizeMake(cellWidth, cellWidth);
 }
 
 #pragma mark - Cover Photo Mask

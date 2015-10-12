@@ -25,13 +25,17 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         print("detail view did load")
         
-        backButton.transform = CGAffineTransformMakeScale(0.5, 0.5)
+        backButton.transform = CGAffineTransformMakeScale(0.0, 0.0)
         backButtonLeading.constant = -100
         
         messageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)
         messageButtonTrailing.constant = +100
         
         setup()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBarHidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
