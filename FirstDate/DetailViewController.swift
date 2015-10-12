@@ -46,8 +46,10 @@ class DetailViewController: UIViewController {
             self.backButton.transform = CGAffineTransformMakeScale(1, 1)
             self.backButtonLeading.constant = 0
             
-            self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
-            self.messageButtonTrailing.constant = 0
+            if (self.idea.user == User.currentUser()) {
+                self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
+                self.messageButtonTrailing.constant = 0
+            }
             }, completion: nil)
     }
     
@@ -73,6 +75,13 @@ class DetailViewController: UIViewController {
             query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
                 if error == nil {
                     self.heartCountLabel.text = "\(result)"
+                    if (result < 1) {
+                        self.messageButton.enabled = false
+                        self.messageButton.alpha = 0.0
+                    } else {
+                        self.messageButton.enabled = true
+                        self.messageButton.alpha = 1.0
+                    }
                 }
             })
             

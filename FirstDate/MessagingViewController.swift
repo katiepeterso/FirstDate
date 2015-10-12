@@ -11,12 +11,12 @@ import Parse
 import JSQMessagesViewController
 
 class MessagingViewController: JSQMessagesViewController {
-    
+
     var messages = [Message]()
-    var receiver = User()
+    var receiver = User.currentUser()
     
     let bubbleFactory = JSQMessagesBubbleImageFactory()
-    var senderPhoto = UIImage()
+    var senderPhoto: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +28,28 @@ class MessagingViewController: JSQMessagesViewController {
         self.collectionView!.dataSource = self
         self.collectionView!.delegate = self
         fetchConversation()
+        
+        self.inputToolbar!.contentView!.leftBarButtonItem = nil
     }
     
     func fetchConversation() {
-        let getMessages = PFQuery(className:"Message")
-        getMessages.whereKey("sender", equalTo:User.currentUser()!)
-        getMessages.includeKey("sender")
-        getMessages.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
+        let getSentMessages = PFQuery(className:"Message")
+        getSentMessages.whereKey("sendingUser", equalTo:User.currentUser()!)
+        getSentMessages.whereKey("receivingUser", equalTo: receiver!)
+        
+        let getRecievedMessages = PFQuery(className:"Message")
+        getRecievedMessages.whereKey("sendingUser", equalTo:receiver!)
+        getRecievedMessages.whereKey("receivingUser", equalTo: User.currentUser()!)
+        
+        let getAllMessages = PFQuery.orQueryWithSubqueries([getSentMessages, getRecievedMessages])
+
+        getAllMessages.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             if(results!.count != 0) {
                 self.messages += results as! [Message]
+                self.collectionView?.reloadData()
             }
         }
     }
-    
     
     //MARK: - JSQMessagesCollectionViewDataSource -
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
@@ -60,11 +69,17 @@ class MessagingViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        PhotoHelper.getPhotoInBackground(self.messages[indexPath.item].sendingUser.userPhoto) { (resultImage) -> Void in
-            self.senderPhoto = resultImage!
-            self.collectionView?.reloadData()
+        
+        
+        if (self.senderPhoto == nil) {
+            PhotoHelper.getPhotoInBackground(self.messages[indexPath.item].sendingUser.userPhoto) { (resultImage) -> Void in
+                self.senderPhoto = resultImage!
+                self.collectionView!.reloadData()
+            }
+            return JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+        } else {
+            return JSQMessagesAvatarImageFactory.avatarImageWithImage(self.senderPhoto, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
         }
-        return JSQMessagesAvatarImageFactory.avatarImageWithImage(self.senderPhoto, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
     }
     
     //MARK: - Send Message -
