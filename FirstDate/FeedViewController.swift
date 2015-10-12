@@ -320,6 +320,8 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }
             
         } else if segue.identifier == "showDetail" {
+            let detailVC = segue.destinationViewController as! DetailViewController
+            detailVC.idea = dateView.idea
             
         } else if segue.identifier == "showProfile" {
             if User.currentUser() == nil {

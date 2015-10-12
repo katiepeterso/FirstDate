@@ -141,7 +141,7 @@ const CGFloat coverPhotoOffset = 50;
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DetailViewController *dateDetail = (DetailViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
-    dateDetail.detailIdea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
+    dateDetail.idea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
         self.createdDateIdeas[indexPath.item]:
         self.heartedDateIdeas[indexPath.item];
     [self presentViewController:dateDetail animated:YES completion:nil];

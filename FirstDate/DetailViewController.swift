@@ -15,7 +15,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    var detailIdea: DateIdea!
+    var idea: DateIdea!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,17 +27,17 @@ class DetailViewController: UIViewController {
     }
     
     func setup() {
-        if (detailIdea != nil) {
-            PhotoHelper.getPhotoInBackground(detailIdea.photo) { (resultImage) -> Void in
+        if (idea != nil) {
+            PhotoHelper.getPhotoInBackground(idea.photo) { (resultImage) -> Void in
                 self.detailIdeaImageView.image = resultImage
             }
-            PhotoHelper.getPhotoInBackground(detailIdea.user.userPhoto) { (resultImage) -> Void in
+            PhotoHelper.getPhotoInBackground(idea.user.userPhoto) { (resultImage) -> Void in
                 self.profileImageView.image = resultImage
             }
-            self.usernameLabel.text = self.detailIdea.user.username
-            self.descriptionLabel.text = self.detailIdea.details
-            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2
-            self.profileImageView.layer.masksToBounds = true
+            usernameLabel.text = idea.user.username
+            descriptionLabel.text = idea.details
+            profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2
+            profileImageView.layer.masksToBounds = true
 
         }
     }
