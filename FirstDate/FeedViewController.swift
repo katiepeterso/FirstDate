@@ -84,6 +84,22 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     self.ideas += dateIdeas
                     self.activityIndicator.stopAnimating()
                     
+                    for idea in self.ideas {
+                        if let photo = idea.photo {
+                            PhotoHelper.getPhotoInBackground(photo, completionHandler: { (resultImage) -> Void in
+                                // download to cache
+                            })
+                        }
+                        
+                        if let user = idea.user,
+                            let photo = user.userPhoto {
+                                PhotoHelper.getPhotoInBackground(photo, completionHandler: { (resultImage) -> Void in
+                                    // download to cache
+                                })
+                            
+                        }
+                    }
+                    
                     if self.dateView == nil {
                         self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
                         self.showDateView(self.dateView)
@@ -104,6 +120,19 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             dateView.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
         }
     }
+    
+    // MARK: - Appearance
+    // TODO: Set status bar appearance
+    
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        if let image = backgroundImageView.image {
+//            let contentColor = image.md_imageContentColor()
+//            if contentColor == MDContentColor.Dark {
+//                return UIStatusBarStyle.LightContent
+//            }
+//        }
+//        return UIStatusBarStyle.Default
+//    }
     
     // MARK: - Fetch New Data
     
@@ -314,6 +343,31 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         }
     }
     
+    // MARK: - Actions
+    
+    @IBAction func showSettings(sender: UIButton) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        if User.currentUser() != nil {
+            alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (action) -> Void in
+                User.logOut()
+                
+                self.performSegueWithIdentifier("showLogin", sender: self)
+            }))
+        } else {
+            alertController.addAction(UIAlertAction(title: "Login", style: .Default, handler: { (action) -> Void in
+                
+                self.performSegueWithIdentifier("showLogin", sender: self)
+            }))
+        }
+        
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -331,9 +385,14 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 performSegueWithIdentifier("showLogin", sender: sender)
             }
         } else if segue.identifier == "showLogin" {
-            let loginVC = segue.destinationViewController as! LoginViewController
+            let navigationVC = segue.destinationViewController as! UINavigationController
+            let loginVC = navigationVC.topViewController as! LoginViewController
             loginVC.delegate = self
         }
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        
     }
     
     // MARK: - Helper
