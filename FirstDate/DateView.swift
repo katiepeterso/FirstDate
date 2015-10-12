@@ -11,7 +11,7 @@ import UIKit
 @objc protocol DateViewDelegate {
     func dateViewShouldHeart(dateView: DateView) -> Bool
     func dateViewDidHeart(dateView: DateView)
-    func dateViewDidUnheart(dateView: DateView)
+    optional func dateViewDidUnheart(dateView: DateView)
 }
 
 class DateView: UIView {
@@ -71,16 +71,10 @@ class DateView: UIView {
     }
     
     @IBAction func heart(button: UIButton) {
-        if (delegate.dateViewShouldHeart(self) && !hearted) {
+        if (delegate.dateViewShouldHeart(self)) {
             heartCount++
-            hearted = true
             button.setImage(UIImage(named: "hearted"), forState: .Normal)
             delegate.dateViewDidHeart(self)
-        } else if (hearted) {
-            heartCount--
-            hearted = false
-            button.setImage(UIImage(named: "heart"), forState: .Normal)
-            delegate.dateViewDidUnheart(self)
         }
     }
 }

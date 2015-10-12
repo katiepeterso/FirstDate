@@ -8,11 +8,9 @@
 
 import UIKit
 import Parse
-import DBImageColorPicker
+import UIImage_MDContentColor
 
 class FeedViewController: UIViewController, DateViewDelegate, LoginViewControllerDelegate {
-    
-    var colorPicker: DBImageColorPicker!
     
     var ideas: [DateIdea] = [DateIdea]()
     
@@ -31,7 +29,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     
     var animator:UIDynamicAnimator!
     var snapBehavior: UISnapBehavior!
-    var attachmentBehavior: (UIAttachmentBehavior!, UIAttachmentBehavior!)
+    var attachmentBehavior: UIAttachmentBehavior!
     var gravityBehavior: UIGravityBehavior!
     
     // MARK: - Life Cycle
@@ -39,15 +37,16 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        backgroundImageView.image = nil
-        view.backgroundColor = UIColor(red: 80.0/255, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+        let profileButtonImage = UIImage(named: "user")?.imageWithRenderingMode(.AlwaysTemplate)
+        profileButton.setImage(profileButtonImage, forState: .Normal)
+        
+        let createButtonImage = UIImage(named: "create")?.imageWithRenderingMode(.AlwaysTemplate)
+        createButton.setImage(createButtonImage, forState: .Normal)
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge) // TODO: Change to custom activity indicator
         activityIndicator.center = view.center
         activityIndicator.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
         view.insertSubview(activityIndicator, belowSubview: visualEffectView)
-        
-        activityIndicator.startAnimating()
         
         animator = UIDynamicAnimator(referenceView: view)
         
@@ -59,27 +58,47 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         navigationController?.navigationBarHidden = true
         navigationItem.title = "Explore"
         
+        activityIndicator.startAnimating()
+        
+        let querySavedDateIdea = DateIdea.query()!
+        querySavedDateIdea.fromPinWithName("LastDateIdeaViewed")
+        querySavedDateIdea.includeKey("user")
+        querySavedDateIdea.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
+            
+            if let dateIdeas = dateIdeas as? [DateIdea],
+                let firstIdea = dateIdeas.first {
+                    self.activityIndicator.stopAnimating()
+                    
+                    if self.dateView == nil {
+                        self.dateView = self.createDateViewWithIdea(firstIdea)
+                        self.showDateView(self.dateView)
+                        self.updateLastSeenDateIdeaDate()
+                    }
+            }
+        }
+        
         if ideas.count < 5 {
             fetchDateIdeas() { (dateIdeas, success) in
                 if success {
-                    self.ideas = dateIdeas
+                    self.ideas += dateIdeas
                     self.activityIndicator.stopAnimating()
                     
-                    self.dateView = self.getDateView()
-                    
-                    self.snapBehavior = UISnapBehavior(item: self.dateView, snapToPoint: self.view.center)
-                    self.animator.addBehavior(self.snapBehavior)
-                    for constraint in self.view.constraints {
-                        if let identifier = constraint.identifier {
-                            if identifier == "dateViewCenterY" {
-                                constraint.constant = 0.0
-                            }
-                        }
+                    if self.dateView == nil {
+                        self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
+                        self.showDateView(self.dateView)
+                        self.updateLastSeenDateIdeaDate()
                     }
                 } else {
-                    
+                    // TODO: Handle failure
                 }
             }
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if dateView != nil {
+            DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
+            dateView.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
         }
     }
     
@@ -90,84 +109,78 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         let query = PFQuery(className: "DateIdea")
         query.includeKey("user")
         query.limit = 10;
+        //        if let user = User.currentUser() {
+        //            query.whereKey("createdAt", greaterThan: user.lastSeenDateIdeaCreatedAt!)
+        //        }
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if (error == nil) {
-                let dateIdeas = objects as! [DateIdea]
-                completion?(dateIdeas: dateIdeas, success: true)
+                if let dateIdeas = objects as? [DateIdea] where dateIdeas.count > 0 {
+                    completion?(dateIdeas: dateIdeas, success: true)
+                }
             } else {
                 completion?(dateIdeas: nil, success: false)
             }
         }
     }
     
-//    func getUserHearts()
-//    {
-//        let relation = User.currentUser()?.relationForKey("hearts")
-//        let query = relation?.query()
-//        query?.includeKey("user")
-//        query?.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
-//            if (error == nil) {
-//                self.hearts = dateIdeas as! [DateIdea]
-//                print("getUserHearts")
-//                print(self.hearts)
-//            }
-//        }
-//    }
+    // MARK: - Update Parse
+    func updateLastSeenDateIdeaDate() {
+        if let user = User.currentUser() {
+            user.lastSeenDateIdeaCreatedAt = dateView.idea?.createdAt
+            user.saveEventually()
+        }
+    }
     
     // MARK: - Create Date View
     
-    func getDateView() -> DateView {
+    func createDateViewWithIdea(idea: DateIdea) -> DateView {
         let dv = NSBundle.mainBundle().loadNibNamed("DateView", owner:self, options: nil)[0] as! DateView
-        
-        let idea = self.ideas.removeFirst()
         
         dv.idea = idea
         
-        PhotoHelper.getPhotoInBackground(idea.photo) { (image) in
-            dv.dateImageView.image = image
-            self.backgroundImageView.image = image
-            self.colorPicker = DBImageColorPicker(fromImage: image, withBackgroundType: DBImageColorPickerBackgroundType.Default)
-            dv.heartCountLabel.textColor = self.colorPicker.primaryTextColor
-        }
-        
-        if let user = idea.user,
-            let photo = user.userPhoto {
-            PhotoHelper.getPhotoInBackground(photo) { (image) in
-                dv.userImageView.image = image
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+            var dateImage: UIImage?
+            var userImage: UIImage?
+            
+            if let dateImageData = try? idea.photo.getData() {
+                dateImage = UIImage(data: dateImageData)
             }
+            
+            if let user = idea.user,
+                let photo = user.userPhoto,
+                userImageData = try? photo.getData() {
+                    userImage = UIImage(data: userImageData)
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if self.dateView == dv {
+                    self.backgroundImageView.image = dateImage
+                }
+                dv.dateImageView.image = dateImage
+                dv.userImageView.image = userImage
+            })
         }
         
-        let relation = idea.relationForKey("heartedBy")
-        let query = relation.query()
+        let query = idea.heartedBy.query()
         query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if error == nil {
-                let heartCount: Int32 = result
-                dv.heartCount = heartCount
+                dv.heartCount = result
             }
         })
-        
-        
-        
-//        if hearts.contains(idea) {
-//            dv.hearted = true
-//        }
         
         view.insertSubview(dv, aboveSubview: visualEffectView)
         
         dv.translatesAutoresizingMaskIntoConstraints = false
         
-        let dateViewCenterX = NSLayoutConstraint(item: dv,attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0.0)
+        let dateViewCenterX = dv.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor)
+        let dateViewCenterY = dv.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor)
         
-        let dateViewCenterY = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: -1000.0)
-        dateViewCenterY.identifier = "dateViewCenterY"
+        let dateViewLeadingMargin = dv.leadingAnchor.constraintEqualToAnchor(view.layoutMarginsGuide.leadingAnchor)
+        let dateViewTrailingMargin = dv.trailingAnchor.constraintEqualToAnchor(view.layoutMarginsGuide.trailingAnchor)
         
-        let dateViewHeight = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: dv, attribute: NSLayoutAttribute.Width, multiplier: 1.0, constant: 0.0)
+        let dateViewHeight = dv.heightAnchor.constraintEqualToAnchor(dv.widthAnchor)
         
-        let dateViewLeadingMargin = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.LeadingMargin, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.LeadingMargin, multiplier: 1.0, constant: 0.0)
-        
-        let dateViewTrailingMargin = NSLayoutConstraint(item: dv, attribute: NSLayoutAttribute.TrailingMargin, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.TrailingMargin, multiplier: 1.0, constant: 0.0)
-        
-        view.addConstraints([dateViewCenterX, dateViewCenterY, dateViewHeight, dateViewLeadingMargin, dateViewTrailingMargin])
+        view.addConstraints([dateViewCenterX, dateViewCenterY, dateViewLeadingMargin, dateViewTrailingMargin, dateViewHeight])
         
         doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "handleDoubleTapGesture:")
         doubleTapRecognizer.numberOfTapsRequired = 2
@@ -176,21 +189,50 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         panRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         dv.addGestureRecognizer(panRecognizer)
         
+        dv.delegate = self
+        
+        dv.alpha = 0.0
+        
+        let scale = CGAffineTransformMakeScale(0.5, 0.5)
+        let translate = CGAffineTransformMakeTranslation(0, -200)
+        dv.transform = CGAffineTransformConcat(scale, translate)
+        
         return dv
+    }
+    
+    // MARK: - Show / Hide Views
+    
+    func showDateView(dv: DateView) {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+            let scale = CGAffineTransformMakeScale(1, 1)
+            let translate = CGAffineTransformMakeTranslation(0, 0)
+            dv.transform = CGAffineTransformConcat(scale, translate)
+            dv.alpha = 1.0
+            self.backgroundImageView.image = dv.dateImageView.image
+            }, completion: nil)
+        
+    }
+    
+    func hideDateView(dv: DateView) {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+            let scale = CGAffineTransformMakeScale(0.5, 0.5)
+            let translate = CGAffineTransformMakeTranslation(0, -200)
+            dv.transform = CGAffineTransformConcat(scale, translate)
+            dv.alpha = 0.0
+            }, completion: nil)
+        
     }
     
     // MARK: - Gesture Recognizers
     
     func handleDoubleTapGesture(sender: UITapGestureRecognizer) {
-        if dateView.hearted == false {
-            dateView.heart(dateView.heartButton)
-        }
+        dateView.heart(dateView.heartButton)
     }
-
+    
     func handlePanGesture(sender: UIPanGestureRecognizer) {
         
         let location = sender.locationInView(view)
-
+        
         if sender.state == UIGestureRecognizerState.Began {
             
             if snapBehavior != nil {
@@ -198,54 +240,45 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }
             
             // create a new incoming dateView
-            if incomingDateView == nil {
-                incomingDateView = getDateView()
-                incomingDateView.delegate = self
+            if (incomingDateView == nil) && (ideas.count > 0) {
+                incomingDateView = createDateViewWithIdea(ideas.removeFirst())
             }
-
+            
             // animate them together
             
             let currentDateViewLocation = sender.locationInView(dateView)
-            let incomingDateViewLocation = sender.locationInView(incomingDateView)
             
             let centerOffset = UIOffsetMake(currentDateViewLocation.x - CGRectGetMidX(dateView.bounds), currentDateViewLocation.y - CGRectGetMidY(dateView.bounds))
             
-            attachmentBehavior.0 = UIAttachmentBehavior(item: dateView, offsetFromCenter: centerOffset, attachedToAnchor: location)
-            attachmentBehavior.0.frequency = 0
+            attachmentBehavior = UIAttachmentBehavior(item: dateView, offsetFromCenter: centerOffset, attachedToAnchor: location)
+            attachmentBehavior.frequency = 0
             
-            let offScreenCenterOffset = UIOffsetMake(incomingDateViewLocation.x - CGRectGetMidX(incomingDateView.bounds), incomingDateViewLocation.y - CGRectGetMidY(incomingDateView.bounds))
-            
-            attachmentBehavior.1 = UIAttachmentBehavior(item: incomingDateView, offsetFromCenter: offScreenCenterOffset, attachedToAnchor: location)
-            attachmentBehavior.1.frequency = 0
-            
-            animator.addBehavior(attachmentBehavior.0)
-            animator.addBehavior(attachmentBehavior.1)
+            animator.addBehavior(attachmentBehavior)
         } else if sender.state == UIGestureRecognizerState.Changed {
-            attachmentBehavior.0.anchorPoint = location
-            attachmentBehavior.1.anchorPoint = CGPoint(x: location.x - 100, y: location.y - 500)
+            attachmentBehavior.anchorPoint = location
+            let translation = sender.translationInView(view)
+            if translation.y > 0 {
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.incomingDateView.alpha = 0.5
+                })
+            } else {
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.incomingDateView.alpha = 0.0
+                })
+            }
         } else if sender.state == UIGestureRecognizerState.Ended {
-            backgroundImageView.image = dateView.dateImageView.image
             
-            animator.removeBehavior(attachmentBehavior.0)
-            
-            snapBehavior = UISnapBehavior(item: dateView, snapToPoint: view.center)
-            animator.addBehavior(snapBehavior)
-            
-            animator.removeBehavior(attachmentBehavior.1)
-            
-            snapBehavior = UISnapBehavior(item: incomingDateView, snapToPoint: CGPoint(x: view.frame.size.width/2, y: -300))
-            animator.addBehavior(snapBehavior)
+            animator.removeAllBehaviors()
             
             let translation = sender.translationInView(view)
+            
             if translation.y > 100 {
-                animator.removeAllBehaviors()
                 
                 let gravity = UIGravityBehavior(items: [dateView])
                 gravity.gravityDirection = CGVectorMake(0, 10)
                 animator.addBehavior(gravity)
                 
-                let snapToCenter = UISnapBehavior(item: incomingDateView, snapToPoint: view.center)
-                animator.addBehavior(snapToCenter)
+                showDateView(incomingDateView)
                 
                 delay(0.3, closure: { () -> () in
                     self.dateView.removeFromSuperview()
@@ -254,9 +287,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     
                     self.fetchDateIdeas(nil)
                 })
-            } else if translation.y < -50 {
-                
-                animator.removeAllBehaviors()
+            } else if translation.y < -100 {
                 
                 dateView.transform = CGAffineTransformMakeRotation(0);
                 
@@ -269,6 +300,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     }, completion: { finished in
                         self.performSegueWithIdentifier("showDetail", sender: self)
                 })
+            } else {
+                
+                snapBehavior = UISnapBehavior(item: dateView, snapToPoint: view.center)
+                animator.addBehavior(snapBehavior)
+                
+                hideDateView(incomingDateView)
+                
             }
         }
     }
@@ -310,7 +348,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         if (User.currentUser() != nil) {
             return true
         } else {
-//            performSegueWithIdentifier("showLogin", sender: <#T##AnyObject?#>)
+            performSegueWithIdentifier("showLogin", sender: self)
             return false
         }
     }
@@ -323,16 +361,28 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         let relationForDateIdea = dateView.idea!.relationForKey("heartedBy")
         relationForDateIdea.addObject(User.currentUser()!)
         dateView.idea!.saveInBackground()
-    }
-    
-    func dateViewDidUnheart(dateView: DateView) {
-        let relationForUser = User.currentUser()?.relationForKey("hearts")
-        relationForUser?.removeObject(dateView.idea!)
-        User.currentUser()?.saveInBackground()
         
-        let relationForDateIdea = dateView.idea!.relationForKey("heartedBy")
-        relationForDateIdea.removeObject(User.currentUser()!)
-        dateView.idea!.saveInBackground()
+        animator.removeAllBehaviors()
+        
+        // create a new incoming dateView
+        if incomingDateView == nil {
+            incomingDateView = createDateViewWithIdea(ideas.removeFirst())
+        }
+        
+        //        UIView.animateWithDuration(2.0, animations: { () -> Void in
+        //            self.dateView.frame = CGRectZero
+        //            }) { (completed) -> Void in
+        //                if completed {
+        //                    let snapToCenter = UISnapBehavior(item: self.incomingDateView, snapToPoint: self.view.center)
+        //                    self.animator.addBehavior(snapToCenter)
+        //
+        //                    self.dateView.removeFromSuperview()
+        //                    self.dateView = self.incomingDateView
+        //                    self.incomingDateView = nil
+        //
+        //                    self.fetchDateIdeas(nil)
+        //                }
+        //        }
     }
     
     // MARK: - Login View Controller Delegate
@@ -341,5 +391,5 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         if user != nil {
         }
     }
-
+    
 }

@@ -23,6 +23,7 @@
 @dynamic coverPhoto;
 @dynamic userPhoto;
 @dynamic about;
+@dynamic lastSeenDateIdeaCreatedAt;
 
 - (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference
 {
