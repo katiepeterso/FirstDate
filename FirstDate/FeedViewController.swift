@@ -37,12 +37,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let profileButtonImage = UIImage(named: "user")?.imageWithRenderingMode(.AlwaysTemplate)
-//        profileButton.setImage(profileButtonImage, forState: .Normal)
-        
-//        let createButtonImage = UIImage(named: "create")?.imageWithRenderingMode(.AlwaysTemplate)
-//        createButton.setImage(createButtonImage, forState: .Normal)
-        
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge) // TODO: Change to custom activity indicator
         activityIndicator.center = view.center
         activityIndicator.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
@@ -88,27 +82,17 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        print("ViewWillDisappear fired")
-        if dateView != nil {
-            print("Saving last date idea to local datastore")
-            DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
-            dateView.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
-        }
-    }
-    
     // MARK: - Appearance
-    // TODO: Set status bar appearance
     
-//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-//        if let image = backgroundImageView.image {
-//            let contentColor = image.md_imageContentColor()
-//            if contentColor == MDContentColor.Dark {
-//                return UIStatusBarStyle.LightContent
-//            }
-//        }
-//        return UIStatusBarStyle.Default
-//    }
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        if let image = backgroundImageView?.image {
+            let contentColor = image.md_imageContentColor()
+            if contentColor == MDContentColor.Dark {
+                return UIStatusBarStyle.LightContent
+            }
+        }
+        return UIStatusBarStyle.Default
+    }
     
     // MARK: - Fetch New Data
     
@@ -117,13 +101,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         let query = DateIdea.query()
         query?.includeKey("user")
         query?.limit = 10;
-        //        if let user = User.currentUser() {
-        //            query.whereKey("createdAt", greaterThan: user.lastSeenDateIdeaCreatedAt!)
-        //        }
+//        if let user = User.currentUser() {
+//            query.whereKey("createdAt", greaterThan: user.lastSeenDateIdeaCreatedAt!)
+//        }
         query?.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if (error == nil) {
                 if let dateIdeas = objects as? [DateIdea] where dateIdeas.count > 0 {
-                    self.ideas = dateIdeas
+                    self.ideas += dateIdeas
                     
                     for idea in self.ideas {
                         if let photo = idea.photo {
@@ -160,6 +144,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     func createDateViewWithIdea(idea: DateIdea) -> DateView {
         let dv = NSBundle.mainBundle().loadNibNamed("DateView", owner:self, options: nil)[0] as! DateView
         
+        let dateViewDimension = view.frame.width - (view.layoutMargins.left + view.layoutMargins.right)
+        dv.frame = CGRectMake(0, 0, dateViewDimension, dateViewDimension)
+        
         dv.idea = idea
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
@@ -177,8 +164,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                // first run code:
                 if self.dateView == dv {
                     self.backgroundImageView.image = dateImage
+                    self.setNeedsStatusBarAppearanceUpdate()
                 }
                 dv.dateImageView.image = dateImage
                 dv.userImageView.image = userImage
@@ -194,24 +183,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         
         view.insertSubview(dv, aboveSubview: visualEffectView)
         
-        dv.translatesAutoresizingMaskIntoConstraints = false
-        
-        let dateViewCenterX = dv.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor)
-        let dateViewCenterY = dv.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor)
-        
-        let dateViewLeadingMargin = dv.leadingAnchor.constraintEqualToAnchor(view.layoutMarginsGuide.leadingAnchor)
-        dateViewLeadingMargin.priority = 999
-//        dateViewLeadingMargin.identifier = "dateViewLeadingMargin"
-        
-        let dateViewTrailingMargin = dv.trailingAnchor.constraintEqualToAnchor(view.layoutMarginsGuide.trailingAnchor)
-        dateViewTrailingMargin.priority = 999
-//        dateViewTrailingMargin.identifier = "dateViewTrailingMargin"
-        
-        let dateViewHeight = dv.heightAnchor.constraintEqualToAnchor(dv.widthAnchor)
-        dateViewHeight.priority = 999
-        
-        view.addConstraints([dateViewCenterX, dateViewCenterY, dateViewLeadingMargin, dateViewTrailingMargin, dateViewHeight])
-        
         doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "handleDoubleTapGesture:")
         doubleTapRecognizer.numberOfTapsRequired = 2
         dv.addGestureRecognizer(doubleTapRecognizer)
@@ -222,10 +193,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         dv.delegate = self
         
         dv.alpha = 0.0
-        
+
         let scale = CGAffineTransformMakeScale(0.5, 0.5)
-        let translate = CGAffineTransformMakeTranslation(0, -view.frame.height/4)
+        let translate = CGAffineTransformMakeTranslation(0, -view.frame.height/8)
         dv.transform = CGAffineTransformConcat(scale, translate)
+        dv.center.x = view.center.x
         
         return dv
     }
@@ -238,15 +210,26 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             let translate = CGAffineTransformMakeTranslation(0, 0)
             dv.transform = CGAffineTransformConcat(scale, translate)
             dv.alpha = 1.0
-            self.backgroundImageView.image = dv.dateImageView.image
-            }, completion: nil)
+            dv.center = self.view.center
+            }, completion: { completed in
+                UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
+                    self.backgroundImageView.image = dv.dateImageView.image
+                    }, completion: {completed in
+                        self.setNeedsStatusBarAppearanceUpdate()
+                })
+                DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
+                dv.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
+            })
+        
+        
+
         
     }
     
     func hideDateView(dv: DateView) {
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
             let scale = CGAffineTransformMakeScale(0.5, 0.5)
-            let translate = CGAffineTransformMakeTranslation(0, -200)
+            let translate = CGAffineTransformMakeTranslation(0, -self.view.frame.height/8)
             dv.transform = CGAffineTransformConcat(scale, translate)
             dv.alpha = 0.0
             }, completion: nil)
@@ -287,15 +270,26 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         } else if sender.state == UIGestureRecognizerState.Changed {
             attachmentBehavior.anchorPoint = location
             let translation = sender.translationInView(view)
-            if translation.y > 0 {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.incomingDateView.alpha = 0.5
-                })
-            } else {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.incomingDateView.alpha = 0.0
-                })
-            }
+            
+            let alpha = max(min(translation.y / 200, 1), 0)
+            
+//            let scale = max(min(translation.y / 200, 0.5), 0)
+            
+//            let transform = CGAffineTransformMakeTranslation(0, translation.y)
+            
+            
+            self.incomingDateView.alpha = alpha
+//            self.incomingDateView.transform = CGAffineTransformScale(transform, scale, scale)
+            
+//            if translation.y > 0 {
+//                UIView.animateWithDuration(0.3, animations: { () -> Void in
+//                    self.incomingDateView.alpha = 0.5
+//                })
+//            } else {
+//                UIView.animateWithDuration(0.3, animations: { () -> Void in
+//                    self.incomingDateView.alpha = 0.0
+//                })
+//            }
         } else if sender.state == UIGestureRecognizerState.Ended {
             
             animator.removeAllBehaviors()
@@ -304,19 +298,37 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             
             if translation.y > 100 {
                 
+                let outgoing = self.dateView
+                
                 let gravity = UIGravityBehavior(items: [dateView])
                 gravity.gravityDirection = CGVectorMake(0, 10)
                 animator.addBehavior(gravity)
                 
                 showDateView(incomingDateView)
                 
-                delay(0.3, closure: { () -> () in
-                    self.dateView.removeFromSuperview()
-                    self.dateView = self.incomingDateView
-                    self.incomingDateView = nil
+                gravity.action = { [weak gravity] in
                     
-                    self.fetchDateIdeas(nil)
-                })
+                    if !self.view.frame.intersects(outgoing.frame) {
+                        if let g = gravity {
+                            self.animator.removeBehavior(g)
+                        }
+                        
+                        outgoing.removeFromSuperview()
+                        self.fetchDateIdeas(nil)
+                    }
+                    
+                }
+                
+                self.dateView = self.incomingDateView
+                self.incomingDateView = nil
+                
+//                delay(0.3, closure: { () -> () in
+//                    self.dateView.removeFromSuperview()
+//                    self.dateView = self.incomingDateView
+//                    self.incomingDateView = nil
+//                    
+//                    self.fetchDateIdeas(nil)
+//                })
             } else if translation.y < -75 {
                 
                 dateView.transform = CGAffineTransformMakeRotation(0);
@@ -326,19 +338,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     self.dateView.headerView.alpha = 0
                     self.dateView.footerView.alpha = 0
                     
-                    let dateViewLeading = self.dateView.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor)
-                    dateViewLeading.identifier = "dateViewLeading"
+                    self.dateView.frame = self.view.bounds
                     
-                    let dateViewTrailing = self.dateView.leadingAnchor.constraintEqualToAnchor(self.view.trailingAnchor)
-                    dateViewLeading.identifier = "dateViewTrailing"
-                    
-                    let dateViewHeight = self.dateView.heightAnchor.constraintEqualToAnchor(self.view.heightAnchor)
-                    dateViewHeight.identifier = "dateViewHeight"
-                    
-                    let dateViewImageViewHeight = self.dateView.dateImageView.heightAnchor.constraintEqualToAnchor(self.view.heightAnchor, multiplier: 0.5)
-                    dateViewImageViewHeight.identifier = "dateViewImageViewHeight"
-                    
-                    self.view.addConstraints([dateViewLeading, dateViewTrailing, dateViewHeight, dateViewImageViewHeight])
+                    self.dateView.dateImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height/2)
                     
                     
                     }, completion: { finished in
@@ -404,14 +406,30 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
-            
-            self.dateView.layer.cornerRadius = self.dateView.frame.height / 24.0
-            self.dateView.headerView.alpha = 1.0
-            self.dateView.footerView.alpha = 1.0
-            
-            
-            }, completion: nil)
+        
+        self.dateView.layer.cornerRadius = self.dateView.frame.height / 24.0
+        self.dateView.headerView.alpha = 1.0
+        self.dateView.footerView.alpha = 1.0
+        
+        let dateViewDimension = self.view.frame.width - (self.view.layoutMargins.left + self.view.layoutMargins.right)
+        self.dateView.frame = CGRectMake(0, 0, dateViewDimension, dateViewDimension)
+        self.dateView.dateImageView.frame = self.dateView.frame
+        
+        self.dateView.center = self.view.center
+        
+//        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+//            
+//            self.dateView.layer.cornerRadius = self.dateView.frame.height / 24.0
+//            self.dateView.headerView.alpha = 1.0
+//            self.dateView.footerView.alpha = 1.0
+//            
+//            let dateViewDimension = self.view.frame.width - (self.view.layoutMargins.left + self.view.layoutMargins.right)
+//            self.dateView.frame = CGRectMake(0, 0, dateViewDimension, dateViewDimension)
+//            self.dateView.dateImageView.frame = self.dateView.frame
+//            
+//            self.dateView.center = self.view.center
+//            
+//            }, completion: nil)
         
     }
     
@@ -471,11 +489,15 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 let translate = CGAffineTransformMakeTranslation(0, 0)
                 self.incomingDateView.transform = CGAffineTransformConcat(scale, translate)
                 self.incomingDateView.alpha = 1.0
-                self.backgroundImageView.image = self.incomingDateView.dateImageView.image
+                self.incomingDateView.center = self.view.center
             })
             }) { (completed) -> Void in
                 // animations completed
-                self.showDateView(self.incomingDateView)
+                UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
+                    self.backgroundImageView.image = self.incomingDateView.dateImageView.image
+                    }, completion: nil)
+                
+//                self.backgroundImageView.image = self.incomingDateView.dateImageView.image
                 self.dateView.removeFromSuperview()
                 self.dateView = self.incomingDateView
                 self.incomingDateView = nil
