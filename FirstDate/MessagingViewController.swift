@@ -13,7 +13,7 @@ import JSQMessagesViewController
 class MessagingViewController: JSQMessagesViewController {
 
     var messages = [Message]()
-    var receiver = User.currentUser()
+    var receiver: User?
     
     let bubbleFactory = JSQMessagesBubbleImageFactory()
     var senderPhoto: UIImage?

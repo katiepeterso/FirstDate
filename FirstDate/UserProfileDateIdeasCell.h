@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class DateIdea;
-//@class Heart;
 
 @interface UserProfileDateIdeasCell : UICollectionViewCell
 

@@ -27,6 +27,7 @@ const CGFloat coverPhotoOffset = 50;
 @property (nonatomic) BOOL userPhotoSelected;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *userIdeasControl;
 
+
 @end
 
 @implementation UserProfileViewController
@@ -37,16 +38,16 @@ const CGFloat coverPhotoOffset = 50;
     self.createdDateIdeas = [NSMutableArray array];
     self.heartedDateIdeas = [NSMutableArray array];
     
-    self.fullNameLabel.text = User.currentUser.username;
-    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",User.currentUser.age];
+    self.fullNameLabel.text = self.selectedUser.username;
+    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.selectedUser.age];
     
     self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
-    self.userPhotoImageView.layer.masksToBounds = YES;
+    self.userPhotoImageView.clipsToBounds = YES;
     
-    [PhotoHelper getPhotoInBackground:User.currentUser.userPhoto completionHandler:^(UIImage *userPhoto) {
+    [PhotoHelper getPhotoInBackground:self.selectedUser.userPhoto completionHandler:^(UIImage *userPhoto) {
         self.userPhotoImageView.image = userPhoto;
     }];
-    [PhotoHelper getPhotoInBackground:User.currentUser.coverPhoto completionHandler:^(UIImage *coverPhoto) {
+    [PhotoHelper getPhotoInBackground:self.selectedUser.coverPhoto completionHandler:^(UIImage *coverPhoto) {
         self.photoImageView.image = coverPhoto;
     }];
     
@@ -62,7 +63,7 @@ const CGFloat coverPhotoOffset = 50;
 
 - (void)fetchIdeas {
     PFQuery *getCreatedIdeas = [PFQuery queryWithClassName:@"DateIdea"];
-    [getCreatedIdeas whereKey:@"user" equalTo:[User currentUser]];
+    [getCreatedIdeas whereKey:@"user" equalTo:self.selectedUser];
     [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count) {
             self.createdDateIdeas = [objects mutableCopy];
@@ -73,7 +74,7 @@ const CGFloat coverPhotoOffset = 50;
 
 - (void)fetchHearts {
     PFQuery *getHearts = [PFQuery queryWithClassName:@"DateIdea"];
-    [getHearts whereKey:@"heartedBy" equalTo:[User currentUser]];
+    [getHearts whereKey:@"heartedBy" equalTo:self.selectedUser];
     [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count) {
             self.heartedDateIdeas = [objects mutableCopy];
@@ -98,14 +99,14 @@ const CGFloat coverPhotoOffset = 50;
     if (info[UIImagePickerControllerOriginalImage]) {
         if (self.userPhotoSelected) {
             NSData *data = [PhotoHelper setView:self.userPhotoImageView toImage:info[UIImagePickerControllerOriginalImage]];
-            User.currentUser.userPhoto = [PFFile fileWithData:data];
+            self.selectedUser.userPhoto = [PFFile fileWithData:data];
         } else {
             NSData *data = [PhotoHelper setView:self.photoImageView toImage:info[UIImagePickerControllerOriginalImage]];
-            User.currentUser.coverPhoto = [PFFile fileWithData:data];
+            self.selectedUser.coverPhoto = [PFFile fileWithData:data];
         }
     }
     
-    [User.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [self.selectedUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             // The object has been saved.
         } else {

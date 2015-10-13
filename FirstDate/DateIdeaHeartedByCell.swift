@@ -9,19 +9,39 @@
 import UIKit
 
 class DateIdeaHeartedByCell: UITableViewCell {
-
+    
+    var user: User? {
+        didSet {
+            setup()
+        }
+    }
+    
     @IBOutlet weak var userPhotoImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setup() {
+        userPhotoImageView.layer.cornerRadius = userPhotoImageView.frame.size.width/2
+        userPhotoImageView.clipsToBounds = true
+        
+        if user != nil {
+            usernameLabel.text = user?.username
+            if user?.userPhoto != nil {
+                PhotoHelper.getPhotoInBackground((user?.userPhoto)!) { (resultImage) -> Void in
+                    self.userPhotoImageView.image = resultImage
+                }
+            }
+        }
     }
 
 }

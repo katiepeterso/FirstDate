@@ -58,7 +58,10 @@ class DetailViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        <#code#>
+        if segue.identifier == "showHeartedBy" {
+            let heartedVC = segue.destinationViewController as! DateIdeaHeartedByViewController
+            heartedVC.idea = self.idea
+        }
     }
     
     func setup() {
@@ -92,7 +95,7 @@ class DetailViewController: UIViewController {
             usernameLabel.text = idea.user.username
             descriptionLabel.text = idea.details
             profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2
-            profileImageView.layer.masksToBounds = true
+            profileImageView.clipsToBounds = true
 
         }
     }

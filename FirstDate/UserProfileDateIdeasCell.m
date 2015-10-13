@@ -23,7 +23,7 @@
 - (void)setupForDate:(DateIdea *)date {
     
     self.layer.cornerRadius = self.frame.size.height / 12.0;
-    self.layer.masksToBounds = true;
+    self.clipsToBounds = YES;
     
     self.dateIdeaLabel.text = date.title;
     

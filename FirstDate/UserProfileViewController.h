@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class User;
 
 @interface UserProfileViewController : UIViewController
+
+@property (nonatomic) User *selectedUser;
 
 @end
