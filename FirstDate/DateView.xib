@@ -15,9 +15,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ee-zo-09u">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="wt0-ZY-aLs">
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wt0-ZY-aLs">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zW-Uy-u5Y">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="98"/>
@@ -120,8 +121,8 @@
                         <constraint firstAttribute="trailing" secondItem="8zW-Uy-u5Y" secondAttribute="trailing" id="hwe-n0-5cr"/>
                         <constraint firstAttribute="trailing" secondItem="mi2-NU-LzD" secondAttribute="trailing" id="jH4-90-cbF"/>
                         <constraint firstItem="8zW-Uy-u5Y" firstAttribute="leading" secondItem="5ee-zo-09u" secondAttribute="leading" id="jN2-pW-QaM"/>
-                        <constraint firstItem="wt0-ZY-aLs" firstAttribute="top" secondItem="5ee-zo-09u" secondAttribute="top" id="wQM-3a-ojr"/>
-                        <constraint firstAttribute="bottom" secondItem="wt0-ZY-aLs" secondAttribute="bottom" id="zbE-TD-eVu"/>
+                        <constraint firstItem="wt0-ZY-aLs" firstAttribute="top" secondItem="5ee-zo-09u" secondAttribute="top" priority="999" id="wQM-3a-ojr"/>
+                        <constraint firstAttribute="bottom" secondItem="wt0-ZY-aLs" secondAttribute="bottom" priority="999" id="zbE-TD-eVu"/>
                     </constraints>
                 </view>
             </subviews>
@@ -153,7 +154,6 @@
     </objects>
     <resources>
         <image name="add photo" width="240" height="240"/>
-        <image name="bg_idea_2" width="345" height="360"/>
-        <image name="heart" width="27" height="21"/>
+        <image name="heart" width="40" height="40"/>
     </resources>
 </document>

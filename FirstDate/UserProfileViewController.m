@@ -82,7 +82,7 @@ const CGFloat coverPhotoOffset = 50;
     }];
 }
 
-#pragma mark - Image Picker and display
+#pragma mark - Image Picker and Display
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
     [PhotoHelper displayImagePicker:self delegate:self];
     self.userPhotoSelected = NO;
@@ -117,6 +117,7 @@ const CGFloat coverPhotoOffset = 50;
 }
 
 #pragma mark - Collection View Delegate
+
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return (self.userIdeasControl.selectedSegmentIndex == 0) ?
       self.createdDateIdeas.count:
@@ -161,7 +162,18 @@ const CGFloat coverPhotoOffset = 50;
     self.headerView.layer.mask = maskLayer;
 }
 
+#pragma mark - Navigation
+
+- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
+    
+}
+
+- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {
+    return YES;
+}
+
 #pragma mark - Segmented Control
+
 - (IBAction)userIdeasControlAction:(UISegmentedControl *)sender {
     [self.collectionView reloadData];
 }
