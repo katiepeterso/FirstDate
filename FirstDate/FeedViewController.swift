@@ -375,7 +375,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }))
         }
         
-        
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
         
         presentViewController(alertController, animated: true, completion: nil)
@@ -416,20 +415,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         self.dateView.dateImageView.frame = self.dateView.frame
         
         self.dateView.center = self.view.center
-        
-//        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
-//            
-//            self.dateView.layer.cornerRadius = self.dateView.frame.height / 24.0
-//            self.dateView.headerView.alpha = 1.0
-//            self.dateView.footerView.alpha = 1.0
-//            
-//            let dateViewDimension = self.view.frame.width - (self.view.layoutMargins.left + self.view.layoutMargins.right)
-//            self.dateView.frame = CGRectMake(0, 0, dateViewDimension, dateViewDimension)
-//            self.dateView.dateImageView.frame = self.dateView.frame
-//            
-//            self.dateView.center = self.view.center
-//            
-//            }, completion: nil)
         
     }
     
@@ -497,7 +482,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     self.backgroundImageView.image = self.incomingDateView.dateImageView.image
                     }, completion: nil)
                 
-//                self.backgroundImageView.image = self.incomingDateView.dateImageView.image
                 self.dateView.removeFromSuperview()
                 self.dateView = self.incomingDateView
                 self.incomingDateView = nil
