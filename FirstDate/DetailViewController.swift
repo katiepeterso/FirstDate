@@ -57,6 +57,10 @@ class DetailViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        <#code#>
+    }
+    
     func setup() {
         if (idea != nil) {
             PhotoHelper.getPhotoInBackground(idea.photo) { (resultImage) -> Void in
