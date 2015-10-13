@@ -33,8 +33,8 @@
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="WJC-7G-cR2" secondAttribute="trailing" constant="8" id="Wlq-E9-ZcF"/>
-                                <constraint firstAttribute="bottom" secondItem="WJC-7G-cR2" secondAttribute="bottom" constant="8" id="wx1-NW-IUK"/>
+                                <constraint firstItem="WJC-7G-cR2" firstAttribute="trailing" secondItem="S1t-0F-bFw" secondAttribute="trailingMargin" id="9zx-XG-NuS"/>
+                                <constraint firstItem="WJC-7G-cR2" firstAttribute="bottom" secondItem="S1t-0F-bFw" secondAttribute="bottomMargin" id="jB8-Hx-FMz"/>
                             </constraints>
                         </view>
                         <sections>
@@ -430,9 +430,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="XrB-Qy-gKJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XrB-Qy-gKJ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <visualEffectView opaque="NO" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bmf-u8-lCP">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -518,9 +519,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_idea_2" translatesAutoresizingMaskIntoConstraints="NO" id="wKg-dA-XAY">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wKg-dA-XAY">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="300.5"/>
                                 <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="67R-p7-53r">
                                 <rect key="frame" x="20" y="308" width="85.5" height="40"/>
@@ -683,7 +685,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account yet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd0-8i-Mkm">
-                                <rect key="frame" x="204" y="522" width="193.5" height="19.5"/>
+                                <rect key="frame" x="204" y="522" width="194" height="20"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -743,13 +745,13 @@
                             <constraint firstItem="Fry-ul-ZYY" firstAttribute="top" secondItem="MvK-Dj-hjk" secondAttribute="bottom" id="2on-kk-NEH"/>
                             <constraint firstItem="Yaw-Ts-Y1Q" firstAttribute="trailing" secondItem="ARc-vW-66v" secondAttribute="trailingMargin" id="FD0-sZ-WCW"/>
                             <constraint firstItem="xd0-8i-Mkm" firstAttribute="centerX" secondItem="ARc-vW-66v" secondAttribute="centerX" id="NgT-xQ-yrU"/>
-                            <constraint firstItem="Cit-3q-tvm" firstAttribute="top" secondItem="4Bp-xU-dFV" secondAttribute="bottom" constant="8" id="RBl-OH-baW"/>
                             <constraint firstItem="Fry-ul-ZYY" firstAttribute="top" secondItem="cTB-mG-Nkz" secondAttribute="bottom" constant="20" id="YRd-Tl-hQ3"/>
                             <constraint firstItem="cTB-mG-Nkz" firstAttribute="top" secondItem="xd0-8i-Mkm" secondAttribute="bottom" constant="8" id="Zzu-cw-wXf"/>
                             <constraint firstItem="Yaw-Ts-Y1Q" firstAttribute="centerY" secondItem="ARc-vW-66v" secondAttribute="centerY" id="fS9-GR-zuR"/>
+                            <constraint firstItem="Cit-3q-tvm" firstAttribute="top" secondItem="4Bp-xU-dFV" secondAttribute="bottom" constant="8" symbolic="YES" id="ifT-PH-vYa"/>
                             <constraint firstItem="cTB-mG-Nkz" firstAttribute="centerX" secondItem="ARc-vW-66v" secondAttribute="centerX" id="jEq-af-V0k"/>
+                            <constraint firstItem="Cit-3q-tvm" firstAttribute="trailing" secondItem="Yaw-Ts-Y1Q" secondAttribute="trailing" id="nsb-nf-VTx"/>
                             <constraint firstItem="Yaw-Ts-Y1Q" firstAttribute="leading" secondItem="ARc-vW-66v" secondAttribute="leadingMargin" id="tck-64-cxF"/>
-                            <constraint firstItem="Cit-3q-tvm" firstAttribute="trailing" secondItem="ARc-vW-66v" secondAttribute="trailingMargin" id="uem-jv-p9G"/>
                             <constraint firstAttribute="trailing" secondItem="MvK-Dj-hjk" secondAttribute="trailing" id="wb4-by-gKE"/>
                             <constraint firstItem="MvK-Dj-hjk" firstAttribute="top" secondItem="ARc-vW-66v" secondAttribute="topMargin" id="x1b-eI-Uhg"/>
                             <constraint firstItem="MvK-Dj-hjk" firstAttribute="leading" secondItem="ARc-vW-66v" secondAttribute="leading" id="zcl-k5-eqZ"/>
@@ -780,7 +782,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_signup" translatesAutoresizingMaskIntoConstraints="NO" id="yyw-Eb-NpX">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_signup" translatesAutoresizingMaskIntoConstraints="NO" id="yyw-Eb-NpX">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                             </imageView>
@@ -958,7 +960,6 @@
         <image name="add photo" width="240" height="240"/>
         <image name="back" width="40" height="40"/>
         <image name="bg" width="750" height="1334"/>
-        <image name="bg_idea_2" width="345" height="360"/>
         <image name="bg_signup" width="750" height="1334"/>
         <image name="chat" width="40" height="40"/>
         <image name="close" width="40" height="40"/>
