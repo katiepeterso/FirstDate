@@ -44,6 +44,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self subscribeToKeyboardNotifications];
+    [PhotoHelper makeCircleImageView:self.photoImageView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -80,7 +81,7 @@
     NSString *age = [self.ageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     
-    if ([username length] == 0 || [password length] == 0 || [email length] == 0 || [age length] == 0 || !self.photoImageView.image ) {
+    if ([username length] == 0 || [password length] == 0 || [email length] == 0 || [age length] == 0 || [self.photoImageView.image isEqual:[UIImage imageNamed:@"add photo"]]) {
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
                                                                                  message:@"Make sure you provide a photo, enter a username, password, email address and your age!"

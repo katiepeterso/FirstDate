@@ -26,7 +26,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *photoLabel;
 @property (strong, nonatomic) IBOutlet UIButton *submitEditButton;
 @property (nonatomic, strong) DateIdea *currentDateIdea;
-@property (nonatomic, assign) BOOL imageIsPicked;
 
 @end
 
@@ -157,7 +156,6 @@
 -(void)setInitialAddViewState {
     self.photoLabel.text = @"Select date photo";
     self.photoImageView.image = [UIImage imageNamed:@"add photo"];
-    self.imageIsPicked = NO;
     
     self.titleField.text = @"";
     self.descriptionView.text = @"Enter date description here...";
