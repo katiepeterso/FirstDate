@@ -18,12 +18,12 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var heartCountLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     var idea: DateIdea!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("detail view did load")
         
         backButton.transform = CGAffineTransformMakeScale(0.0, 0.0)
         backButtonLeading.constant = -100
@@ -40,7 +40,6 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        print("detail view did appear")
         
         UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
             self.backButton.transform = CGAffineTransformMakeScale(1, 1)
@@ -94,8 +93,8 @@ class DetailViewController: UIViewController {
             
             usernameLabel.text = idea.user.username
             descriptionLabel.text = idea.details
-            profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2
-            profileImageView.clipsToBounds = true
+            titleLabel.text = idea.title
+            PhotoHelper.makeCircleImageView(profileImageView)
 
         }
     }

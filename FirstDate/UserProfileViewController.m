@@ -41,8 +41,7 @@ const CGFloat coverPhotoOffset = 50;
     self.fullNameLabel.text = self.selectedUser.username;
     self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.selectedUser.age];
     
-    self.userPhotoImageView.layer.cornerRadius = self.userPhotoImageView.frame.size.width/2;
-    self.userPhotoImageView.clipsToBounds = YES;
+    [PhotoHelper makeCircleImageView:self.userPhotoImageView];
     
     [PhotoHelper getPhotoInBackground:self.selectedUser.userPhoto completionHandler:^(UIImage *userPhoto) {
         self.userPhotoImageView.image = userPhoto;

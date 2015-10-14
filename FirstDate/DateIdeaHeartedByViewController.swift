@@ -16,6 +16,8 @@ class DateIdeaHeartedByViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBarHidden = false
+
         let heartQuery = idea?.heartedBy.query()
         heartQuery?.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if let users = result as? [User] where result!.count>0 {
@@ -25,11 +27,6 @@ class DateIdeaHeartedByViewController: UITableViewController {
         })
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source -
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -37,29 +34,33 @@ class DateIdeaHeartedByViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.hearts.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("heartedByCell", forIndexPath: indexPath) as! DateIdeaHeartedByCell
         cell.user = self.hearts[indexPath.row]
-
         return cell
     }
     
     
     // MARK: - Navigation -
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showConversation" {
+        if segue.identifier == "showMessaging" {
+            let selectedCell = sender as! DateIdeaHeartedByCell
+            let indexPath = tableView.indexPathForCell(selectedCell)
             let messageVC = segue.destinationViewController as! MessagingViewController
-//            messageVC.receiver = self.hearts[]
+            messageVC.receiver = self.hearts[indexPath!.row]
         }
     }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //
-    }
 
-   
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let selectedUserProfileVC = storyboard.instantiateViewControllerWithIdentifier("UserProfileViewController") as! UserProfileViewController
+        selectedUserProfileVC.selectedUser = self.hearts[indexPath.row]
+        navigationController?.showViewController(selectedUserProfileVC, sender: self)
+        
+    }
 }

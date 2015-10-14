@@ -13,16 +13,22 @@ import JSQMessagesViewController
 
 @objc class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    class func getPhotoInBackground(file: PFFile, completionHandler:(resultImage:UIImage?) -> Void) {
-        file.getDataInBackgroundWithBlock{
-            (imageData: NSData?, error: NSError?) -> Void in
-            if (error == nil && imageData != nil) {
+    class func getPhotoInBackground(file: PFFile?, completionHandler:(resultImage:UIImage?) -> Void) {
+        if file != nil {
+            file!.getDataInBackgroundWithBlock{
+                (imageData: NSData?, error: NSError?) -> Void in
+                if (error == nil && imageData != nil) {
                     completionHandler(resultImage: UIImage(data:imageData!))
-            } else {
-                completionHandler(resultImage: UIImage(named: "add photo")!)
+                } else {
+                    completionHandler(resultImage: UIImage(named: "add photo")!)
+                }
             }
+
+        } else {
+            completionHandler(resultImage: UIImage(named: "add photo")!)
         }
     }
+    
     
     class func displayImagePicker(controller: UIViewController, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) {
         let pickerController = UIImagePickerController()
@@ -50,9 +56,16 @@ import JSQMessagesViewController
         controller.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    
     class func setView(view: UIImageView, toImage: UIImage) -> NSData {
         view.image = toImage
         return UIImageJPEGRepresentation(toImage, 0.95)!
+    }
+    
+    
+    class func makeCircleImageView(view: UIImageView) {
+        view.layer.cornerRadius = view.frame.width/2
+        view.clipsToBounds = true
     }
 }
 

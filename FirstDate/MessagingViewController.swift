@@ -30,6 +30,7 @@ class MessagingViewController: JSQMessagesViewController {
         fetchConversation()
         
         self.inputToolbar!.contentView!.leftBarButtonItem = nil
+        self.navigationController!.navigationBarHidden = false
     }
     
     func fetchConversation() {
@@ -70,7 +71,6 @@ class MessagingViewController: JSQMessagesViewController {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
         
-        
         if (self.senderPhoto == nil) {
             PhotoHelper.getPhotoInBackground(self.messages[indexPath.item].sendingUser.userPhoto) { (resultImage) -> Void in
                 self.senderPhoto = resultImage!
@@ -85,7 +85,7 @@ class MessagingViewController: JSQMessagesViewController {
     //MARK: - Send Message -
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         
-        let newMessage = Message(text: text, sender: User.currentUser()!, receiver: User.currentUser()!)
+        let newMessage = Message(text: text, sender: User.currentUser()!, receiver: receiver!)
         self.messages.append(newMessage)
         newMessage.saveInBackground()
         

@@ -396,6 +396,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         } else if segue.identifier == "showProfile" {
             if User.currentUser() == nil {
                 performSegueWithIdentifier("showLogin", sender: sender)
+            } else {
+                let profileVC = segue.destinationViewController as! UserProfileViewController
+                profileVC.selectedUser = User.currentUser()
             }
         } else if segue.identifier == "showLogin" {
             let navigationVC = segue.destinationViewController as! UINavigationController

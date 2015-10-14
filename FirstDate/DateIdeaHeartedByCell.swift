@@ -31,16 +31,12 @@ class DateIdeaHeartedByCell: UITableViewCell {
     }
     
     func setup() {
-        userPhotoImageView.layer.cornerRadius = userPhotoImageView.frame.size.width/2
-        userPhotoImageView.clipsToBounds = true
-        
+        PhotoHelper.makeCircleImageView(userPhotoImageView)
         if user != nil {
             usernameLabel.text = user?.username
-            if user?.userPhoto != nil {
-                PhotoHelper.getPhotoInBackground((user?.userPhoto)!) { (resultImage) -> Void in
-                    self.userPhotoImageView.image = resultImage
-                }
-            }
+            PhotoHelper.getPhotoInBackground(user?.userPhoto, completionHandler: { (resultImage) -> Void in
+                self.userPhotoImageView.image = resultImage
+            })
         }
     }
 
