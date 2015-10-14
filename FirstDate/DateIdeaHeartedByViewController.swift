@@ -52,6 +52,7 @@ class DateIdeaHeartedByViewController: UITableViewController {
             let indexPath = tableView.indexPathForCell(selectedCell)
             let messageVC = segue.destinationViewController as! MessagingViewController
             messageVC.receiver = self.hearts[indexPath!.row]
+            messageVC.idea = idea
         }
     }
 

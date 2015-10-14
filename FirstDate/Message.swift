@@ -16,6 +16,8 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
     @NSManaged var messagingHash: NSNumber
     @NSManaged var messagingText: NSString
     @NSManaged var receivingUser: User
+    @NSManaged var idea: DateIdea
+    @NSManaged var isRead: NSNumber
     
     override class func initialize() {
         struct Static {
@@ -26,14 +28,15 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
         }
     }
     
-    init(text: String, sender: User, receiver: User) {
+    init(text: String, sender: User, receiver: User, idea: DateIdea) {
         super.init()
         self.messagingText = text
         self.sendingUser = sender
         let now = NSDate()
         self.messagingHash = NSNumber(integer: (self.sendingUser.objectId!.hash ^ now.hash ^ self.messagingText.hash))
         self.receivingUser = receiver
-        
+        self.idea = idea
+        self.isRead = NSNumber(bool: false);
     }
     
     override init() {

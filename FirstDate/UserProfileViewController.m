@@ -12,6 +12,7 @@
 #import "DateIdea.h"
 #import "UserProfileDateIdeasCell.h"
 #import "FirstDate-Swift.h"
+#import "WZLBadgeImport.h"
 
 const CGFloat coverPhotoOffset = 50;
 
@@ -19,13 +20,15 @@ const CGFloat coverPhotoOffset = 50;
 @property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
-@property (nonatomic) NSMutableArray *createdDateIdeas;
-@property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (nonatomic) BOOL userPhotoSelected;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *userIdeasControl;
+
+@property (nonatomic) NSMutableArray *createdDateIdeas;
+@property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
+@property (nonatomic) BOOL userPhotoSelected;
+@property (nonatomic) NSMutableDictionary *unreadMessagesCount;
 
 
 @end
@@ -37,6 +40,7 @@ const CGFloat coverPhotoOffset = 50;
     
     self.createdDateIdeas = [NSMutableArray array];
     self.heartedDateIdeas = [NSMutableArray array];
+    self.unreadMessagesCount = [NSMutableDictionary dictionary];
     
     self.fullNameLabel.text = self.selectedUser.username;
     self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.selectedUser.age];
@@ -61,7 +65,7 @@ const CGFloat coverPhotoOffset = 50;
 }
 
 - (void)fetchIdeas {
-    PFQuery *getCreatedIdeas = [PFQuery queryWithClassName:@"DateIdea"];
+    PFQuery *getCreatedIdeas = [DateIdea query];
     [getCreatedIdeas whereKey:@"user" equalTo:self.selectedUser];
     [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count) {
@@ -72,12 +76,26 @@ const CGFloat coverPhotoOffset = 50;
 }
 
 - (void)fetchHearts {
-    PFQuery *getHearts = [PFQuery queryWithClassName:@"DateIdea"];
+    PFQuery *getHearts = [DateIdea query];
     [getHearts whereKey:@"heartedBy" equalTo:self.selectedUser];
     [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count) {
             self.heartedDateIdeas = [objects mutableCopy];
             [self.collectionView reloadData];
+            for (DateIdea *idea in self.heartedDateIdeas) {
+                PFQuery *getUnreadMessagesCount = [Message query];
+                [getUnreadMessagesCount includeKey:@"idea"];
+                [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
+                [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
+                [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+                    if (!error && number > 0) {
+                        self.unreadMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
+                        NSLog(@"%d", number);
+                        [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
+                        [self.collectionView reloadData];
+                    }
+                }];
+            }
         }
     }];
 }
@@ -133,7 +151,12 @@ const CGFloat coverPhotoOffset = 50;
         }
     } else {
         if (self.heartedDateIdeas.count) {
-            [cell setDateIdea:self.heartedDateIdeas[indexPath.item]];
+            DateIdea *heartedIdea = self.heartedDateIdeas[indexPath.item];
+            [cell setDateIdea:heartedIdea];
+            if ([self.unreadMessagesCount[heartedIdea.objectId] intValue]) {
+                [cell showBadgeWithStyle:WBadgeStyleNumber value:[self.unreadMessagesCount[heartedIdea.objectId] intValue] animationType:WBadgeAnimTypeNone];
+                cell.badgeCenterOffset = CGPointMake(-16, 12);
+            }
         }
     }
     return cell;
@@ -145,6 +168,7 @@ const CGFloat coverPhotoOffset = 50;
     dateDetail.idea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
         self.createdDateIdeas[indexPath.item]:
         self.heartedDateIdeas[indexPath.item];
+    [collectionView.visibleCells[indexPath.row] clearBadge];
     [self.navigationController pushViewController:dateDetail animated:YES];
 }
 

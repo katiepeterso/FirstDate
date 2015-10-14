@@ -14,6 +14,7 @@ class MessagingViewController: JSQMessagesViewController {
 
     var messages = [Message]()
     var receiver: User?
+    var idea: DateIdea?
     
     let bubbleFactory = JSQMessagesBubbleImageFactory()
     var senderPhoto: UIImage?
@@ -85,7 +86,7 @@ class MessagingViewController: JSQMessagesViewController {
     //MARK: - Send Message -
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         
-        let newMessage = Message(text: text, sender: User.currentUser()!, receiver: receiver!)
+        let newMessage = Message(text: text, sender: User.currentUser()!, receiver: receiver!, idea: idea!)
         self.messages.append(newMessage)
         newMessage.saveInBackground()
         
