@@ -38,6 +38,10 @@ const CGFloat coverPhotoOffset = 50;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([User currentUser]) {
+        self.selectedUser = [User currentUser];
+    }
+    
     self.createdDateIdeas = [NSMutableArray array];
     self.heartedDateIdeas = [NSMutableArray array];
     self.unreadMessagesCount = [NSMutableDictionary dictionary];
@@ -66,40 +70,46 @@ const CGFloat coverPhotoOffset = 50;
 
 - (void)fetchIdeas {
     PFQuery *getCreatedIdeas = [DateIdea query];
-    [getCreatedIdeas whereKey:@"user" equalTo:self.selectedUser];
-    [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (objects.count) {
-            self.createdDateIdeas = [objects mutableCopy];
-            [self.collectionView reloadData];
-        }
-    }];
+    
+    if (self.selectedUser) {
+        [getCreatedIdeas whereKey:@"user" equalTo:self.selectedUser];
+        
+        [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (objects.count) {
+                self.createdDateIdeas = [objects mutableCopy];
+                [self.collectionView reloadData];
+            }
+        }];
+    }
 }
 
 - (void)fetchHearts {
     PFQuery *getHearts = [DateIdea query];
-    [getHearts whereKey:@"heartedBy" equalTo:self.selectedUser];
-    [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (objects.count) {
-            self.heartedDateIdeas = [objects mutableCopy];
-            [self.collectionView reloadData];
-            for (DateIdea *idea in self.heartedDateIdeas) {
-                PFQuery *getUnreadMessagesCount = [Message query];
-                [getUnreadMessagesCount includeKey:@"idea"];
-                [getUnreadMessagesCount includeKey:@"receivingUser"];
-                [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
-                [getUnreadMessagesCount whereKey:@"receivingUser" equalTo:[User currentUser]];
-                [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
-                [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
-                    if (!error && number > 0) {
-                        self.unreadMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
-                        NSLog(@"%d", number);
-                        [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
-                        [self.collectionView reloadData];
-                    }
-                }];
+    if (self.selectedUser) {
+        [getHearts whereKey:@"heartedBy" equalTo:self.selectedUser];
+        [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (objects.count) {
+                self.heartedDateIdeas = [objects mutableCopy];
+                [self.collectionView reloadData];
+                for (DateIdea *idea in self.heartedDateIdeas) {
+                    PFQuery *getUnreadMessagesCount = [Message query];
+                    [getUnreadMessagesCount includeKey:@"idea"];
+                    [getUnreadMessagesCount includeKey:@"receivingUser"];
+                    [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
+                    [getUnreadMessagesCount whereKey:@"receivingUser" equalTo:[User currentUser]];
+                    [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
+                    [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+                        if (!error && number > 0) {
+                            self.unreadMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
+                            NSLog(@"%d", number);
+                            [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
+                            [self.collectionView reloadData];
+                        }
+                    }];
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 #pragma mark - Image Picker and Display
