@@ -168,7 +168,7 @@ const CGFloat coverPhotoOffset = 50;
     dateDetail.idea = (self.userIdeasControl.selectedSegmentIndex == 0) ?
         self.createdDateIdeas[indexPath.item]:
         self.heartedDateIdeas[indexPath.item];
-    [collectionView.visibleCells[indexPath.row] clearBadge];
+    [[collectionView cellForItemAtIndexPath:indexPath] clearBadge];
     [self.navigationController pushViewController:dateDetail animated:YES];
 }
 
