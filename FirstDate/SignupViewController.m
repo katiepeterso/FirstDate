@@ -126,7 +126,7 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    frame.origin.y = -[self getKeyboardHeight:notification] / 2;
+    frame.origin.y = -[self getKeyboardHeight:notification] / 2.0;
     self.view.frame = frame;
 
 }

@@ -115,7 +115,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }
         } else {
             if lastIdea == nil {
-                queryDate = (User.currentUser()?.lastSeenDateIdeaCreatedAt)!
+                if User.currentUser()?.lastSeenDateIdeaCreatedAt != nil  {
+                    queryDate = (User.currentUser()?.lastSeenDateIdeaCreatedAt)!
+                } else {
+                    queryDate = earliestDate!
+                }
             } else {
                 queryDate = lastIdea!.createdAt!
             }

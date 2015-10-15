@@ -10,7 +10,7 @@
 #import "User.h"
 #import <Parse/Parse.h>
 
-@interface LoginViewController ()
+@interface LoginViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
@@ -21,12 +21,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.usernameField.delegate = self;
+    self.passwordField.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self subscribeToKeyboardNotifications];
+
     [self.navigationController.navigationBar setHidden:YES];
     
     // Disable iOS 7 back gesture
@@ -35,6 +38,11 @@
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self unsubscribeToKeyboardNotifications];
 }
 
 - (IBAction)login:(id)sender
@@ -70,5 +78,40 @@
         }];
     }
 }
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    frame.origin.y = -[self getKeyboardHeight:notification] / 2.0;
+    self.view.frame = frame;
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    frame.origin.y = 0;
+    self.view.frame = frame;
+}
+
+- (CGFloat)getKeyboardHeight:(NSNotification *)notification {
+    NSValue *keyboardSize = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
+    return keyboardSize.CGRectValue.size.height;
+}
+
+- (void)subscribeToKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)unsubscribeToKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+#pragma mark Text Field Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
 
 @end
