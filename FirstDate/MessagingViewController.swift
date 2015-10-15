@@ -44,6 +44,7 @@ class MessagingViewController: JSQMessagesViewController {
         getRecievedMessages.whereKey("receivingUser", equalTo: User.currentUser()!)
         
         let getAllMessages = PFQuery.orQueryWithSubqueries([getSentMessages, getRecievedMessages])
+        getAllMessages.orderByAscending("createdAt")
 
         getAllMessages.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             if(results!.count != 0) {

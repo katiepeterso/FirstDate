@@ -33,11 +33,13 @@ class DetailViewController: UIViewController {
         messageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)
         messageButtonTrailing.constant = +100
         
-        setup()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
+        setup()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -105,7 +107,7 @@ class DetailViewController: UIViewController {
             query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
                 if error == nil {
                     self.heartCountLabel.text = "\(result)"
-                    if (result < 1) {
+                    if (result < 1 || self.idea.user == User.currentUser()) {
                         self.messageButton.enabled = false
                         self.messageButton.alpha = 0.0
                     } else {

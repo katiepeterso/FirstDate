@@ -28,8 +28,8 @@ const CGFloat coverPhotoOffset = 50;
 @property (nonatomic) NSMutableArray *createdDateIdeas;
 @property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
 @property (nonatomic) BOOL userPhotoSelected;
-@property (nonatomic) NSMutableDictionary *unreadMessagesCount;
-
+@property (nonatomic) NSMutableDictionary *unreadHeartedMessagesCount;
+@property (nonatomic) NSMutableDictionary *unreadCreatedMessagesCount;
 
 @end
 
@@ -44,18 +44,16 @@ const CGFloat coverPhotoOffset = 50;
     
     self.createdDateIdeas = [NSMutableArray array];
     self.heartedDateIdeas = [NSMutableArray array];
-    self.unreadMessagesCount = [NSMutableDictionary dictionary];
-    
-    self.fullNameLabel.text = self.selectedUser.username;
-    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.selectedUser.age];
+    self.unreadCreatedMessagesCount = [NSMutableDictionary dictionary];
+    self.unreadHeartedMessagesCount = [NSMutableDictionary dictionary];
     
     [PhotoHelper makeCircleImageView:self.userPhotoImageView];
     
-    [PhotoHelper getPhotoInBackground:self.selectedUser.userPhoto completionHandler:^(UIImage *userPhoto) {
-        self.userPhotoImageView.image = userPhoto;
-    }];
     [PhotoHelper getPhotoInBackground:self.selectedUser.coverPhoto completionHandler:^(UIImage *coverPhoto) {
         self.photoImageView.image = coverPhoto;
+    }];
+    [PhotoHelper getPhotoInBackground:self.selectedUser.userPhoto completionHandler:^(UIImage *userPhoto) {
+        self.userPhotoImageView.image = userPhoto;
     }];
     
     [self addDiagonalMaskToImage];
@@ -65,6 +63,8 @@ const CGFloat coverPhotoOffset = 50;
     [super viewWillAppear:animated];
     [self fetchIdeas];
     [self fetchHearts];
+    self.fullNameLabel.text = self.selectedUser.username;
+    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.selectedUser.age];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -77,7 +77,22 @@ const CGFloat coverPhotoOffset = 50;
         [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count) {
                 self.createdDateIdeas = [objects mutableCopy];
-                [self.collectionView reloadData];
+                for (DateIdea *idea in self.createdDateIdeas) {
+                    PFQuery *getUnreadMessagesCount = [Message query];
+                    [getUnreadMessagesCount includeKey:@"idea"];
+                    [getUnreadMessagesCount includeKey:@"sendingUser"];
+                    [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
+                    [getUnreadMessagesCount whereKey:@"sendingUser" equalTo:[User currentUser]];
+                    [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
+                    [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+                        if (!error && number > 0) {
+                            self.unreadCreatedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
+                            NSLog(@"%d", number);
+                            [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
+                            [self.collectionView reloadData];
+                        }
+                    }];
+                }
             }
         }];
     }
@@ -90,7 +105,7 @@ const CGFloat coverPhotoOffset = 50;
         [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count) {
                 self.heartedDateIdeas = [objects mutableCopy];
-                [self.collectionView reloadData];
+//                [self.collectionView reloadData];
                 for (DateIdea *idea in self.heartedDateIdeas) {
                     PFQuery *getUnreadMessagesCount = [Message query];
                     [getUnreadMessagesCount includeKey:@"idea"];
@@ -100,7 +115,7 @@ const CGFloat coverPhotoOffset = 50;
                     [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
                     [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
                         if (!error && number > 0) {
-                            self.unreadMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
+                            self.unreadHeartedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
                             NSLog(@"%d", number);
                             [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
                             [self.collectionView reloadData];
@@ -159,14 +174,20 @@ const CGFloat coverPhotoOffset = 50;
     
     if (self.userIdeasControl.selectedSegmentIndex == 0) {
         if (self.createdDateIdeas.count) {
-            [cell setDateIdea:self.createdDateIdeas[indexPath.item]];
+            DateIdea *createdIdea = self.createdDateIdeas[indexPath.item];
+            [cell setDateIdea:createdIdea];
+            if ([self.unreadCreatedMessagesCount[createdIdea.objectId] intValue]) {
+                [cell showBadgeWithStyle:WBadgeStyleNumber value:[self.unreadCreatedMessagesCount[createdIdea.objectId] intValue] animationType:WBadgeAnimTypeNone];
+                cell.badgeCenterOffset = CGPointMake(-16, 12);
+            }
+
         }
     } else {
         if (self.heartedDateIdeas.count) {
             DateIdea *heartedIdea = self.heartedDateIdeas[indexPath.item];
             [cell setDateIdea:heartedIdea];
-            if ([self.unreadMessagesCount[heartedIdea.objectId] intValue]) {
-                [cell showBadgeWithStyle:WBadgeStyleNumber value:[self.unreadMessagesCount[heartedIdea.objectId] intValue] animationType:WBadgeAnimTypeNone];
+            if ([self.unreadHeartedMessagesCount[heartedIdea.objectId] intValue]) {
+                [cell showBadgeWithStyle:WBadgeStyleNumber value:[self.unreadHeartedMessagesCount[heartedIdea.objectId] intValue] animationType:WBadgeAnimTypeNone];
                 cell.badgeCenterOffset = CGPointMake(-16, 12);
             }
         }

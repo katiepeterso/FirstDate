@@ -37,10 +37,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge) // TODO: Change to custom activity indicator
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray) // TODO: Change to custom activity indicator
         activityIndicator.center = view.center
         activityIndicator.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
-        view.insertSubview(activityIndicator, belowSubview: visualEffectView)
+        view.insertSubview(activityIndicator, aboveSubview: visualEffectView)
         
         animator = UIDynamicAnimator(referenceView: view)
         
@@ -61,7 +61,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             print("Retrieving last date idea from local datastore")
             if let dateIdeas = dateIdeas as? [DateIdea],
                 let firstIdea = dateIdeas.first {
-                    self.activityIndicator.stopAnimating()
                     
                     if self.dateView == nil  {
                         self.dateView = self.createDateViewWithIdea(firstIdea)
@@ -160,8 +159,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     // MARK: - Update Parse
     func updateLastSeenDateIdeaDate() {
         if let user = User.currentUser() {
-            user.lastSeenDateIdeaCreatedAt = dateView.idea?.createdAt
-            user.saveEventually()
+            let lastSeenDate = NSDate(timeInterval: 1.0, sinceDate: (dateView.idea?.createdAt)!)
+            user.lastSeenDateIdeaCreatedAt = lastSeenDate
+            user.saveInBackground()
         }
     }
     
@@ -197,6 +197,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 }
                 dv.dateImageView.image = dateImage
                 dv.userImageView.image = userImage
+                self.activityIndicator.stopAnimating()
             })
         }
         
@@ -246,6 +247,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
                 dv.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
                 self.updateLastSeenDateIdeaDate()
+                self.activityIndicator.stopAnimating()
             })
         
         
