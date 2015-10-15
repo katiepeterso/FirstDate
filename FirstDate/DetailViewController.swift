@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class DetailViewController: UIViewController {
 
@@ -16,6 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var messageButton: UIButton!
     @IBOutlet weak var messageButtonTrailing: NSLayoutConstraint!
     @IBOutlet weak var heartCountLabel: UILabel!
+    @IBOutlet weak var heartedByButton: UIButton!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -41,14 +43,32 @@ class DetailViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        if (self.idea.user == User.currentUser()) {
+            self.heartedByButton.hidden = false
+        }
+        
+        if let user = User.currentUser() {
+            let query = Message.query()
+            query?.includeKey("idea")
+            query?.includeKey("receiveingUser")
+            query?.whereKey("idea", equalTo: idea)
+            query?.whereKey("receivingUser", equalTo: user)
+            query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                if result > 0 {
+                    UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+                        self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
+                        self.messageButtonTrailing.constant = 0
+                        }, completion: nil)
+                    
+                }
+            })
+            
+        }
+        
         UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
             self.backButton.transform = CGAffineTransformMakeScale(1, 1)
             self.backButtonLeading.constant = 0
             
-            if (self.idea.user == User.currentUser()) {
-                self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
-                self.messageButtonTrailing.constant = 0
-            }
             }, completion: nil)
     }
     
@@ -60,6 +80,10 @@ class DetailViewController: UIViewController {
         if segue.identifier == "showHeartedBy" {
             let heartedVC = segue.destinationViewController as! DateIdeaHeartedByViewController
             heartedVC.idea = self.idea
+        } else if segue.identifier == "showMessaging" {
+            let messagingVC = segue.destinationViewController as! MessagingViewController
+            messagingVC.idea = idea
+            messagingVC.receiver = idea.user
         }
     }
     

@@ -71,16 +71,23 @@ class MessagingViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        
-        if (self.senderPhoto == nil) {
-            PhotoHelper.getPhotoInBackground(self.messages[indexPath.item].sendingUser.userPhoto) { (resultImage) -> Void in
-                self.senderPhoto = resultImage!
-                self.collectionView!.reloadData()
-            }
-            return JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-        } else {
-            return JSQMessagesAvatarImageFactory.avatarImageWithImage(self.senderPhoto, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-        }
+//        let message = messages[indexPath.item]
+//        if (self.senderPhoto == nil || (User.currentUser() != message.receivingUser)) {
+//            PhotoHelper.getPhotoInBackground(message.sendingUser.userPhoto) { (resultImage) -> Void in
+//                self.senderPhoto = resultImage!
+//                self.collectionView!.reloadData()
+//            }
+//            return JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+//        } else {
+//            return JSQMessagesAvatarImageFactory.avatarImageWithImage(self.senderPhoto, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+//        }
+//                    PhotoHelper.getPhotoInBackground(message.sendingUser.userPhoto) { (resultImage) -> Void in
+//                        self.senderPhoto = resultImage!
+//                        self.collectionView!.reloadData()
+//                    }
+//        
+//        return JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+        return nil
     }
     
     //MARK: - Send Message -
