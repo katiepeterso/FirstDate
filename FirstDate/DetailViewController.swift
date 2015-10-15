@@ -39,7 +39,6 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         setup()
-        
     }
     
     override func viewDidAppear(animated: Bool) {

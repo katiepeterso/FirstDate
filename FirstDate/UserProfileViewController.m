@@ -105,7 +105,6 @@ const CGFloat coverPhotoOffset = 50;
         [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count) {
                 self.heartedDateIdeas = [objects mutableCopy];
-//                [self.collectionView reloadData];
                 for (DateIdea *idea in self.heartedDateIdeas) {
                     PFQuery *getUnreadMessagesCount = [Message query];
                     [getUnreadMessagesCount includeKey:@"idea"];

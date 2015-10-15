@@ -61,7 +61,12 @@
         
     }
     else {
+        
         [User logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
+            
+            
+            
+            
             if (error) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
                                                                                          message:[NSString stringWithFormat:@"%@", error.description]
