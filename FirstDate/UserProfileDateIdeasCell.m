@@ -9,7 +9,7 @@
 #import "UserProfileDateIdeasCell.h"
 #import "DateIdea.h"
 #import "FirstDate-Swift.h"
-//#import "Heart.h"
+#import "WZLBadgeImport.h"
 
 @interface UserProfileDateIdeasCell ()
 
@@ -40,6 +40,13 @@
     _currentDateIdea = dateIdea;
     
     [self setupForDate:self.currentDateIdea];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    [self clearBadge];
+    
 }
 
 @end

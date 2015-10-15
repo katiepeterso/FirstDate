@@ -66,7 +66,7 @@ class MessagingViewController: JSQMessagesViewController {
         if(messages[indexPath.item].sendingUser == User.currentUser()) {
             return bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor (red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0))
         } else {
-            return bubbleFactory.incomingMessagesBubbleImageWithColor(UIColor (red: 158.0/255.0, green: 37.0/255.0, blue: 143.0/255.0, alpha: 1.0))
+            return bubbleFactory.incomingMessagesBubbleImageWithColor(UIColor (red: 255.0/255.0, green: 46.0/255.0, blue: 99.0/255.0, alpha: 1.0))
         }
     }
     

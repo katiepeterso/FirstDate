@@ -33,7 +33,7 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
         self.messagingText = text
         self.sendingUser = sender
         let now = NSDate()
-        self.messagingHash = NSNumber(integer: (self.sendingUser.objectId!.hash ^ now.hash ^ self.messagingText.hash))
+        self.messagingHash = NSNumber(integer: (self.sendingUser.objectId!.hash ^ now.hash))
         self.receivingUser = receiver
         self.idea = idea
         self.isRead = NSNumber(bool: false);
