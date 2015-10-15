@@ -63,23 +63,19 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 let firstIdea = dateIdeas.first {
                     self.activityIndicator.stopAnimating()
                     
-                    if self.dateView == nil {
+                    if self.dateView == nil  {
                         self.dateView = self.createDateViewWithIdea(firstIdea)
                         self.showDateView(self.dateView)
-                        self.updateLastSeenDateIdeaDate()
                     }
             }
         }
         
-        if ideas.count < 5 {
             fetchDateIdeas() {
                 if self.dateView == nil {
                     self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
                     self.showDateView(self.dateView)
-                    self.updateLastSeenDateIdeaDate()
                 }
             }
-        }
     }
     
     // MARK: - Appearance
@@ -97,13 +93,39 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     // MARK: - Fetch New Data
     
     func fetchDateIdeas(completion:(() -> ())?) {
+        if self.ideas.count >= 5 {
+            return
+        }
+        
+        let lastIdea = self.ideas.last
+        var queryDate: NSDate
+
+        let c = NSDateComponents()
+        c.year = 2015
+        c.month = 1
+        c.day = 1
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+        let earliestDate = calendar!.dateFromComponents(c)
+        
+        if User.currentUser() == nil{
+            if lastIdea == nil {
+                queryDate = earliestDate!
+            } else {
+                queryDate = (lastIdea?.createdAt)!
+            }
+        } else {
+            if lastIdea == nil {
+                queryDate = (User.currentUser()?.lastSeenDateIdeaCreatedAt)!
+            } else {
+                queryDate = lastIdea!.createdAt!
+            }
+        }
         
         let query = DateIdea.query()
+        query?.addAscendingOrder("createdAt")
         query?.includeKey("user")
         query?.limit = 10;
-//        if let user = User.currentUser() {
-//            query.whereKey("createdAt", greaterThan: user.lastSeenDateIdeaCreatedAt!)
-//        }
+        query?.whereKey("createdAt", greaterThan: queryDate)
         query?.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if (error == nil) {
                 if let dateIdeas = objects as? [DateIdea] where dateIdeas.count > 0 {
@@ -219,6 +241,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 })
                 DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
                 dv.idea?.pinInBackgroundWithName("LastDateIdeaViewed")
+                self.updateLastSeenDateIdeaDate()
             })
         
         
@@ -256,7 +279,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             if (incomingDateView == nil) && (ideas.count > 0) {
                 incomingDateView = createDateViewWithIdea(ideas.removeFirst())
             }
-            
             // animate them together
             
             let currentDateViewLocation = sender.locationInView(dateView)
@@ -277,8 +299,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             
 //            let transform = CGAffineTransformMakeTranslation(0, translation.y)
             
-            
-            self.incomingDateView.alpha = alpha
+            if(self.incomingDateView != nil) {
+                self.incomingDateView.alpha = alpha
+            }
 //            self.incomingDateView.transform = CGAffineTransformScale(transform, scale, scale)
             
 //            if translation.y > 0 {
@@ -304,7 +327,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 gravity.gravityDirection = CGVectorMake(0, 10)
                 animator.addBehavior(gravity)
                 
-                showDateView(incomingDateView)
+                if(incomingDateView != nil) {
+                    showDateView(incomingDateView)
+                } else {
+                    DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
+                }
                 
                 gravity.action = { [weak gravity] in
                     
@@ -409,15 +436,17 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         
-        self.dateView.layer.cornerRadius = self.dateView.frame.height / 24.0
-        self.dateView.headerView.alpha = 1.0
-        self.dateView.footerView.alpha = 1.0
-        
-        let dateViewDimension = self.view.frame.width - (self.view.layoutMargins.left + self.view.layoutMargins.right)
-        self.dateView.frame = CGRectMake(0, 0, dateViewDimension, dateViewDimension)
-        self.dateView.dateImageView.frame = self.dateView.frame
-        
-        self.dateView.center = self.view.center
+        if (self.dateView != nil) {
+            self.dateView.layer.cornerRadius = self.dateView.frame.height / 24.0
+            self.dateView.headerView.alpha = 1.0
+            self.dateView.footerView.alpha = 1.0
+            
+            let dateViewDimension = self.view.frame.width - (self.view.layoutMargins.left + self.view.layoutMargins.right)
+            self.dateView.frame = CGRectMake(0, 0, dateViewDimension, dateViewDimension)
+            self.dateView.dateImageView.frame = self.dateView.frame
+            
+            self.dateView.center = self.view.center
+        }
         
     }
     
@@ -455,44 +484,42 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         animator.removeAllBehaviors()
         
         // create a new incoming dateView
-        if self.incomingDateView == nil {
+        if (self.incomingDateView == nil) && (ideas.count > 0){
             self.incomingDateView = self.createDateViewWithIdea(self.ideas.removeFirst())
         }
         
-        UIView.animateKeyframesWithDuration(0.5, delay: 0.2, options: [], animations: {
-            
-            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.2, animations: {
-                self.incomingDateView.alpha = 0.5
-            })
-            
-            UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.8, animations: {
-                let scale = CGAffineTransformMakeScale(0.01, 0.01)
-                self.dateView.transform = scale
-                self.dateView.alpha = 0.0
-
-            })
-            
-            UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.8, animations: {
-                let scale = CGAffineTransformMakeScale(1, 1)
-                let translate = CGAffineTransformMakeTranslation(0, 0)
-                self.incomingDateView.transform = CGAffineTransformConcat(scale, translate)
-                self.incomingDateView.alpha = 1.0
-                self.incomingDateView.center = self.view.center
-            })
-            }) { (completed) -> Void in
-                // animations completed
-                UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
-                    self.backgroundImageView.image = self.incomingDateView.dateImageView.image
-                    }, completion: nil)
+        if (self.incomingDateView != nil) {
+            UIView.animateKeyframesWithDuration(0.5, delay: 0.2, options: [], animations: {
                 
-                self.dateView.removeFromSuperview()
-                self.dateView = self.incomingDateView
-                self.incomingDateView = nil
+                UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.2, animations: {
+                    self.incomingDateView.alpha = 0.5
+                })
                 
-                if self.ideas.count < 5 {
+                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.8, animations: {
+                    let scale = CGAffineTransformMakeScale(0.01, 0.01)
+                    self.dateView.transform = scale
+                    self.dateView.alpha = 0.0
+                    
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.8, animations: {
+                    let scale = CGAffineTransformMakeScale(1, 1)
+                    let translate = CGAffineTransformMakeTranslation(0, 0)
+                    self.incomingDateView.transform = CGAffineTransformConcat(scale, translate)
+                    self.incomingDateView.alpha = 1.0
+                    self.incomingDateView.center = self.view.center
+                })
+                }) { (completed) -> Void in
+                    // animations completed
+                    UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
+                        self.backgroundImageView.image = self.incomingDateView.dateImageView.image
+                        }, completion: nil)
+                    self.dateView.removeFromSuperview()
+                    self.dateView = self.incomingDateView
+                    self.incomingDateView = nil
                     self.fetchDateIdeas(nil)
-                
-                }
+                    self.updateLastSeenDateIdeaDate()
+        }
         }
     
     }
