@@ -22,6 +22,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    
     var idea: DateIdea!
     
     override func viewDidLoad() {
@@ -32,7 +33,6 @@ class DetailViewController: UIViewController {
         
         messageButton.transform = CGAffineTransformMakeScale(0.5, 0.5)
         messageButtonTrailing.constant = +100
-        
         
     }
     
@@ -105,11 +105,12 @@ class DetailViewController: UIViewController {
             let query = idea.heartedBy.query()
             query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
                 if error == nil {
-                    self.heartCountLabel.text = "\(result)"
                     if (result < 1 || self.idea.user == User.currentUser()) {
+                        self.heartCountLabel.text = "  "
                         self.messageButton.enabled = false
                         self.messageButton.alpha = 0.0
                     } else {
+                        self.heartCountLabel.text = "\(result) x"
                         self.messageButton.enabled = true
                         self.messageButton.alpha = 1.0
                     }

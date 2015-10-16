@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginFormBottom;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelButtonTop;
 @end
 
 @implementation LoginViewController
@@ -84,7 +83,6 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     [UIView animateWithDuration:0.25 animations:^{
-        [self.view removeConstraint:self.cancelButtonTop];
         self.loginFormBottom.constant = [self getKeyboardHeight:notification] + 16;
         [self.view layoutIfNeeded];
     }];
@@ -92,8 +90,6 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification {
     [UIView animateWithDuration:0.25 animations:^{
-        self.cancelButtonTop = [self.cancelButton.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor constant:8.0];
-        [self.view addConstraint:self.cancelButtonTop];
         self.loginFormBottom.constant = 16;
         [self.view layoutIfNeeded];
     }];

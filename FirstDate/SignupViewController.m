@@ -20,6 +20,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupFormBottom;
+
+@property (strong, nonatomic) UIToolbar *accessoryView;
+@property (strong, nonatomic) NSArray *textFields;
+@property (strong, nonatomic) UITextField *activeTextField;
 @end
 
 @implementation SignupViewController
@@ -30,17 +34,24 @@
     
     self.nextButton.alpha = 0.5;
     
-    self.usernameField.delegate = self;
-    self.passwordField.delegate = self;
-    self.emailField.delegate = self;
+    self.accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
+    UIBarButtonItem *previous = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"previous"] style:UIBarButtonItemStylePlain target:self action:@selector(previousTextField)];
+    previous.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
     
-//    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
-//    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
-//    done.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
-//    
-//    [accessoryView setItems:@[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
+    UIBarButtonItem *next = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"next"] style:UIBarButtonItemStylePlain target:self action:@selector(nextTextField)];
+    next.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
     
-//    self.ageField.inputAccessoryView = accessoryView;
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditing)];
+    done.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
+    
+    [self.accessoryView setItems:@[previous, next, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
+    
+    self.textFields = @[self.usernameField, self.passwordField, self.emailField];
+    
+    for (UITextField *textField in self.textFields) {
+        [self configureTextField:textField];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,9 +76,43 @@
     }
 }
 
+#pragma mark - Actions
+
 - (IBAction)dismiss:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Helpers
+
+- (void)configureTextField:(UITextField *)textField {
+    textField.delegate = self;
+    textField.inputAccessoryView = self.accessoryView;
+}
+
+- (void)previousTextField {
+    if ([self.activeTextField isEqual:self.usernameField]) {
+        [self.textFields.lastObject becomeFirstResponder];
+    } else {
+        NSUInteger index = [self.textFields indexOfObject:self.activeTextField];
+        [self.textFields[index - 1] becomeFirstResponder];
+    }
+}
+
+- (void)nextTextField {
+    if ([self.activeTextField isEqual:self.emailField]) {
+        [self.textFields.firstObject becomeFirstResponder];
+    } else {
+        NSUInteger index = [self.textFields indexOfObject:self.activeTextField];
+        [self.textFields[index + 1] becomeFirstResponder];
+    }
+}
+
+- (void)doneEditing {
+    [self.view endEditing:YES];
+    if (self.usernameField.text.length && self.passwordField.text.length && self.emailField.text.length) {
+        [self performSegueWithIdentifier:@"continueSignUp" sender:self.nextButton];
+    }
 }
 
 #pragma mark - Handle System Notifications
@@ -126,15 +171,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//- (void)hideKeyboard {
-//    [self.ageField resignFirstResponder];
-//}
-
 #pragma mark - Text Field Delegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.activeTextField = textField;
 }
 
 #pragma mark - Navigation 

@@ -30,33 +30,42 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
     let genderOptions = ["Not Specified", "Male", "Female"]
     let datingPreferenceOptions = ["Both", "Men", "Women"]
     
+    var textFields: [UITextField]!
+    var activeTextField: UITextField!
+    
+    lazy var accessoryView: UIToolbar = {
+        var av = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.width, 44.0))
+        
+        let previous = UIBarButtonItem(image: UIImage(named: "previous"), style: .Plain, target: self, action: "previousTextField")
+        previous.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+        
+        let next = UIBarButtonItem(image: UIImage(named: "next"), style: .Plain, target: self, action: "nextTextField")
+        next.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+        
+        let done = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneEditing")
+        done.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+        
+        av.setItems([previous, next, UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil), done], animated: true)
+        av.userInteractionEnabled = true
+        
+        return av
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         newUser = User(username: username, password: password, email: email)
-        
-        nameField.delegate = self
-        ageField.delegate = self
-        genderField.delegate = self
-        datingPreferenceField.delegate = self
         
         genderPickerView = UIPickerView()
         datingPreferencePickerView = UIPickerView()
         configurePickerView(genderPickerView)
         configurePickerView(datingPreferencePickerView)
         
-        let accessoryView = UIToolbar(frame: CGRectMake(0, 0, view.frame.width, 44.0))
+        textFields = [nameField, ageField, genderField, datingPreferenceField]
+        for textField in textFields {
+            configureTextField(textField)
+        }
         
-        let previous = UIBarButtonItem(image: UIImage(named: "previous"), style: .Plain, target: self, action: "")// TODO: go to previous textField
-        let next = UIBarButtonItem(image: UIImage(named: "next"), style: .Plain, target: self, action: "")// TODO: go to next textField
-        let done = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "endEditing:")
-        done.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
-        
-        accessoryView.setItems([previous, next, UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil), done], animated: true)
-        
-        ageField.inputAccessoryView = accessoryView
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -72,7 +81,7 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
     
     // MARK: - Actions
     
-    @IBAction func signUp(sender: UIButton) {
+    @IBAction func signUp(sender: UIButton?) {
         let nameString = nameField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         let ageString = ageField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         let genderString = genderField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
@@ -114,6 +123,10 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
         }
     }
     
+    @IBAction func backButtonPressed(sender: UIButton) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: - Gesture Recognizers
     
     @IBAction func setProfilePhotoTapRecognized(gesture: UITapGestureRecognizer) {
@@ -130,6 +143,38 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
             genderField.inputView = pickerView
         } else {
             datingPreferenceField.inputView = pickerView
+        }
+    }
+    
+    func configureTextField(textField: UITextField) {
+        textField.delegate = self
+        textField.inputAccessoryView = accessoryView
+    }
+    
+    func previousTextField() {
+        if activeTextField == nameField {
+            textFields.last?.becomeFirstResponder()
+        } else {
+            if let currentIndex = textFields.indexOf(activeTextField) {
+                textFields[currentIndex - 1].becomeFirstResponder()
+            }
+        }
+    }
+    
+    func nextTextField() {
+        if activeTextField == datingPreferenceField {
+            textFields.first?.becomeFirstResponder()
+        } else {
+            if let currentIndex = textFields.indexOf(activeTextField) {
+                textFields[currentIndex + 1].becomeFirstResponder()
+            }
+        }
+    }
+    
+    func doneEditing() {
+        view.endEditing(true)
+        if nameField.text?.characters.count > 0 && ageField.text?.characters.count > 0 {
+            signUp(nil)
         }
     }
     
@@ -174,11 +219,9 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == genderPickerView {
             genderField.text = genderOptions[row]
-            genderField.resignFirstResponder()
             
         } else {
             datingPreferenceField.text = datingPreferenceOptions[row]
-            datingPreferenceField.resignFirstResponder()
         }
     }
     
@@ -191,6 +234,10 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        activeTextField = textField
     }
     
     // MARK: - Handle System Notifications
@@ -223,15 +270,5 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

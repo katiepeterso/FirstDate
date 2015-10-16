@@ -64,7 +64,7 @@ const CGFloat coverPhotoOffset = 50;
     [self fetchIdeas];
     [self fetchHearts];
     self.fullNameLabel.text = self.selectedUser.username;
-    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu",self.selectedUser.age];
+    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu", (unsigned long)self.selectedUser.age];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -87,7 +87,6 @@ const CGFloat coverPhotoOffset = 50;
                     [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
                         if (!error && number > 0) {
                             self.unreadCreatedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
-                            NSLog(@"%d", number);
                             [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
                             [self.collectionView reloadData];
                         }
@@ -115,7 +114,6 @@ const CGFloat coverPhotoOffset = 50;
                     [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
                         if (!error && number > 0) {
                             self.unreadHeartedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
-                            NSLog(@"%d", number);
                             [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
                             [self.collectionView reloadData];
                         }
@@ -177,7 +175,7 @@ const CGFloat coverPhotoOffset = 50;
             [cell setDateIdea:createdIdea];
             if ([self.unreadCreatedMessagesCount[createdIdea.objectId] intValue]) {
                 [cell showBadgeWithStyle:WBadgeStyleNumber value:[self.unreadCreatedMessagesCount[createdIdea.objectId] intValue] animationType:WBadgeAnimTypeNone];
-                cell.badgeCenterOffset = CGPointMake(-16, 12);
+                cell.badgeCenterOffset = CGPointMake(-16, 14);
             }
 
         }
@@ -187,7 +185,7 @@ const CGFloat coverPhotoOffset = 50;
             [cell setDateIdea:heartedIdea];
             if ([self.unreadHeartedMessagesCount[heartedIdea.objectId] intValue]) {
                 [cell showBadgeWithStyle:WBadgeStyleNumber value:[self.unreadHeartedMessagesCount[heartedIdea.objectId] intValue] animationType:WBadgeAnimTypeNone];
-                cell.badgeCenterOffset = CGPointMake(-16, 12);
+                cell.badgeCenterOffset = CGPointMake(-16, 14);
             }
         }
     }

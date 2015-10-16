@@ -58,7 +58,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         querySavedDateIdea.fromPinWithName("LastDateIdeaViewed")
         querySavedDateIdea.includeKey("user")
         querySavedDateIdea.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
-            print("Retrieving last date idea from local datastore")
             if let dateIdeas = dateIdeas as? [DateIdea],
                 let firstIdea = dateIdeas.first {
                     
@@ -250,9 +249,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 self.activityIndicator.stopAnimating()
             })
         
-        
-
-        
     }
     
     func hideDateView(dv: DateView) {
@@ -301,24 +297,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             
             let alpha = max(min(translation.y / 200, 1), 0)
             
-//            let scale = max(min(translation.y / 200, 0.5), 0)
-            
-//            let transform = CGAffineTransformMakeTranslation(0, translation.y)
-            
             if(self.incomingDateView != nil) {
                 self.incomingDateView.alpha = alpha
             }
-//            self.incomingDateView.transform = CGAffineTransformScale(transform, scale, scale)
             
-//            if translation.y > 0 {
-//                UIView.animateWithDuration(0.3, animations: { () -> Void in
-//                    self.incomingDateView.alpha = 0.5
-//                })
-//            } else {
-//                UIView.animateWithDuration(0.3, animations: { () -> Void in
-//                    self.incomingDateView.alpha = 0.0
-//                })
-//            }
         } else if sender.state == UIGestureRecognizerState.Ended {
             
             animator.removeAllBehaviors()
@@ -355,13 +337,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 self.dateView = self.incomingDateView
                 self.incomingDateView = nil
                 
-//                delay(0.3, closure: { () -> () in
-//                    self.dateView.removeFromSuperview()
-//                    self.dateView = self.incomingDateView
-//                    self.incomingDateView = nil
-//                    
-//                    self.fetchDateIdeas(nil)
-//                })
             } else if translation.y < -75 {
                 
                 dateView.transform = CGAffineTransformMakeRotation(0);
@@ -409,6 +384,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         }
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
+        alertController.view.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
         
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -425,7 +401,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         } else if segue.identifier == "showDetail" {
             let detailVC = segue.destinationViewController as! DetailViewController
             detailVC.idea = dateView.idea
-            print("Passing the idea to detail \(dateView.idea)")
         } else if segue.identifier == "showProfile" {
             if User.currentUser() == nil {
                 performSegueWithIdentifier("showLogin", sender: sender)
@@ -454,17 +429,6 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             self.dateView.center = self.view.center
         }
         
-    }
-    
-    // MARK: - Helper
-    
-    func delay(delay: Double, closure:() -> ()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
     }
     
     // MARK: - Date View Delegate
