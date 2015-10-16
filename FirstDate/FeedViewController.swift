@@ -130,6 +130,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         query?.addAscendingOrder("createdAt")
         query?.includeKey("user")
         query?.limit = 10;
+        if let user = User.currentUser() {
+            query?.whereKey("user", notEqualTo: user)
+        }
         query?.whereKey("createdAt", greaterThan: queryDate)
         query?.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if (error == nil) {
