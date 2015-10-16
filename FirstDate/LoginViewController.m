@@ -13,7 +13,10 @@
 @interface LoginViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginFormBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelButtonTop;
 @end
 
 @implementation LoginViewController
@@ -32,7 +35,7 @@
 
     [self.navigationController.navigationBar setHidden:YES];
     
-    // Disable iOS 7 back gesture
+    // Disable back swipe gesture
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
@@ -80,16 +83,20 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    frame.origin.y = -[self getKeyboardHeight:notification] / 2.0;
-    self.view.frame = frame;
-    
+    [UIView animateWithDuration:0.25 animations:^{
+        [self.view removeConstraint:self.cancelButtonTop];
+        self.loginFormBottom.constant = [self getKeyboardHeight:notification] + 16;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    frame.origin.y = 0;
-    self.view.frame = frame;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.cancelButtonTop = [self.cancelButton.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor constant:8.0];
+        [self.view addConstraint:self.cancelButtonTop];
+        self.loginFormBottom.constant = 16;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (CGFloat)getKeyboardHeight:(NSNotification *)notification {

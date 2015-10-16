@@ -135,6 +135,7 @@
 }
 
 #pragma mark - Text Edit Resign First Responder
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self hideKeyboard];
     if (self.photoImageView.image != [UIImage imageNamed:@"add photo"]) {
