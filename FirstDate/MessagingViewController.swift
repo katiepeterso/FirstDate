@@ -56,6 +56,10 @@ class MessagingViewController: JSQMessagesViewController {
     
     //MARK: - JSQMessagesCollectionViewDataSource -
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+        if self.messages[indexPath.item].receivingUser == User.currentUser() {
+            self.messages[indexPath.item].isRead = NSNumber(bool: true)
+            self.messages[indexPath.item].saveInBackground()
+        }
         return self.messages[indexPath.item]
     }
     

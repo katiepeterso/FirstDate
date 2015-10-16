@@ -80,9 +80,9 @@ const CGFloat coverPhotoOffset = 50;
                 for (DateIdea *idea in self.createdDateIdeas) {
                     PFQuery *getUnreadMessagesCount = [Message query];
                     [getUnreadMessagesCount includeKey:@"idea"];
-                    [getUnreadMessagesCount includeKey:@"sendingUser"];
+                    [getUnreadMessagesCount includeKey:@"receivingUser"];
                     [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
-                    [getUnreadMessagesCount whereKey:@"sendingUser" equalTo:[User currentUser]];
+                    [getUnreadMessagesCount whereKey:@"receivingUser" equalTo:[User currentUser]];
                     [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
                     [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
                         if (!error && number > 0) {
