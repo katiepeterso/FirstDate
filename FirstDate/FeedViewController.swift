@@ -184,7 +184,8 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             var dateImage: UIImage?
             var userImage: UIImage?
             
-            if let dateImageData = try? idea.photo.getData() {
+            if let photo = idea.photo,
+                let dateImageData = try? photo.getData() {
                 dateImage = UIImage(data: dateImageData)
             }
             
