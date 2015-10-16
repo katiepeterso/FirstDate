@@ -39,7 +39,7 @@ const CGFloat coverPhotoOffset = 50;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([User currentUser]) {
+    if (self.selectedUser == nil) {
         self.selectedUser = [User currentUser];
     }
     
