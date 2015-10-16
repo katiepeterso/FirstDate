@@ -30,7 +30,7 @@
     self = [super init];
     if (self) {
         self.username = username;
-        self.password = email;
+        self.password = password;
         self.email = email;
     }
     return self;

@@ -193,7 +193,7 @@
         SignupSupplementViewController *supplementVC = segue.destinationViewController;
         supplementVC.username = username;
         supplementVC.password = password;
-        supplementVC.email = email;
+        supplementVC.email = email;    
     }
 }
 @end
