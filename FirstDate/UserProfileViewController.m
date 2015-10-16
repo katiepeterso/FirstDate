@@ -65,7 +65,11 @@ const CGFloat coverPhotoOffset = 50;
     [self fetchIdeas];
     [self fetchHearts];
     self.fullNameLabel.text = self.selectedUser.username;
-    self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu", (unsigned long)self.selectedUser.age];
+    if (self.selectedUser.age == 0) {
+        self.ageLabel.text = @"Age: Not Specified";
+    } else {
+        self.ageLabel.text = [NSString stringWithFormat:@"Age: %lu", (unsigned long)self.selectedUser.age];
+    }
     self.navigationController.navigationBarHidden = NO;
 }
 
