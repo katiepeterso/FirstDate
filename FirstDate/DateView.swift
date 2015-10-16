@@ -55,7 +55,9 @@ class DateView: UIView {
     
     var heartCount: Int32 = 0 {
         didSet {
-            heartCountLabel.text = "\(heartCount) x"
+            if heartCount != 0 {
+                heartCountLabel.text = "\(heartCount)"
+            }
         }
     }
     
