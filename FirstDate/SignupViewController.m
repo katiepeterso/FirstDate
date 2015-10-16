@@ -12,14 +12,14 @@
 #import "User.h"
 #import "FirstDate-Swift.h"
 
-@interface SignupViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
+@interface SignupViewController () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
-@property (weak, nonatomic) IBOutlet UITextField *ageField;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupFormBottom;
 @end
 
 @implementation SignupViewController
@@ -27,96 +27,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.nextButton.alpha = 0.5;
+    
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
     self.emailField.delegate = self;
-    self.ageField.delegate = self;
     
-    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
-    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
-    done.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
+//    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0)];
+//    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideKeyboard)];
+//    done.tintColor = [UIColor colorWithRed:80.0/255.0 green:210.0/255.0 blue:194.0/255.0 alpha:1.0];
+//    
+//    [accessoryView setItems:@[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
     
-    [accessoryView setItems:@[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], done]];
-    
-    self.ageField.inputAccessoryView = accessoryView;
+//    self.ageField.inputAccessoryView = accessoryView;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self subscribeToKeyboardNotifications];
-    [PhotoHelper makeCircleImageView:self.photoImageView];
+    [self subscribeToSystemNotifications];
+    [self validateForm];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self unsubscribeToKeyboardNotifications];
+    [self unsubscribeFromSystemNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
+    // Enable back swipe gesture
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
-}
-
-#pragma mark - Image Picker and display
-- (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
-    [PhotoHelper displayImagePicker:self delegate:self];
-}
-
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.photoImageView.image = info[UIImagePickerControllerOriginalImage];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)signup:(id)sender
-{
-    NSString *username = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *password = [self.passwordField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *email = [self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *age = [self.ageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
-    
-    if ([username length] == 0 || [password length] == 0 || [email length] == 0 || [age length] == 0 || [self.photoImageView.image isEqual:[UIImage imageNamed:@"add photo"]]) {
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
-                                                                                 message:@"Make sure you provide a photo, enter a username, password, email address and your age!"
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-    else {
-        User *newUser = [User user];
-        newUser.username = username;
-        newUser.password = password;
-        newUser.email = email;
-        newUser.age = [age intValue];
-        
-        if (self.photoImageView.image) {
-            NSData* data = UIImageJPEGRepresentation(self.photoImageView.image, 0.25);
-            newUser.userPhoto = [PFFile fileWithData:data];
-        }
-        
-        [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (error) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops! Something went wrong."
-                                                                                         message:[NSString stringWithFormat:@"%@", error.description]
-                                                                                  preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
-                
-                [self presentViewController:alertController animated:YES completion:nil];
-            } else {
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }
-        }];
-    }
-    
 }
 
 - (IBAction)dismiss:(id)sender
@@ -124,17 +70,42 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
-    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    frame.origin.y = -[self getKeyboardHeight:notification] / 2.0;
-    self.view.frame = frame;
+#pragma mark - Handle System Notifications
 
+- (void)usernameChanged:(NSNotification *)notification {
+    [self validateForm];
+}
+
+- (void)passwordChanged:(NSNotification *)notification {
+    [self validateForm];
+}
+
+- (void)emailChanged:(NSNotification *)notification {
+    [self validateForm];
+}
+
+- (void)validateForm {
+    if (self.usernameField.text.length && self.passwordField.text.length && self.emailField.text.length) {
+        self.nextButton.alpha = 1.0;
+        self.nextButton.enabled = YES;
+    } else {
+        self.nextButton.alpha = 0.5;
+        self.nextButton.enabled = NO;
+    }
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.signupFormBottom.constant = [self getKeyboardHeight:notification] + 16;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-    CGRect frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    frame.origin.y = 0;
-    self.view.frame = frame;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.signupFormBottom.constant = 16;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (CGFloat)getKeyboardHeight:(NSNotification *)notification {
@@ -142,24 +113,42 @@
     return keyboardSize.CGRectValue.size.height;
 }
 
-- (void)subscribeToKeyboardNotifications {
+- (void)subscribeToSystemNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(usernameChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passwordChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)unsubscribeToKeyboardNotifications {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+- (void)unsubscribeFromSystemNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-                                                                                                          
-- (void)hideKeyboard {
-    [self.ageField resignFirstResponder];
-}
-                                                                                                          
-#pragma mark Text Field Delegate
+
+//- (void)hideKeyboard {
+//    [self.ageField resignFirstResponder];
+//}
+
+#pragma mark - Text Field Delegate
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
 
+#pragma mark - Navigation 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"continueSignUp"]) {
+        NSString *username = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *password = [self.passwordField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *email = [self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        SignupSupplementViewController *supplementVC = segue.destinationViewController;
+        supplementVC.username = username;
+        supplementVC.password = password;
+        supplementVC.email = email;
+    }
+}
 @end

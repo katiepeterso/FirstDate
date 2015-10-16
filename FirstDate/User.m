@@ -16,22 +16,22 @@
     [self registerSubclass];
 }
 
-@dynamic sex;
-@dynamic datingPreference;
-@dynamic age;
 @dynamic name;
+@dynamic age;
+@dynamic gender;
+@dynamic datingPreference;
+@dynamic about;
 @dynamic coverPhoto;
 @dynamic userPhoto;
-@dynamic about;
 @dynamic lastSeenDateIdeaCreatedAt;
 
-- (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference
+- (instancetype)initWithUsername:(NSString *)username password:(NSString *)password email:(NSString *)email
 {
     self = [super init];
     if (self) {
         self.username = username;
-        self.sex = sex;
-        self.datingPreference = datingPreference;
+        self.password = email;
+        self.email = email;
     }
     return self;
 }

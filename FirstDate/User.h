@@ -13,28 +13,29 @@
 
 @class PFFile;
 
-typedef NS_ENUM(NSUInteger, Sex) {
-    SexMale,
-    SexFemale,
+typedef NS_ENUM(NSUInteger, Gender) {
+    GenderNotSpecified,
+    GenderMale,
+    GenderFemale,
 };
 
 typedef NS_ENUM(NSUInteger, DatingPreference) {
-    DatingPreferenceMale,
-    DatingPreferenceFemale,
     DatingPreferenceBoth,
+    DatingPreferenceMen,
+    DatingPreferenceWomen,
 };
 
 @interface User: PFUser <PFSubclassing>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) NSUInteger age;
-@property (nonatomic, assign) Sex sex;
+@property (nonatomic, assign) Gender gender;
 @property (nonatomic, assign) DatingPreference datingPreference;
 @property (nonatomic, strong) NSString *about;
 @property (nonatomic, strong) PFFile *coverPhoto;
 @property (nonatomic, strong) PFFile *userPhoto;
 @property (nonatomic, strong) NSDate *lastSeenDateIdeaCreatedAt;
 
-- (instancetype)initWithUsername:(NSString *)username sex:(Sex)sex datingPreference:(DatingPreference)datingPreference;
+- (instancetype)initWithUsername:(NSString *)username password:(NSString *)password email:(NSString *)email;
 
 @end

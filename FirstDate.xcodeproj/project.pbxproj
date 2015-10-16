@@ -24,6 +24,7 @@
 		C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5E81BB0B42200EAD889 /* AddEditIdeaViewController.m */; };
 		C73AA5EC1BB0B76300EAD889 /* DateIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EB1BB0B76300EAD889 /* DateIdea.m */; };
 		C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C73AA5EE1BB0B88B00EAD889 /* User.m */; };
+		C74C47791BD03EDA00AACED3 /* SignupSupplementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74C47781BD03EDA00AACED3 /* SignupSupplementViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5131BB36DCE00651DC9 /* SignupViewController.m */; };
 		C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C752C5151BB36DCE00651DC9 /* LoginViewController.m */; };
 		C7D761131BC2D83200170F3A /* DateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7D761121BC2D83200170F3A /* DateView.xib */; settings = {ASSET_TAGS = (); }; };
@@ -62,6 +63,7 @@
 		C73AA5EB1BB0B76300EAD889 /* DateIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateIdea.m; sourceTree = "<group>"; };
 		C73AA5ED1BB0B88B00EAD889 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C73AA5EE1BB0B88B00EAD889 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		C74C47781BD03EDA00AACED3 /* SignupSupplementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupSupplementViewController.swift; sourceTree = "<group>"; };
 		C752C5121BB36DCE00651DC9 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		C752C5131BB36DCE00651DC9 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		C752C5141BB36DCE00651DC9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */,
+				C74C47781BD03EDA00AACED3 /* SignupSupplementViewController.swift */,
 				C752C5121BB36DCE00651DC9 /* SignupViewController.h */,
 				C752C5131BB36DCE00651DC9 /* SignupViewController.m */,
 				C752C5141BB36DCE00651DC9 /* LoginViewController.h */,
@@ -282,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C74C47791BD03EDA00AACED3 /* SignupSupplementViewController.swift in Sources */,
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
 				AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */,
