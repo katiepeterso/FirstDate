@@ -92,7 +92,7 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
         }
         
         if let age = ageString {
-            newUser.age = UInt(age)!
+            newUser.age = UInt(age) ?? 0
         }
         
         if genderString == "Male" {
