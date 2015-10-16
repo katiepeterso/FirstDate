@@ -26,6 +26,7 @@ const CGFloat coverPhotoOffset = 50;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *userIdeasControl;
 
 @property (nonatomic) NSMutableArray *createdDateIdeas;
+@property (nonatomic) NSMutableArray* pendingCountIdeas;
 @property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
 @property (nonatomic) BOOL userPhotoSelected;
 @property (nonatomic) NSMutableDictionary *unreadHeartedMessagesCount;
@@ -77,6 +78,7 @@ const CGFloat coverPhotoOffset = 50;
         [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count) {
                 self.createdDateIdeas = [objects mutableCopy];
+                self.pendingCountIdeas = [objects mutableCopy];
                 for (DateIdea *idea in self.createdDateIdeas) {
                     PFQuery *getUnreadMessagesCount = [Message query];
                     [getUnreadMessagesCount includeKey:@"idea"];
@@ -88,12 +90,21 @@ const CGFloat coverPhotoOffset = 50;
                         if (!error && number > 0) {
                             self.unreadCreatedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
                             [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
-                            [self.collectionView reloadData];
                         }
+                        [self didFinishCountingUnreadMessagesForIdea:idea];
                     }];
                 }
             }
         }];
+    }
+}
+
+-(void)didFinishCountingUnreadMessagesForIdea:(DateIdea*)idea
+{
+    [self.pendingCountIdeas removeObject:idea];
+    
+    if (self.pendingCountIdeas.count == 0) {
+        [self.collectionView reloadData];
     }
 }
 
@@ -115,7 +126,6 @@ const CGFloat coverPhotoOffset = 50;
                         if (!error && number > 0) {
                             self.unreadHeartedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
                             [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
-                            [self.collectionView reloadData];
                         }
                     }];
                 }

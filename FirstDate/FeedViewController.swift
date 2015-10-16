@@ -52,7 +52,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         navigationController?.navigationBarHidden = true
         navigationItem.title = "Explore"
         
-        activityIndicator.startAnimating()
+        if dateView == nil {
+            activityIndicator.startAnimating()
+        }
+        
         
         let querySavedDateIdea = DateIdea.query()!
         querySavedDateIdea.fromPinWithName("LastDateIdeaViewed")
