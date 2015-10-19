@@ -11,11 +11,7 @@ import Parse
 
 class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    var newUser: User!
-    
-    var username: String!
-    var password: String!
-    var email: String!
+    var newUser = User()
 
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameField: UITextField!
@@ -53,8 +49,6 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        newUser = User(username: username, password: password, email: email)
         
         genderPickerView = UIPickerView()
         datingPreferencePickerView = UIPickerView()
@@ -181,9 +175,6 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
     // MARK: - Image Picker Delegate
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if newUser == nil {
-            newUser == User(username: username, password: password, email: email)
-        }
         
         let imageData = PhotoHelper.setView(photoImageView, toImage: info[UIImagePickerControllerOriginalImage] as! UIImage)
         

@@ -20,7 +20,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     @IBOutlet weak var createButton: UIButton!
     
     var dateView: DateView!
-    var incomingDateView: DateView!
+    var incomingDateView: DateView?
     
     var doubleTapRecognizer: UITapGestureRecognizer!
     var panRecognizer: UIPanGestureRecognizer!
@@ -304,8 +304,8 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             
             let alpha = max(min(translation.y / 200, 1), 0)
             
-            if(self.incomingDateView != nil) {
-                self.incomingDateView.alpha = alpha
+            if let incoming = incomingDateView {
+                incoming.alpha = alpha
             }
             
         } else if sender.state == UIGestureRecognizerState.Ended {
@@ -314,7 +314,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             
             let translation = sender.translationInView(view)
             
-            if translation.y > 100 {
+            if translation.y > 100 /*|| fabs(translation.x) > 100*/ {
                 
                 let outgoing = self.dateView
                 
@@ -322,8 +322,8 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 gravity.gravityDirection = CGVectorMake(0, 10)
                 animator.addBehavior(gravity)
                 
-                if(incomingDateView != nil) {
-                    showDateView(incomingDateView)
+                if let incoming = incomingDateView {
+                    showDateView(incoming)
                 } else {
                     DateIdea.unpinAllObjectsInBackgroundWithName("LastDateIdeaViewed")
                 }
@@ -366,7 +366,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 snapBehavior = UISnapBehavior(item: dateView, snapToPoint: view.center)
                 animator.addBehavior(snapBehavior)
                 
-                hideDateView(incomingDateView)
+                if let incoming = incomingDateView {
+                    hideDateView(incoming)
+                }
                 
             }
         }
@@ -462,14 +464,25 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         
         // create a new incoming dateView
         if (self.incomingDateView == nil) && (ideas.count > 0){
-            self.incomingDateView = self.createDateViewWithIdea(self.ideas.removeFirst())
+            
+            if let idea = self.ideas.first {
+                
+                self.incomingDateView = self.createDateViewWithIdea(idea)
+                self.ideas.removeFirst()
+                
+            } else {
+            
+                // no more ideas!!!
+                print("no more ideas found!")
+            }
+            
         }
         
-        if (self.incomingDateView != nil) {
+        if let incoming = incomingDateView {
             UIView.animateKeyframesWithDuration(0.5, delay: 0.2, options: [], animations: {
                 
                 UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.2, animations: {
-                    self.incomingDateView.alpha = 0.5
+                    incoming.alpha = 0.5
                 })
                 
                 UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.8, animations: {
@@ -482,17 +495,17 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.8, animations: {
                     let scale = CGAffineTransformMakeScale(1, 1)
                     let translate = CGAffineTransformMakeTranslation(0, 0)
-                    self.incomingDateView.transform = CGAffineTransformConcat(scale, translate)
-                    self.incomingDateView.alpha = 1.0
-                    self.incomingDateView.center = self.view.center
+                    incoming.transform = CGAffineTransformConcat(scale, translate)
+                    incoming.alpha = 1.0
+                    incoming.center = self.view.center
                 })
                 }) { (completed) -> Void in
                     // animations completed
                     UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
-                        self.backgroundImageView.image = self.incomingDateView.dateImageView.image
+                        self.backgroundImageView.image = self.incomingDateView?.dateImageView.image
                         }, completion: nil)
                     self.dateView.removeFromSuperview()
-                    self.dateView = self.incomingDateView
+                    self.dateView = incoming
                     self.incomingDateView = nil
                     self.fetchDateIdeas(nil)
                     self.updateLastSeenDateIdeaDate()

@@ -191,9 +191,9 @@
         NSString *email = [self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         SignupSupplementViewController *supplementVC = segue.destinationViewController;
-        supplementVC.username = username;
-        supplementVC.password = password;
-        supplementVC.email = email;    
+        supplementVC.newUser.username = username;
+        supplementVC.newUser.password = password;
+        supplementVC.newUser.email = email;    
     }
 }
 @end
