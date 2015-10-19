@@ -13,6 +13,9 @@
 #import "UserProfileDateIdeasCell.h"
 #import "FirstDate-Swift.h"
 #import "WZLBadgeImport.h"
+#import <Bolts/Bolts.h>
+#import <Parse/Parse.h>
+
 
 const CGFloat coverPhotoOffset = 50;
 
@@ -26,7 +29,7 @@ const CGFloat coverPhotoOffset = 50;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *userIdeasControl;
 
 @property (nonatomic) NSMutableArray *createdDateIdeas;
-@property (nonatomic) NSMutableArray* pendingCountIdeas;
+@property (nonatomic) NSMutableArray *pendingCountIdeas;
 @property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
 @property (nonatomic) BOOL userPhotoSelected;
 @property (nonatomic) NSMutableDictionary *unreadHeartedMessagesCount;
@@ -36,6 +39,7 @@ const CGFloat coverPhotoOffset = 50;
 
 @implementation UserProfileViewController
 
+#pragma mark - Lifecycle -
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -73,12 +77,14 @@ const CGFloat coverPhotoOffset = 50;
     self.navigationController.navigationBarHidden = NO;
 }
 
+#pragma mark - Fetch data -
+
 - (void)fetchIdeas {
     PFQuery *getCreatedIdeas = [DateIdea query];
     
     if (self.selectedUser) {
         [getCreatedIdeas whereKey:@"user" equalTo:self.selectedUser];
-        
+                
         //TODO: add check to only count unread messages for current user's profile page
         
         [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
@@ -143,7 +149,7 @@ const CGFloat coverPhotoOffset = 50;
     }
 }
 
-#pragma mark - Image Picker and Display
+#pragma mark - Image Picker and Display -
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
     [PhotoHelper displayImagePicker:self delegate:self];
     self.userPhotoSelected = NO;
@@ -177,7 +183,7 @@ const CGFloat coverPhotoOffset = 50;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Collection View Delegate
+#pragma mark - Collection View Delegate -
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return (self.userIdeasControl.selectedSegmentIndex == 0) ?
@@ -226,7 +232,7 @@ const CGFloat coverPhotoOffset = 50;
     return CGSizeMake(cellWidth, cellWidth);
 }
 
-#pragma mark - Cover Photo Mask
+#pragma mark - Cover Photo Mask -
 
 - (void)addDiagonalMaskToImage {
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
@@ -240,7 +246,7 @@ const CGFloat coverPhotoOffset = 50;
     self.headerView.layer.mask = maskLayer;
 }
 
-#pragma mark - Navigation
+#pragma mark - Navigation -
 
 - (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
     
@@ -250,7 +256,7 @@ const CGFloat coverPhotoOffset = 50;
     return YES;
 }
 
-#pragma mark - Segmented Control
+#pragma mark - Segmented Control -
 
 - (IBAction)userIdeasControlAction:(UISegmentedControl *)sender {
     [self.collectionView reloadData];

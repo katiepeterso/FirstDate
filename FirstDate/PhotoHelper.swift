@@ -59,9 +59,43 @@ import JSQMessagesViewController
     
     class func setView(view: UIImageView, toImage: UIImage) -> NSData {
         view.image = toImage
-        return UIImageJPEGRepresentation(toImage, 0.95)!
+        
+        var actualHeight : CGFloat = toImage.size.height
+        var actualWidth : CGFloat = toImage.size.width
+        let maxHeight : CGFloat = 600.0
+        let maxWidth : CGFloat = 800.0
+        var imgRatio : CGFloat = actualWidth/actualHeight
+        let maxRatio : CGFloat = maxWidth/maxHeight
+        let compressionQuality : CGFloat = 0.5
+        
+        if (actualHeight > maxHeight || actualWidth > maxWidth){
+            if(imgRatio < maxRatio){
+                //adjust width according to maxHeight
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = imgRatio * actualWidth;
+                actualHeight = maxHeight;
+            }
+            else if(imgRatio > maxRatio){
+                //adjust height according to maxWidth
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = imgRatio * actualHeight;
+                actualWidth = maxWidth;
+            }
+            else{
+                actualHeight = maxHeight;
+                actualWidth = maxWidth;
+            }
+        }
+        
+        let rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+        UIGraphicsBeginImageContext(rect.size);
+        toImage.drawInRect(rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext();
+        let imageData = UIImageJPEGRepresentation(img, compressionQuality);
+        UIGraphicsEndImageContext();
+        
+        return imageData!;
     }
-    
     
     class func makeCircleImageView(view: UIImageView) {
         view.layer.cornerRadius = view.frame.width/2

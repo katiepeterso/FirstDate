@@ -10,9 +10,6 @@
 		AA1F2E651BCCA27D000ECDEC /* DateIdeaHeartedByViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F2E641BCCA27D000ECDEC /* DateIdeaHeartedByViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AA2F3EC31BCC86E4005C7C8A /* DateIdeaHeartedByCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F3EC21BCC86E4005C7C8A /* DateIdeaHeartedByCell.swift */; settings = {ASSET_TAGS = (); }; };
 		AA41877B1BC301E90044A60D /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA41877A1BC301E90044A60D /* PhotoHelper.swift */; settings = {ASSET_TAGS = (); }; };
-		AA4A44D11BD57D3B007160C5 /* PhotoRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4A44D01BD57D3B007160C5 /* PhotoRecord.m */; settings = {ASSET_TAGS = (); }; };
-		AA4A44D41BD57E5C007160C5 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4A44D31BD57E5C007160C5 /* PendingOperations.m */; settings = {ASSET_TAGS = (); }; };
-		AA4A44D71BD580B4007160C5 /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4A44D61BD580B4007160C5 /* ImageDownloader.m */; settings = {ASSET_TAGS = (); }; };
 		AA858BFC1BC97DE100462537 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA858BFB1BC97DE100462537 /* Message.swift */; settings = {ASSET_TAGS = (); }; };
 		AA858BFE1BC97E2F00462537 /* MessagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AABD120F1BC5CE5A00A3236C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -43,12 +40,6 @@
 		AA1F2E641BCCA27D000ECDEC /* DateIdeaHeartedByViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateIdeaHeartedByViewController.swift; sourceTree = "<group>"; };
 		AA2F3EC21BCC86E4005C7C8A /* DateIdeaHeartedByCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateIdeaHeartedByCell.swift; sourceTree = "<group>"; };
 		AA41877A1BC301E90044A60D /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
-		AA4A44CF1BD57D3B007160C5 /* PhotoRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoRecord.h; sourceTree = "<group>"; };
-		AA4A44D01BD57D3B007160C5 /* PhotoRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoRecord.m; sourceTree = "<group>"; };
-		AA4A44D21BD57E5C007160C5 /* PendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingOperations.h; sourceTree = "<group>"; };
-		AA4A44D31BD57E5C007160C5 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
-		AA4A44D51BD580B4007160C5 /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
-		AA4A44D61BD580B4007160C5 /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
 		AA858BFB1BC97DE100462537 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingViewController.swift; sourceTree = "<group>"; };
 		AABD120E1BC5CE5A00A3236C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -149,12 +140,6 @@
 		AA52F2BD1BB39D3C00E52B43 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AA4A44CF1BD57D3B007160C5 /* PhotoRecord.h */,
-				AA4A44D01BD57D3B007160C5 /* PhotoRecord.m */,
-				AA4A44D21BD57E5C007160C5 /* PendingOperations.h */,
-				AA4A44D31BD57E5C007160C5 /* PendingOperations.m */,
-				AA4A44D51BD580B4007160C5 /* ImageDownloader.h */,
-				AA4A44D61BD580B4007160C5 /* ImageDownloader.m */,
 				C7D761121BC2D83200170F3A /* DateView.xib */,
 				C7DA79741BC20AE300D3E5F4 /* DateView.swift */,
 				AAEDA2301BB5C7B9008C61FF /* UserProfileDateIdeasCell.h */,
@@ -302,8 +287,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C74C47791BD03EDA00AACED3 /* SignupSupplementViewController.swift in Sources */,
-				AA4A44D11BD57D3B007160C5 /* PhotoRecord.m in Sources */,
-				AA4A44D41BD57E5C007160C5 /* PendingOperations.m in Sources */,
 				C73AA5EF1BB0B88B00EAD889 /* User.m in Sources */,
 				C752C5171BB36DCE00651DC9 /* LoginViewController.m in Sources */,
 				AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */,
@@ -313,7 +296,6 @@
 				AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */,
 				C752C5161BB36DCE00651DC9 /* SignupViewController.m in Sources */,
 				AA41877B1BC301E90044A60D /* PhotoHelper.swift in Sources */,
-				AA4A44D71BD580B4007160C5 /* ImageDownloader.m in Sources */,
 				C70460311BB210EF005D8335 /* Comment.swift in Sources */,
 				C7DA79751BC20AE300D3E5F4 /* DateView.swift in Sources */,
 				AA2F3EC31BCC86E4005C7C8A /* DateIdeaHeartedByCell.swift in Sources */,
