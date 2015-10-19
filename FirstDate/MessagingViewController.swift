@@ -21,10 +21,13 @@ class MessagingViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (User.currentUser() != nil) {
-            self.senderDisplayName = User.currentUser()!.username
-            senderId = User.currentUser()!.objectId
+        
+        guard let currentUser = User.currentUser() else {
+                return
         }
+        
+        self.senderDisplayName = currentUser.username
+        senderId = currentUser.objectId
         
         self.collectionView!.dataSource = self
         self.collectionView!.delegate = self
@@ -35,13 +38,19 @@ class MessagingViewController: JSQMessagesViewController {
     }
     
     func fetchConversation() {
+        guard let currentUser = User.currentUser(),
+            let receiver = receiver
+        else {
+            return
+        }
+        
         let getSentMessages = PFQuery(className:"Message")
-        getSentMessages.whereKey("sendingUser", equalTo:User.currentUser()!)
-        getSentMessages.whereKey("receivingUser", equalTo: receiver!)
+        getSentMessages.whereKey("sendingUser", equalTo:currentUser)
+        getSentMessages.whereKey("receivingUser", equalTo: receiver)
         
         let getRecievedMessages = PFQuery(className:"Message")
-        getRecievedMessages.whereKey("sendingUser", equalTo:receiver!)
-        getRecievedMessages.whereKey("receivingUser", equalTo: User.currentUser()!)
+        getRecievedMessages.whereKey("sendingUser", equalTo:receiver)
+        getRecievedMessages.whereKey("receivingUser", equalTo: currentUser)
         
         let getAllMessages = PFQuery.orQueryWithSubqueries([getSentMessages, getRecievedMessages])
         getAllMessages.orderByAscending("createdAt")
