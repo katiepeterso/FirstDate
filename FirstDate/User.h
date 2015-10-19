@@ -38,4 +38,8 @@ typedef NS_ENUM(NSUInteger, DatingPreference) {
 
 - (instancetype)initWithUsername:(NSString *)username password:(NSString *)password email:(NSString *)email;
 
+- (PFRelation *)hearts {
+    
+}
+
 @end
