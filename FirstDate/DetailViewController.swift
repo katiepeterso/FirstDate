@@ -73,6 +73,13 @@ class DetailViewController: UIViewController {
             }, completion: nil)
     }
     
+    // MARK: - Appearance
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return AppearanceHelper.statusBarColor(detailIdeaImageView?.image)
+    }
+
+    
     @IBAction func backButtonPressed(sender: UIButton) {
         navigationController?.popViewControllerAnimated(true)
     }
@@ -92,6 +99,7 @@ class DetailViewController: UIViewController {
         if (idea != nil) {
             PhotoHelper.getPhotoInBackground(idea.photo) { (resultImage) -> Void in
                 self.detailIdeaImageView.image = resultImage
+                self.preferredStatusBarStyle()
             }
             
             if let user = idea.user,

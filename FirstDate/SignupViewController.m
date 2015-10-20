@@ -76,6 +76,10 @@
     }
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - Actions
 
 - (IBAction)dismiss:(id)sender
