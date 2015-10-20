@@ -19,6 +19,7 @@
 		AAD8DA0B1BAE04BB00218CC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA091BAE04BB00218CC9 /* Main.storyboard */; };
 		AAD8DA0D1BAE04BB00218CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */; };
 		AAD8DA101BAE04BB00218CC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD8DA0E1BAE04BB00218CC9 /* LaunchScreen.storyboard */; };
+		AAE9FD5E1BD6C29B00AFDFF7 /* FeedNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE9FD5D1BD6C29B00AFDFF7 /* FeedNavigationViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AAEDA22F1BB4FFD8008C61FF /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
 		AAEDA2321BB5C7B9008C61FF /* UserProfileDateIdeasCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEDA2311BB5C7B9008C61FF /* UserProfileDateIdeasCell.m */; settings = {ASSET_TAGS = (); }; };
 		C70460311BB210EF005D8335 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70460301BB210EF005D8335 /* Comment.swift */; };
@@ -53,6 +54,7 @@
 		AAD8DA0C1BAE04BB00218CC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAD8DA0F1BAE04BB00218CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAD8DA111BAE04BB00218CC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAE9FD5D1BD6C29B00AFDFF7 /* FeedNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedNavigationViewController.swift; sourceTree = "<group>"; };
 		AAEDA22D1BB4FFD8008C61FF /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		AAEDA22E1BB4FFD8008C61FF /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		AAEDA2301BB5C7B9008C61FF /* UserProfileDateIdeasCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileDateIdeasCell.h; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		AA52F2BC1BB39D2B00E52B43 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AAE9FD5D1BD6C29B00AFDFF7 /* FeedNavigationViewController.swift */,
 				AA858BFD1BC97E2F00462537 /* MessagingViewController.swift */,
 				C74C47781BD03EDA00AACED3 /* SignupSupplementViewController.swift */,
 				C752C5121BB36DCE00651DC9 /* SignupViewController.h */,
@@ -308,6 +311,7 @@
 				AA1F2E651BCCA27D000ECDEC /* DateIdeaHeartedByViewController.swift in Sources */,
 				AA858BFC1BC97DE100462537 /* Message.swift in Sources */,
 				AAD8DA021BAE04BB00218CC9 /* main.m in Sources */,
+				AAE9FD5E1BD6C29B00AFDFF7 /* FeedNavigationViewController.swift in Sources */,
 				C73AA5E91BB0B42200EAD889 /* AddEditIdeaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

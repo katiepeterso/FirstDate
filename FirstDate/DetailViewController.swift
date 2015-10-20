@@ -99,7 +99,6 @@ class DetailViewController: UIViewController {
         if (idea != nil) {
             PhotoHelper.getPhotoInBackground(idea.photo) { (resultImage) -> Void in
                 self.detailIdeaImageView.image = resultImage
-                self.preferredStatusBarStyle()
             }
             
             if let user = idea.user,
