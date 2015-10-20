@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import UIImage_MDContentColor
 
 class FeedViewController: UIViewController, DateViewDelegate, LoginViewControllerDelegate {
     
@@ -82,13 +81,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     // MARK: - Appearance
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        if let image = backgroundImageView?.image {
-            let contentColor = image.md_imageContentColor()
-            if contentColor == MDContentColor.Dark {
-                return UIStatusBarStyle.LightContent
-            }
-        }
-        return UIStatusBarStyle.Default
+        return AppearanceHelper.statusBarColor(backgroundImageView?.image)
     }
     
     // MARK: - Fetch New Data
