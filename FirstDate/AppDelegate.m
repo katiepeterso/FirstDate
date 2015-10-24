@@ -28,6 +28,7 @@
     [User registerSubclass];
     [DateIdea registerSubclass];
     [Comment registerSubclass];
+    [Message registerSubclass];
     
     // Initialize Parse.
     [Parse setApplicationId:PARSE_API_APPLICATION_ID clientKey:PARSE_API_CLIENT_KEY];

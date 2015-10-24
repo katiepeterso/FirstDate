@@ -39,7 +39,7 @@ class MessagingViewController: JSQMessagesViewController {
     
     func fetchConversation() {
         guard let currentUser = User.currentUser(),
-            let receiver = receiver
+            let receiver = receiver, let dateIdea = idea
         else {
             return
         }
@@ -47,18 +47,20 @@ class MessagingViewController: JSQMessagesViewController {
         let getSentMessages = PFQuery(className:"Message")
         getSentMessages.whereKey("sendingUser", equalTo:currentUser)
         getSentMessages.whereKey("receivingUser", equalTo: receiver)
+        getSentMessages.whereKey("idea", equalTo: dateIdea)
         
         let getRecievedMessages = PFQuery(className:"Message")
         getRecievedMessages.whereKey("sendingUser", equalTo:receiver)
         getRecievedMessages.whereKey("receivingUser", equalTo: currentUser)
+        getRecievedMessages.whereKey("idea", equalTo: dateIdea)
         
         let getAllMessages = PFQuery.orQueryWithSubqueries([getSentMessages, getRecievedMessages])
         getAllMessages.orderByAscending("createdAt")
 
         getAllMessages.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             if(results!.count != 0) {
-                let messagesResults = results as [PFObject]!
-                self.messages += messagesResults as! [Message]
+                let messagesResults = results as! [Message]
+                self.messages = messagesResults
                 self.collectionView?.reloadData()
             }
         }

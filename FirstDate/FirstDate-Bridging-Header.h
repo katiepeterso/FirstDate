@@ -7,3 +7,4 @@
 #import "LoginViewController.h"
 #import "UserProfileViewController.h"
 #import <JSQMessagesViewController/JSQMessages.h> 
+#import <Parse/PFObject+Subclass.h>

@@ -21,6 +21,10 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
         }
     }
     
+    static func parseClassName() -> String {
+        return "Message"
+    }
+    
     @NSManaged var sendingUser: User
     @NSManaged var messagingHash: NSNumber
     @NSManaged var messagingText: NSString
@@ -43,10 +47,6 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
         super.init()
     }
     
-    static func parseClassName() -> String {
-        return "Message"
-    }
-
     
     func senderId() -> String! {
         return sendingUser.objectId
