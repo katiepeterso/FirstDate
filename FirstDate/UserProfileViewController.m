@@ -16,6 +16,19 @@
 #import <Bolts/Bolts.h>
 #import <Parse/Parse.h>
 
+//@interface ParseFetchOp : NSOperation
+//@property
+//@end
+//
+//@implementation ParseFetchOp
+//
+//-(void)main
+//{
+//    
+//}
+//
+//@end
+
 
 const CGFloat coverPhotoOffset = 50;
 
@@ -29,7 +42,6 @@ const CGFloat coverPhotoOffset = 50;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *userIdeasControl;
 
 @property (nonatomic) NSMutableArray *createdDateIdeas;
-@property (nonatomic) NSMutableArray *pendingCountIdeas;
 @property (strong, nonatomic) NSMutableArray *heartedDateIdeas;
 @property (nonatomic) BOOL userPhotoSelected;
 @property (nonatomic) NSMutableDictionary *unreadHeartedMessagesCount;
@@ -81,73 +93,54 @@ const CGFloat coverPhotoOffset = 50;
 
 - (void)fetchIdeas {
     PFQuery *getCreatedIdeas = [DateIdea query];
+    [getCreatedIdeas includeKey:@"messages"];
     
     if (self.selectedUser) {
         [getCreatedIdeas whereKey:@"user" equalTo:self.selectedUser];
-                
-        //TODO: add check to only count unread messages for current user's profile page
-        
         [getCreatedIdeas findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count) {
                 self.createdDateIdeas = [objects mutableCopy];
-                self.pendingCountIdeas = [objects mutableCopy];
-                for (DateIdea *idea in self.createdDateIdeas) {
-                    PFQuery *getUnreadMessagesCount = [Message query];
-                    [getUnreadMessagesCount includeKey:@"idea"];
-                    [getUnreadMessagesCount includeKey:@"receivingUser"];
-                    [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
-                    [getUnreadMessagesCount whereKey:@"receivingUser" equalTo:self.selectedUser];
-                    [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
-                    [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
-                        if (!error && number > 0) {
-                            self.unreadCreatedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
-                            [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
-                        }
-                        [self didFinishCountingUnreadMessagesForIdea:idea];
-                    }];
+                for (DateIdea *date in self.createdDateIdeas) {
+                    self.unreadCreatedMessagesCount[date.objectId] = [self countUnreadMessagesForIdea:date];
                 }
             }
+            [self.collectionView reloadData];
         }];
-    }
-}
-
--(void)didFinishCountingUnreadMessagesForIdea:(DateIdea*)idea
-{
-    [self.pendingCountIdeas removeObject:idea];
-    
-    if (self.pendingCountIdeas.count == 0) {
-        [self.collectionView reloadData];
     }
 }
 
 - (void)fetchHearts {
     PFQuery *getHearts = [DateIdea query];
+    [getHearts includeKey:@"messages"];
     if (self.selectedUser) {
         [getHearts whereKey:@"heartedBy" equalTo:self.selectedUser];
         [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count) {
                 self.heartedDateIdeas = [objects mutableCopy];
-                if ([self.selectedUser isEqual:[User currentUser]]) {
-                    for (DateIdea *idea in self.heartedDateIdeas) {
-                        PFQuery *getUnreadMessagesCount = [Message query];
-                        [getUnreadMessagesCount includeKey:@"idea"];
-                        [getUnreadMessagesCount includeKey:@"receivingUser"];
-                        [getUnreadMessagesCount whereKey:@"idea" equalTo:idea];
-                        [getUnreadMessagesCount whereKey:@"receivingUser" equalTo:[User currentUser]];
-                        [getUnreadMessagesCount whereKey:@"isRead" equalTo:[NSNumber numberWithBool:false]];
-                        [getUnreadMessagesCount countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
-                            if (!error && number > 0) {
-                                self.unreadHeartedMessagesCount[idea.objectId] = [NSNumber numberWithInt:number];
-                                [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
-                            }
-                        }];
-                    }
-
+                for (DateIdea *idea in self.heartedDateIdeas) {
+                    self.unreadHeartedMessagesCount[idea.objectId] = [self countUnreadMessagesForIdea:idea];
                 }
             }
-        }];
+         }];
     }
 }
+
+- (NSNumber *)countUnreadMessagesForIdea:(DateIdea *)idea {
+    int i = 0;
+    NSArray *messages = idea.messages;
+    if ([self.selectedUser isEqual:[User currentUser]]) {
+        for (Message *message in messages) {
+            if ([message[@"receivingUser"] isEqual:[User currentUser]] && [message[@"isRead"] isEqual:[NSNumber numberWithBool:false]]) {
+                i++;
+            }
+        }
+        if (i > 0) {
+            [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
+        }
+    }
+    return [NSNumber numberWithInt:i];
+}
+
 
 #pragma mark - Image Picker and Display -
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {

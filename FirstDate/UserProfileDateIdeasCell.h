@@ -13,6 +13,7 @@
 @interface UserProfileDateIdeasCell : UICollectionViewCell
 
 @property (nonatomic) DateIdea *currentDateIdea;
+@property (nonatomic) UIImage *downloadedImage;
 
 - (void)setDateIdea:(DateIdea *)dateIdea;
 

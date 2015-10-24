@@ -12,13 +12,6 @@ import JSQMessagesViewController
 import Foundation
 
 class Message: PFObject, PFSubclassing, JSQMessageData {
-    @NSManaged var sendingUser: User
-    @NSManaged var messagingHash: NSNumber
-    @NSManaged var messagingText: NSString
-    @NSManaged var receivingUser: User
-    @NSManaged var idea: DateIdea
-    @NSManaged var isRead: NSNumber
-    
     override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -27,6 +20,13 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
             self.registerSubclass()
         }
     }
+    
+    @NSManaged var sendingUser: User
+    @NSManaged var messagingHash: NSNumber
+    @NSManaged var messagingText: NSString
+    @NSManaged var receivingUser: User
+    @NSManaged var idea: DateIdea
+    @NSManaged var isRead: NSNumber
     
     init(text: String, sender: User, receiver: User, idea: DateIdea) {
         super.init()
