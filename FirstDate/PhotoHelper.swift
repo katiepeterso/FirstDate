@@ -11,7 +11,7 @@ import ParseUI
 import Parse
 import JSQMessagesViewController
 
-@objc class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     class func getPhotoInBackground(file: PFFile?, completionHandler:(resultImage:UIImage?) -> Void) {
         if file != nil {
