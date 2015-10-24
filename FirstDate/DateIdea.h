@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *details;
 @property (nonatomic, strong, readonly) PFRelation *heartedBy;
 @property (nonatomic, strong) PFFile *photo;
+@property (nonatomic, strong) NSArray *messages;
 
 + (NSString *)parseClassName;
 

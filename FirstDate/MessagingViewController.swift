@@ -57,7 +57,8 @@ class MessagingViewController: JSQMessagesViewController {
 
         getAllMessages.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             if(results!.count != 0) {
-                self.messages += results as! [Message]
+                let messagesResults = results as [PFObject]!
+                self.messages += messagesResults as! [Message]
                 self.collectionView?.reloadData()
             }
         }
@@ -109,7 +110,19 @@ class MessagingViewController: JSQMessagesViewController {
         
         let newMessage = Message(text: text, sender: User.currentUser()!, receiver: receiver!, idea: idea!)
         self.messages.append(newMessage)
-        newMessage.saveInBackground()
+        idea!.messages = self.messages
+        do {
+            try idea!.save()
+        }
+        catch {
+            print("Failed to save idea")
+        }
+        do {
+            try newMessage.save()
+        }
+        catch {
+            print("Failed to save message")
+        }
         
         finishSendingMessageAnimated(true)
     }

@@ -11,7 +11,7 @@ import ParseUI
 import Parse
 import JSQMessagesViewController
 
-@objc class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoHelper: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     class func getPhotoInBackground(file: PFFile?, completionHandler:(resultImage:UIImage?) -> Void) {
         if file != nil {
@@ -102,4 +102,68 @@ import JSQMessagesViewController
         view.clipsToBounds = true
     }
 }
+
+//MARK: NSOperations image downloader -
+enum PhotoRecordState {
+    case New, Downloaded, Failed
+}
+
+class PhotoRecord {
+    let name:String
+    let url:NSURL
+    var state = PhotoRecordState.New
+    var image = UIImage(named: "Placeholder")
+    
+    init(name:String, url:NSURL) {
+        self.name = name
+        self.url = url
+    }
+}
+
+class PendingOperations {
+    lazy var downloadsInProgress = [NSIndexPath:NSOperation]()
+    lazy var downloadQueue:NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "Download queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+        }()
+}
+
+class ImageDownloader: NSOperation {
+    //1
+    let photoRecord: PhotoRecord
+    
+    //2
+    init(photoRecord: PhotoRecord) {
+        self.photoRecord = photoRecord
+    }
+    
+    //3
+    override func main() {
+        //4
+        if self.cancelled {
+            return
+        }
+        //5
+        let imageData = NSData(contentsOfURL:self.photoRecord.url)
+        
+        //6
+        if self.cancelled {
+            return
+        }
+        
+        //7
+        if imageData?.length > 0 {
+            self.photoRecord.image = UIImage(data:imageData!)
+            self.photoRecord.state = .Downloaded
+        }
+        else
+        {
+            self.photoRecord.state = .Failed
+            self.photoRecord.image = UIImage(named: "Failed")
+        }
+    }
+}
+
 

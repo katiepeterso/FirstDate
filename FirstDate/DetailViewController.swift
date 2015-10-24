@@ -73,6 +73,13 @@ class DetailViewController: UIViewController {
             }, completion: nil)
     }
     
+    // MARK: - Appearance
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return AppearanceHelper.statusBarColor(detailIdeaImageView?.image)
+    }
+
+    
     @IBAction func backButtonPressed(sender: UIButton) {
         navigationController?.popViewControllerAnimated(true)
     }

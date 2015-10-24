@@ -373,7 +373,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         if User.currentUser() != nil {
-            alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (action) -> Void in
+            alertController.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (action) -> Void in
                 User.logOut()
                 
                 self.performSegueWithIdentifier("showLogin", sender: self)

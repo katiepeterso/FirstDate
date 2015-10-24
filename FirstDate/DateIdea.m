@@ -10,15 +10,16 @@
 
 @implementation DateIdea
 
++ (void)load {
+    [self registerSubclass];
+}
+
 @dynamic user;
 @dynamic title;
 @dynamic details;
 @dynamic heartedBy;
 @dynamic photo;
-
-+ (void)load {
-    [self registerSubclass];
-}
+@dynamic messages;
 
 + (NSString *)parseClassName {
     return @"DateIdea";

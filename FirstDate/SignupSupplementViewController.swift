@@ -73,6 +73,10 @@ class SignupSupplementViewController: UIViewController, UITextFieldDelegate, UII
         unsubscribeToKeyboardNotifications()
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     // MARK: - Actions
     
     @IBAction func signUp(sender: UIButton?) {
