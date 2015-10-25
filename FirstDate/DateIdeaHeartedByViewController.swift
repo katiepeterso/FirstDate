@@ -10,17 +10,20 @@ import UIKit
 
 class DateIdeaHeartedByViewController: UITableViewController {
     
-    var idea: DateIdea?
+    var idea: DateIdea!
     var hearts = [User]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController!.navigationBarHidden = false
-
-        let heartQuery = idea?.heartedBy.query()
-        heartQuery?.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-            if let users = result as? [User] where result!.count>0 {
+        
+        guard let heartQuery = idea.heartedBy.query() else {
+            return
+        }
+        
+        heartQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+            if let users = result as? [User] where result!.count > 0 {
                 self.hearts += users
                 self.tableView.reloadData()
             }

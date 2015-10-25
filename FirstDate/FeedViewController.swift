@@ -70,12 +70,12 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }
         }
         
-            fetchDateIdeas() {
-                if self.dateView == nil {
-                    self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
-                    self.showDateView(self.dateView)
-                }
+        fetchDateIdeas() {
+            if self.dateView == nil {
+                self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
+                self.showDateView(self.dateView)
             }
+        }
     }
     
     // MARK: - Appearance
@@ -176,6 +176,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
             var dateImage: UIImage?
             var userImage: UIImage?
+            var heartCount: Int!
             
             if let photo = idea.photo,
                 let dateImageData = try? photo.getData() {
@@ -188,6 +189,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     userImage = UIImage(data: userImageData)
             }
             
+            if let heartCountQuery = idea.heartedBy.query() {
+                heartCount = heartCountQuery.countObjects(nil)
+            }
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 // first run code:
                 if self.dateView == dv {
@@ -196,16 +201,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 }
                 dv.dateImageView.image = dateImage
                 dv.userImageView.image = userImage
+                dv.heartCount = heartCount
                 self.activityIndicator.stopAnimating()
             })
         }
-        
-        let query = idea.heartedBy.query()
-        query?.countObjectsInBackgroundWithBlock({ (result, error) -> Void in
-            if error == nil {
-                dv.heartCount = result
-            }
-        })
         
         view.insertSubview(dv, aboveSubview: visualEffectView)
         

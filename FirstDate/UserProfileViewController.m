@@ -126,23 +126,24 @@ const CGFloat coverPhotoOffset = 50;
 }
 
 - (NSNumber *)countUnreadMessagesForIdea:(DateIdea *)idea {
-    int i = 0;
+    int count = 0;
     NSArray *messages = idea.messages;
     if ([self.selectedUser isEqual:[User currentUser]]) {
         for (Message *message in messages) {
             if ([message[@"receivingUser"] isEqual:[User currentUser]] && [message[@"isRead"] isEqual:[NSNumber numberWithBool:false]]) {
-                i++;
+                count++;
             }
         }
-        if (i > 0) {
+        if (count > 0) {
             [self.userIdeasControl showBadgeWithStyle:WBadgeStyleRedDot value:0 animationType:WBadgeAnimTypeNone];
         }
     }
-    return [NSNumber numberWithInt:i];
+    return [NSNumber numberWithInt:count];
 }
 
 
 #pragma mark - Image Picker and Display -
+
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
     [PhotoHelper displayImagePicker:self delegate:self];
     self.userPhotoSelected = NO;
