@@ -121,18 +121,20 @@ class MessagingViewController: JSQMessagesViewController {
         }
         do {
             try newMessage.save()
-            let pushQuery = PFInstallation.query()
-            pushQuery?.whereKey("deviceType", equalTo: "ios")
-            pushQuery?.whereKey("user", equalTo: receiver!)
+            PushNotificationHelper.pushNotificationTo(receiver!, withMessage: "\(senderDisplayName) has sent you a message")
             
-            let push = PFPush()
-            push.setQuery(pushQuery)
-            let pushData = [
-                "alert" : "\(senderDisplayName) has sent you a message",
-                "badge" : "Increment",
-            ]
-            push.setData(pushData)
-            push.sendPushInBackground()
+//            let pushQuery = PFInstallation.query()
+//            pushQuery?.whereKey("deviceType", equalTo: "ios")
+//            pushQuery?.whereKey("user", equalTo: receiver!)
+//            
+//            let push = PFPush()
+//            push.setQuery(pushQuery)
+//            let pushData = [
+//                "alert" : "\(senderDisplayName) has sent you a message",
+//                "badge" : "Increment",
+//            ]
+//            push.setData(pushData)
+//            push.sendPushInBackground()
         }
         catch {
             let alertController = UIAlertController(title: "An error occurred!", message: "Please try sending your message again", preferredStyle: .Alert)

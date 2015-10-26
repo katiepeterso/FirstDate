@@ -77,6 +77,9 @@ class DateView: UIView {
             heartCount++
             button.setImage(UIImage(named: "hearted"), forState: .Normal)
             delegate.dateViewDidHeart(self)
+            if (idea != nil) {
+                PushNotificationHelper.pushNotificationTo(idea!.user, withMessage: "Your idea, '\(idea!.title)' has been hearted by \(User.currentUser()!.username!)")
+            }
         }
     }
 }
