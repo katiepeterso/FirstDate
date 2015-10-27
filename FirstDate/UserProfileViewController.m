@@ -16,20 +16,6 @@
 #import <Bolts/Bolts.h>
 #import <Parse/Parse.h>
 
-//@interface ParseFetchOp : NSOperation
-//@property
-//@end
-//
-//@implementation ParseFetchOp
-//
-//-(void)main
-//{
-//    
-//}
-//
-//@end
-
-
 const CGFloat coverPhotoOffset = 50;
 
 @interface UserProfileViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
