@@ -189,8 +189,9 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                     userImage = UIImage(data: userImageData)
             }
             
+            var heartCountError: NSError? = nil
             if let heartCountQuery = idea.heartedBy.query() {
-                heartCount = heartCountQuery.countObjects(nil)
+                heartCount = heartCountQuery.countObjects(&heartCountError)
             }
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -201,7 +202,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 }
                 dv.dateImageView.image = dateImage
                 dv.userImageView.image = userImage
-                dv.heartCount = heartCount
+                if heartCountError == nil {
+                    dv.heartCount = heartCount
+                } else {
+                    print("An error occurred: \(heartCountError)")
+                }
                 self.activityIndicator.stopAnimating()
             })
         }
