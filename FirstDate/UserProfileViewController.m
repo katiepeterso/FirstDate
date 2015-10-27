@@ -145,13 +145,19 @@ const CGFloat coverPhotoOffset = 50;
 #pragma mark - Image Picker and Display -
 
 - (IBAction)profilePhotoTapped:(UITapGestureRecognizer *)sender {
-    [PhotoHelper displayImagePicker:self delegate:self];
-    self.userPhotoSelected = NO;
+    if (self.selectedUser == [User currentUser]) {
+        [PhotoHelper displayImagePicker:self delegate:self];
+        self.userPhotoSelected = NO;
+    }
 }
 
 - (IBAction)userPhotoTapped:(UITapGestureRecognizer *)sender {
-    [PhotoHelper displayImagePicker:self delegate:self];
-    self.userPhotoSelected = YES;
+    if (self.selectedUser == [User currentUser]) {
+        [PhotoHelper displayImagePicker:self delegate:self];
+        self.userPhotoSelected = YES;
+    } else {
+        // TODO: Show user's bigger photo
+    }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
