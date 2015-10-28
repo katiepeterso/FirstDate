@@ -198,7 +198,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                 // first run code:
                 if self.dateView == dv {
                     UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
-                        self.backgroundImageView.image = dv.dateImageView.image
+                        self.backgroundImageView.image = dateImage
                         }, completion: {completed in
                             self.setNeedsStatusBarAppearanceUpdate()
                     })
