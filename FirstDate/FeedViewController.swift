@@ -404,7 +404,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showAdd" {
             if User.currentUser() == nil {
-                performSegueWithIdentifier("showLogin", sender: sender)
+                let alertController = UIAlertController(title: "Login required", message: "You need to login before you can add new date ideas.", preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "Login", style: .Default, handler: { (action) -> Void in
+                    self.performSegueWithIdentifier("showLogin", sender: sender)
+                }))
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
+                alertController.view.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+                presentViewController(alertController, animated: true, completion: nil)
             }
             
         } else if segue.identifier == "showDetail" {
@@ -412,7 +418,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             detailVC.idea = dateView.idea
         } else if segue.identifier == "showProfile" {
             if User.currentUser() == nil {
-                performSegueWithIdentifier("showLogin", sender: sender)
+                let alertController = UIAlertController(title: "Login required", message: "You need to login before you can access your profile.", preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "Login", style: .Default, handler: { (action) -> Void in
+                    self.performSegueWithIdentifier("showLogin", sender: sender)
+                }))
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
+                alertController.view.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+                presentViewController(alertController, animated: true, completion: nil)
             } else {
                 let profileVC = segue.destinationViewController as! UserProfileViewController
                 profileVC.selectedUser = User.currentUser()
@@ -446,7 +458,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
         if (User.currentUser() != nil) {
             return true
         } else {
-            performSegueWithIdentifier("showLogin", sender: self)
+            let alertController = UIAlertController(title: "Login required", message: "You need to login before you can heart a date idea.", preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "Login", style: .Default, handler: { (action) -> Void in
+                self.performSegueWithIdentifier("showLogin", sender: self)
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
+            alertController.view.tintColor = UIColor(red: 80.0/255.0, green: 210.0/255.0, blue: 194.0/255.0, alpha: 1.0)
+            presentViewController(alertController, animated: true, completion: nil)
             return false
         }
     }
