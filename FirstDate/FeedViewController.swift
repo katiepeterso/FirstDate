@@ -55,8 +55,10 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             activityIndicator.startAnimating()
         }
         
+        guard let querySavedDateIdea = DateIdea.query() else {
+            return
+        }
         
-        let querySavedDateIdea = DateIdea.query()!
         querySavedDateIdea.fromPinWithName("LastDateIdeaViewed")
         querySavedDateIdea.includeKey("user")
         querySavedDateIdea.findObjectsInBackgroundWithBlock { (dateIdeas, error) -> Void in
@@ -68,12 +70,12 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
                         self.showDateView(self.dateView)
                     }
             }
-        }
-        
-        fetchDateIdeas() {
-            if self.dateView == nil {
-                self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
-                self.showDateView(self.dateView)
+            
+            self.fetchDateIdeas() {
+                if self.dateView == nil {
+                    self.dateView = self.createDateViewWithIdea(self.ideas.removeFirst())
+                    self.showDateView(self.dateView)
+                }
             }
         }
     }
@@ -88,7 +90,7 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     
     func fetchDateIdeas(completion:(() -> ())?) {
         if self.ideas.count >= 5 {
-            return
+            completion?()
         }
         
         let lastIdea = self.ideas.last
@@ -119,15 +121,18 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             }
         }
         
-        let query = DateIdea.query()
-        query?.addAscendingOrder("createdAt")
-        query?.includeKey("user")
-        query?.limit = 10;
-        if let user = User.currentUser() {
-            query?.whereKey("user", notEqualTo: user)
+        guard let query = DateIdea.query() else {
+            completion?()
+            return
         }
-        query?.whereKey("createdAt", greaterThan: queryDate)
-        query?.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+        
+        query.addAscendingOrder("createdAt")
+        query.includeKey("user")
+        if let user = User.currentUser() {
+            query.whereKey("user", notEqualTo: user)
+        }
+        query.whereKey("createdAt", greaterThan: queryDate)
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if (error == nil) {
                 if let dateIdeas = objects as? [DateIdea] where dateIdeas.count > 0 {
                     self.ideas += dateIdeas
@@ -156,11 +161,13 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     
     // MARK: - Update Parse
     func updateLastSeenDateIdeaDate() {
-        if let user = User.currentUser() {
-            let lastSeenDate = NSDate(timeInterval: 1.0, sinceDate: (dateView.idea?.createdAt)!)
-            user.lastSeenDateIdeaCreatedAt = lastSeenDate
-            user.saveInBackground()
+        guard let user = User.currentUser() else {
+            return
         }
+        
+        let lastSeenDate = NSDate(timeInterval: 1.0, sinceDate: (dateView.idea?.createdAt)!)
+        user.lastSeenDateIdeaCreatedAt = lastSeenDate
+        user.saveInBackground()
     }
     
     // MARK: - Create Date View
