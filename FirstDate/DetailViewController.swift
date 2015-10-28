@@ -109,8 +109,11 @@ class DetailViewController: UIViewController {
     func setup() {
         
         PhotoHelper.getPhotoInBackground(idea.photo) { (resultImage) -> Void in
-            self.detailIdeaImageView.image = resultImage
-            self.setNeedsStatusBarAppearanceUpdate()
+            UIView.transitionWithView(self.detailIdeaImageView, duration: 0.7, options: [.TransitionCrossDissolve], animations: { () -> Void in
+                self.detailIdeaImageView.image = resultImage
+                }, completion: { (success) -> Void in
+                    self.setNeedsStatusBarAppearanceUpdate()
+            })
         }
         
         guard let user = idea.user else {
@@ -119,7 +122,9 @@ class DetailViewController: UIViewController {
         }
         
         PhotoHelper.getPhotoInBackground(user.userPhoto) { (resultImage) -> Void in
-            self.profileImageView.image = resultImage
+            UIView.transitionWithView(self.profileImageView, duration: 0.7, options: [.TransitionCrossDissolve], animations: { () -> Void in
+                self.profileImageView.image = resultImage
+                }, completion:nil)
         }
         
         guard let query = idea.heartedBy.query() else {
