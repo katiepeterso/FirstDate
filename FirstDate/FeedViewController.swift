@@ -197,8 +197,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 // first run code:
                 if self.dateView == dv {
-                    self.backgroundImageView.image = dateImage
-                    self.setNeedsStatusBarAppearanceUpdate()
+                    UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: [.TransitionCrossDissolve], animations: {
+                        self.backgroundImageView.image = dv.dateImageView.image
+                        }, completion: {completed in
+                            self.setNeedsStatusBarAppearanceUpdate()
+                    })
                 }
                 dv.dateImageView.image = dateImage
                 dv.userImageView.image = userImage
