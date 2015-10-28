@@ -98,6 +98,7 @@ const CGFloat coverPhotoOffset = 50;
 - (void)fetchHearts {
     PFQuery *getHearts = [DateIdea query];
     [getHearts includeKey:@"messages"];
+    [getHearts includeKey:@"user"];
     if (self.selectedUser) {
         [getHearts whereKey:@"heartedBy" equalTo:self.selectedUser];
         [getHearts findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
