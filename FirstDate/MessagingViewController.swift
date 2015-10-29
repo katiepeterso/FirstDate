@@ -117,7 +117,7 @@ class MessagingViewController: JSQMessagesViewController {
     //MARK: - Send Message -
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         
-        let newMessage = Message(text: text, sender: User.currentUser()!, receiver: receiver!, idea: idea!)
+        let newMessage = Message(text: text, sender: User.currentUser()!, receiver: receiver!)
         self.messages.append(newMessage)
         idea!.messages = self.messages
         do {

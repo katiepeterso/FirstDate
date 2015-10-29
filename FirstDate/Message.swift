@@ -29,17 +29,15 @@ class Message: PFObject, PFSubclassing, JSQMessageData {
     @NSManaged var messagingHash: NSNumber
     @NSManaged var messagingText: NSString
     @NSManaged var receivingUser: User
-    @NSManaged var idea: DateIdea
     @NSManaged var isRead: NSNumber
     
-    init(text: String, sender: User, receiver: User, idea: DateIdea) {
+    init(text: String, sender: User, receiver: User) {
         super.init()
         self.messagingText = text
         self.sendingUser = sender
         let now = NSDate()
         self.messagingHash = NSNumber(integer: (self.sendingUser.objectId!.hash ^ now.hash))
         self.receivingUser = receiver
-        self.idea = idea
         self.isRead = NSNumber(bool: false);
     }
     
