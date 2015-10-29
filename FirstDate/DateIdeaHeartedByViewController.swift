@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import WZLBadge
 
 class DateIdeaHeartedByViewController: UITableViewController {
     
     var idea: DateIdea!
     var hearts = [User]()
+    var unreadMessageCountFromUser: [Int]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,9 +27,26 @@ class DateIdeaHeartedByViewController: UITableViewController {
         heartQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if let users = result as? [User] where result!.count > 0 {
                 self.hearts += users
+                self.unreadMessageCountFromUser = [Int](count: self.hearts.count, repeatedValue: 0)
+                
+                if let messages = self.idea.messages as? [Message] {
+                    var userIndex = 0
+                    for user in self.hearts {
+                        for message in messages {
+                            if message.sendingUser == user && message.isRead.isEqualToNumber(NSNumber(bool: false)) {
+                                self.unreadMessageCountFromUser[userIndex]++
+                            }
+                        }
+                        
+                        userIndex++
+                    }
+                }
+                
                 self.tableView.reloadData()
             }
         })
+        
+        
     }
 
     // MARK: - Table view data source -
@@ -43,9 +62,14 @@ class DateIdeaHeartedByViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("heartedByCell", forIndexPath: indexPath) as! DateIdeaHeartedByCell
         cell.user = self.hearts[indexPath.row]
+        
+        let unreadMessageCount = unreadMessageCountFromUser[indexPath.row]
+        if unreadMessageCount > 0 {
+            cell.usernameLabel.showBadgeWithStyle(.Number, value: unreadMessageCount, animationType: .None)
+        }
+        
         return cell
     }
-    
     
     // MARK: - Navigation -
     
