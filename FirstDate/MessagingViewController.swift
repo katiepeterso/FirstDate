@@ -105,6 +105,16 @@ class MessagingViewController: JSQMessagesViewController {
         catch {
             print("Failed to save idea")
         }
+        
+//        newMessage.saveInBackgroundWithBlock { (success, error) -> Void in
+//            if error == nil {
+//                PushNotificationHelper.pushNotificationTo(self.receiver!, withMessage: "\(senderDisplayName) has sent you a message")
+//            } else {
+//                let alertController = UIAlertController(title: "An error occurred!", message: "Please try sending your message again", preferredStyle: .Alert)
+//                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+//                self.presentViewController(alertController, animated: true, completion: nil)
+//            }
+//        }
         do {
             try newMessage.save()
             PushNotificationHelper.pushNotificationTo(receiver!, withMessage: "\(senderDisplayName) has sent you a message")

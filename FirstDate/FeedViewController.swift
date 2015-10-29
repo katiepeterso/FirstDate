@@ -543,6 +543,11 @@ class FeedViewController: UIViewController, DateViewDelegate, LoginViewControlle
     
     func loginViewController(loginViewController: LoginViewController!, didLoginUser user: User!) {
         if user != nil {
+            // Push notifications
+            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+            
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
         }
     }
     
