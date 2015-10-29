@@ -54,25 +54,34 @@ class DetailViewController: UIViewController {
         guard let user = User.currentUser() else {
             return
         }
-        
-        guard let query = Message.query() else {
-            return
-        }
-        
-        query.includeKey("idea")
-        query.includeKey("receiveingUser")
-        query.whereKey("idea", equalTo: idea)
-        query.whereKey("receivingUser", equalTo: user)
-        query.countObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if result > 0 {
-                UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
-                    self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
-                    self.messageButtonTrailing.constant = 0
-                    }, completion: nil)
-                
+
+        if let messages = idea.messages as? [Message] where idea.messages.count > 0 {
+            for message in messages {
+                if message.receivingUser == user {
+                    UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: { () -> Void in
+                        self.messageButton.transform = CGAffineTransformMakeScale(1, 1)
+                        self.messageButtonTrailing.constant = 0
+                        }, completion: nil)
+                }
             }
         }
         
+//
+//        guard let query = Message.query() else {
+//            return
+//        }
+//        
+//        query.includeKey("idea")
+//        query.includeKey("receiveingUser")
+//        query.whereKey("idea", equalTo: idea)
+//        query.whereKey("receivingUser", equalTo: user)
+//        query.countObjectsInBackgroundWithBlock { (result, error) -> Void in
+//            if result > 0 {
+//                
+//                
+//            }
+//        }
+//        
     }
     
     // MARK: - Appearance
