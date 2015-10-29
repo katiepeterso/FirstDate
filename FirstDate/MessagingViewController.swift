@@ -39,38 +39,17 @@ class MessagingViewController: JSQMessagesViewController {
     
     func fetchConversation() {
         guard let currentUser = User.currentUser(),
-            let receiver = receiver, let dateIdea = idea
+            let receiver = receiver, let dateIdea = idea, let messagesArray = dateIdea.messages as? [Message]
             else {
                 return
         }
         
-        for message in dateIdea.messages as! [Message] {
+        for message in messagesArray {
             if (message.sendingUser == currentUser && message.receivingUser == receiver) || (message.sendingUser == receiver && message.receivingUser == currentUser) {
                 self.messages.append(message)
             }
         }
         self.collectionView?.reloadData()
-        
-//        let getSentMessages = PFQuery(className:"Message")
-//        getSentMessages.whereKey("sendingUser", equalTo:currentUser)
-//        getSentMessages.whereKey("receivingUser", equalTo: receiver)
-//        getSentMessages.whereKey("idea", equalTo: dateIdea)
-//        
-//        let getRecievedMessages = PFQuery(className:"Message")
-//        getRecievedMessages.whereKey("sendingUser", equalTo:receiver)
-//        getRecievedMessages.whereKey("receivingUser", equalTo: currentUser)
-//        getRecievedMessages.whereKey("idea", equalTo: dateIdea)
-//        
-//        let getAllMessages = PFQuery.orQueryWithSubqueries([getSentMessages, getRecievedMessages])
-//        getAllMessages.orderByAscending("createdAt")
-//        
-//        getAllMessages.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
-//            if(results!.count != 0) {
-//                let messagesResults = results as! [Message]
-//                self.messages = messagesResults
-//                self.collectionView?.reloadData()
-//            }
-//        }
     }
     
     //MARK: - JSQMessagesCollectionViewDataSource -
