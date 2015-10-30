@@ -242,6 +242,11 @@
 					AAD8D9FC1BAE04BB00218CC9 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 8NW9WCEXC4;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

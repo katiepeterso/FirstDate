@@ -76,6 +76,13 @@
             } else {
                 [self.delegate loginViewController:self didLoginUser:(User *)user];
                 [self dismissViewControllerAnimated:YES completion:nil];
+                
+                PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                if ([PFUser currentUser]) {
+                    currentInstallation[@"user"] = [User currentUser];
+                }
+                [currentInstallation saveInBackground];
+
             }
         }];
     }
