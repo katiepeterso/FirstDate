@@ -65,6 +65,8 @@ class DateIdeaHeartedByViewController: UITableViewController {
         
         let unreadMessageCount = unreadMessageCountFromUser[indexPath.row]
         if unreadMessageCount > 0 {
+            cell.usernameLabel.badgeCenterOffset = CGPointMake(-(cell.usernameLabel.frame.width + cell.usernameLabelLeading.constant), -cell.usernameLabelLeading.constant)
+            cell.usernameLabel.badgeBgColor = UIColor(red: 255.0/255.0, green: 51.0/255.0, blue: 102.0/255.0, alpha: 1.0)
             cell.usernameLabel.showBadgeWithStyle(.Number, value: unreadMessageCount, animationType: .None)
         }
         
@@ -76,6 +78,7 @@ class DateIdeaHeartedByViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showMessaging" {
             let selectedCell = sender as! DateIdeaHeartedByCell
+            selectedCell.usernameLabel.clearBadge()
             let indexPath = tableView.indexPathForCell(selectedCell)
             let messageVC = segue.destinationViewController as! MessagingViewController
             messageVC.receiver = self.hearts[indexPath!.row]

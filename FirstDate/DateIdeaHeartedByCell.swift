@@ -19,6 +19,8 @@ class DateIdeaHeartedByCell: UITableViewCell {
     @IBOutlet weak var userPhotoImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     
+    @IBOutlet weak var usernameLabelLeading: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
